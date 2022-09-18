@@ -1,6 +1,5 @@
 package com.playdata.petCommunity.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,8 +43,8 @@ public class Pet {
 	@Column(length = 30, nullable = false)
 	private String petCategory;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="uno", columnDefinition ="VARCHAR(36)", nullable = false)
-	private Long uno;
+	@ManyToOne
+	@JoinColumn(name="uno", referencedColumnName = "uno", nullable = false)
+	private User user;
 	
 }

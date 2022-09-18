@@ -1,6 +1,5 @@
 package com.playdata.petCommunity.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+public class Comment extends BaseNoticeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //
@@ -38,8 +37,8 @@ public class Comment {
 	@Column(length = 20)
 	private String noticedate;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="nno", columnDefinition ="VARCHAR(36)", nullable = false)
-	private Long nno;
+	@ManyToOne
+	@JoinColumn(name="nno", referencedColumnName = "nno",nullable = false)
+	private Notice notice;;
 	
 }
