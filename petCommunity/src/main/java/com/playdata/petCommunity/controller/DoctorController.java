@@ -26,8 +26,6 @@ public class DoctorController {
 		return "doctor/doctorLogin";
 	}
 	
-	
-	
 	// 의사 회원가입화면
 	@GetMapping("/doctorJoin")
 	public String doctorJoin()	{
@@ -101,7 +99,7 @@ public class DoctorController {
 			RA.addFlashAttribute("msg", "탈퇴 완료 됐습니다");
 			session.invalidate();
 			
-			return ""; // 홈페이지로 리다이렉트
+			return "reidrect:/main"; // 홈페이지로 리다이렉트
 		} else {
 			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
 			return "redirect:/doctor/doctorUpdate";
