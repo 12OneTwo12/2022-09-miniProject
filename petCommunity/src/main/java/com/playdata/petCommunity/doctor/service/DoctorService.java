@@ -15,10 +15,8 @@ public interface DoctorService {
 	
 	Doctor doctorLogin(DoctorVO vo); //의사 로그인
 	
-	Doctor doctorUpdate(DoctorVO vo); // 의사 정보 수정
+	Doctor doctorUpdate(Doctor doctor); // 의사 정보 수정
 	
-	void doctorDelete(Doctor en); // 의사 탈퇴
+	Doctor doctorDelete(String doctorId); // 의사 탈퇴
 	
-	
-
 }

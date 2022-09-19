@@ -46,14 +46,18 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 	
 	@Override
-	public Doctor doctorUpdate(DoctorVO vo) {
-		return null;
+	public Doctor doctorUpdate(Doctor doctor) {
+		return doctorRepository.save(doctor);
 	}
 
 	@Override
-	public void doctorDelete(Doctor en) {
-//		en.setDoctorState
-		doctorRepository.save(en);
+	public Doctor doctorDelete(String doctorId) {
+
+		Doctor doctor = doctorRepository.findByDoctorId(doctorId);
+		
+		doctor.setDoctorState("탈퇴");
+		
+		return doctorRepository.save(doctor);
 	}
 	
 }

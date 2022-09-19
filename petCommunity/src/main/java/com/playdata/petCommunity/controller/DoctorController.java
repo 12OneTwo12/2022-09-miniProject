@@ -71,18 +71,42 @@ public class DoctorController {
 	}
 	
 	// 의사 회원정보 수정
-	@PostMapping("/doctorUpdate")
-	public String doctorUpdate(DoctorVO vo) {
+	@PostMapping("/doctorUpdateForm")
+	public String doctorUpdateForm(Doctor doctor, RedirectAttributes RA) {
 		
-		doctorService.doctorUpdate(vo);
+		Doctor check = doctorService.doctorUpdate(doctor);
 		
-		return "doctor/doctorUpdate";
+		if(check == null) {
+			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
+			return "redirect:/doctor/doctorUpdate";
+		} else {
+			RA.addFlashAttribute("msg", "정상적으로 변경 됐습니다");
+			return "redirect:/doctor/doctorUpdate";
+		}
+		
 	}
 	
 	// 의사 탈퇴
-	@GetMapping("/doctorDelete")
-	public void doctorDelete(Doctor en) {
-		doctorService.doctorDelete(en);
+	@GetMapping("/doctorDeleteForm")
+	public String doctorDeleteForm(HttpSession session, RedirectAttributes RA) {
+		
+		String doctorId = (String) session.getAttribute("doctorId");
+		
+		Doctor doctor = doctorService.doctorDelete(doctorId);
+		
+		if(doctor == null) {
+			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
+			return "redirect:/doctor/doctorUpdate";
+		} else if(doctor.getDoctorState().equals("탈퇴")) {
+			RA.addFlashAttribute("msg", "탈퇴 완료 됐습니다");
+			session.invalidate();
+			
+			return ""; // 홈페이지로 리다이렉트
+		} else {
+			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
+			return "redirect:/doctor/doctorUpdate";
+		}
+		
 	}
 	
 	
