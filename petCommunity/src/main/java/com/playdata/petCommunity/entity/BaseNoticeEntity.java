@@ -18,6 +18,7 @@ import lombok.Getter;
 public class BaseNoticeEntity {
 
 	@CreatedDate 
+
 	@Column(updatable = false)  
 	private LocalDateTime regdate;
 	

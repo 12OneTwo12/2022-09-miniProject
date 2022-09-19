@@ -1,5 +1,6 @@
 package com.playdata.petCommunity.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +11,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.playdata.petCommunity.command.PetVO;
 import com.playdata.petCommunity.pet.service.PetService;
 
+
 @Controller
 @RequestMapping("/pet")
 public class PetController {
 
+
 	@Autowired
 	private PetService petService;
+  
+  @RequestMapping("pet_signup")
+  public String pet_signup() {
+	  return"pet/pet_signup";
+  }
 	
 	// 반려동물정보 입력화면으로 이동
 	@GetMapping("/petJoin")
@@ -36,5 +44,6 @@ public class PetController {
 		return "redirect:/main";
 	}
 	
-	
+
+
 }

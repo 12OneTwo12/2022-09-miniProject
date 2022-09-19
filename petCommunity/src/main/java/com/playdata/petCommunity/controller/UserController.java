@@ -1,5 +1,6 @@
 package com.playdata.petCommunity.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.playdata.petCommunity.command.UserVO;
 import com.playdata.petCommunity.user.service.UserService;
 
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
 
 	@Autowired
 	private UserService userService;
@@ -67,11 +70,3 @@ public class UserController {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-}
