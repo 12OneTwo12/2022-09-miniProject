@@ -37,6 +37,9 @@ public class Comment extends BaseNoticeEntity {
 	@Column(length = 20)
 	private String noticedate;
 	
+	@Column(columnDefinition = "varchar(30) default '정상 등록'")
+	private String commentState;
+	
 	@ManyToOne
 	@JoinColumn(name="nno", referencedColumnName = "nno",nullable = false)
 	private Notice notice;;
