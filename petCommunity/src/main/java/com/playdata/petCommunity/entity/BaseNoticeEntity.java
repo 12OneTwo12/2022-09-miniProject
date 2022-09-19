@@ -17,11 +17,11 @@ import lombok.Getter;
 @Getter
 public class BaseNoticeEntity {
 
-	@CreatedDate // 생성시간
-	@Column(updatable = false) // 자동 업데이트를 사용하지 않음
+	@CreatedDate 
+	@Column(updatable = false) 
 	private LocalDateTime regdate;
 	
-	@LastModifiedDate // 마지막 변경시간
+	@LastModifiedDate 
 	@Column
 	private LocalDateTime moddate;
 	
