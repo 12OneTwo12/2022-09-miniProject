@@ -40,8 +40,8 @@ public class PetController {
 		if(result == 1) { //반려동물 정보입력성공
 			RA.addFlashAttribute("msg", "반려동물의 정보가 입력되었습니다");
 		}
-		
 		return "redirect:/main";
+		
 	}
 	
 

@@ -10,9 +10,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import com.playdata.petCommunity.comment.service.CommentRepository;
+import com.playdata.petCommunity.doctor.service.DoctorRepository;
+import com.playdata.petCommunity.entity.Doctor;
 import com.playdata.petCommunity.entity.Notice;
+import com.playdata.petCommunity.entity.QDoctor;
 import com.playdata.petCommunity.entity.QNotice;
 import com.playdata.petCommunity.notice.service.NoticeRepository;
+import com.playdata.petCommunity.user.service.UserRepository;
 import com.playdata.petCommunity.util.page.Criteria;
 import com.playdata.petCommunity.util.page.PageDTO;
 import com.querydsl.core.BooleanBuilder;
@@ -25,6 +29,12 @@ public class NoticeTest {
 	
 	@Autowired
 	CommentRepository commentRepository;
+	
+	@Autowired
+	DoctorRepository doctorRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 
 //	@Test
 //	public void testCode01() {
@@ -96,6 +106,29 @@ public class NoticeTest {
 //	@Test
 //	public void testCode05() {
 //		System.out.println(commentRepository.findByNno(1L));
+//	}
+	
+//	@Test
+//	public void testCode06() {
+//		
+//		System.out.println(userRepository.findById(1L));
+//		System.out.println(doctorRepository.findById(1L));
+//		
+//	}
+	
+//	@Test
+//	public void testCode07() {
+//		QDoctor qDoctor = QDoctor.doctor;
+//		
+//		BooleanBuilder builder = new BooleanBuilder();
+//		builder.and(qDoctor.doctorState.contains("정상 등록"));
+//		
+//		builder.and(qDoctor.doctorId.contains("jji0428"));
+//		
+//		builder.and(qDoctor.doctorPw.contains("1234"));
+//		
+//		System.out.println(doctorRepository.findAll(builder).iterator().next());
+//		
 //	}
 	
 }

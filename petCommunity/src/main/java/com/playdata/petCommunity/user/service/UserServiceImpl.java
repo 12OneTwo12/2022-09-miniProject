@@ -9,23 +9,29 @@ import com.playdata.petCommunity.entity.User;
 @Service("userService")
 public class UserServiceImpl implements UserService{
 	
-	@Autowired
-	UserRepository userRepository;
+//	@Autowired
+//	UserRepository userRepository;
+//
+//	@Override
+//	public User userIdCheck(UserVO vo) {
+//		return userRepository.findByUser_id(vo.getUserId());
+//	}
 
-	@Override
-	public User userIdCheck(UserVO vo) {
-		return userRepository.findByUser_id(vo.getUserId());
-	}
+//	@Override
+//	public int userJoin(UserVO vo) {
+//		return userRepository.userJoin(vo);
+//	}
+//
+//	@Override
+//	public UserVO userLogin(UserVO vo) {
+//		return userRepository.userLogin(vo);
+//	}
 
-	@Override
-	public int userJoin(UserVO vo) {
-		return userMapper.userJoin(vo);
-	}
-
-	@Override
-	public UserVO userLogin(UserVO vo) {
-		return userMapper.userLogin(vo);
-	}
+//	@Override
+//	public int idCheck(UserVO vo) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 	
 
 }
