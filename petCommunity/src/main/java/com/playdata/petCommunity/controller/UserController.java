@@ -27,19 +27,19 @@ public class UserController {
 	//유저 로그인화면
 	@GetMapping("/userLogin")
 	public String userLogin() {
-		return "user/userLogin";
+		return "user/user_login";
 	}
 	
 	// 유저 회원가입화면
 	@GetMapping("/userJoin")
 	public String userJoin() {
-		return "user/userJoin";
+		return "user/user_signin";
 	}
 	
-	@GetMapping({"/user_login","user_signin","main"})
-	public void view() {
-		
-	}
+//	@GetMapping({"/user_login","user_signin","main"})
+//	public void view() {
+//		
+//	} 이거 내일 가서 말해야함
 	
 	// 유저회원가입
 	//회원가입 성공하면 바로 반려동물 정보입력페이지로
