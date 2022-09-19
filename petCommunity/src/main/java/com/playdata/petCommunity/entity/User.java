@@ -41,4 +41,7 @@ public class User {
 	@Column(length = 300)
 	private String userLocation;
 	
+	@Column(columnDefinition = "varchar(30) default '정상 등록'")
+	private String userState;
+	
 }

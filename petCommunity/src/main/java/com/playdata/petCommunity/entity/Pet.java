@@ -43,6 +43,12 @@ public class Pet {
 	@Column(length = 30, nullable = false)
 	private String petCategory;
 	
+	@Column(length = 30)
+	private String petGender;
+	
+	@Column(length = 30)
+	private String petCategoryDetail;
+	
 	@ManyToOne
 	@JoinColumn(name="uno", referencedColumnName = "uno", nullable = false)
 	private User user;

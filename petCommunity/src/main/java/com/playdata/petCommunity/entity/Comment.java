@@ -34,14 +34,14 @@ public class Comment extends BaseNoticeEntity {
 	@Column(length = 2000)
 	private String content;
 	
-	@Column(length = 20)
-	private String noticedate;
-	
 	@Column(columnDefinition = "varchar(30) default '정상 등록'")
 	private String commentState;
 	
+	@Column(columnDefinition = "varchar(30) default 'user'")
+	private String userOrDoctor;
+	
 	@ManyToOne
 	@JoinColumn(name="nno", referencedColumnName = "nno",nullable = false)
-	private Notice notice;;
+	private Notice notice;
 	
 }

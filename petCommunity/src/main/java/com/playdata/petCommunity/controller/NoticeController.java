@@ -92,7 +92,14 @@ public class NoticeController {
 	public String addComment(@RequestParam("Notice") Notice notice, Comment comment, HttpSession session, RedirectAttributes RA) {
 		
 		String userId = (String) session.getAttribute("userId");
-		comment.setWriter(userId);
+		
+		if(userId == null) {
+			String doctorId = (String) session.getAttribute("doctorId");
+			comment.setWriter(doctorId);
+			comment.setUserOrDoctor("doctor");
+		} else {
+			comment.setWriter(userId);
+		}
 		comment.setNotice(notice);
 		
 		Comment newComment = commentService.registComment(comment);
