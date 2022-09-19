@@ -16,6 +16,18 @@ public class PetServiceImpl implements PetService{
 	@Override
 	public Pet petJoin(Pet pet) {
 		
+		String petNumber = pet.getPetBirth()+"-";
+		
+		if(pet.getPetGender().equals("수컷")) {
+			petNumber += "7";
+		} else if (pet.getPetGender().equals("암컷")) {
+			petNumber += "8";
+		} else if (pet.getPetGender().equals("중성")) {
+			petNumber += "9";
+		}
+		
+		
+		
 		return petMapper.save(pet);
 	}
 	
