@@ -16,7 +16,7 @@ import com.playdata.petCommunity.entity.QNotice;
 import com.playdata.petCommunity.repository.CommentRepository;
 import com.playdata.petCommunity.repository.DoctorRepository;
 import com.playdata.petCommunity.repository.NoticeRepository;
-import com.playdata.petCommunity.user.service.UserRepository;
+import com.playdata.petCommunity.repository.UserRepository;
 import com.playdata.petCommunity.util.page.Criteria;
 import com.playdata.petCommunity.util.page.PageDTO;
 import com.querydsl.core.BooleanBuilder;
