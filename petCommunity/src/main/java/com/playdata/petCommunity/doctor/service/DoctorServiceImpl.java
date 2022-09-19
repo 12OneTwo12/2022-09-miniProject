@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.playdata.petCommunity.command.DoctorVO;
 import com.playdata.petCommunity.entity.Doctor;
+import com.playdata.petCommunity.entity.QDoctor;
+import com.querydsl.core.BooleanBuilder;
 
 @Service("doctorService")
 public class DoctorServiceImpl implements DoctorService{
@@ -14,15 +16,14 @@ public class DoctorServiceImpl implements DoctorService{
 
 	@Override
 	public Doctor doctorIdCheck(DoctorVO vo) {
-		return doctorRepository.findByDoctor_id(vo.getDoctorId());
+		return doctorRepository.findByDoctorId(vo.getDoctorId());
 	}
 
 	@Override // 의사 회원가입
 	public Doctor doctorJoin(Doctor en) {
 		
-		if(doctorRepository.findByDoctor_id(en.getDoctorId()) != null ) {
+		if(doctorRepository.findByDoctorId(en.getDoctorId()) != null ) {
 			return null; // 회원가입시 아이디 중복체크해서 null값이 아니라면 null을 반환해서 controller에서 회원가입실패 메시지가 뜨게
-			
 		} else {
 			return doctorRepository.save(en);
 		}
@@ -31,12 +32,22 @@ public class DoctorServiceImpl implements DoctorService{
 
 	@Override
 	public Doctor doctorLogin(DoctorVO vo) {
-		return doctorRepository.doctorLogin(vo);
+		
+		QDoctor qDoctor = QDoctor.doctor;
+		
+		BooleanBuilder builder = new BooleanBuilder();
+		builder.and(qDoctor.doctorState.contains("정상 등록"));
+		
+		builder.and(qDoctor.doctorId.contains(vo.getDoctorId()));
+		
+		builder.and(qDoctor.doctorPw.contains(vo.getDoctorPw()));
+		
+		return doctorRepository.findAll(builder).iterator().next();
 	}
 	
 	@Override
 	public Doctor doctorUpdate(DoctorVO vo) {
-		return doctorRepository.doctorUpdate(vo);
+		return null;
 	}
 
 	@Override
