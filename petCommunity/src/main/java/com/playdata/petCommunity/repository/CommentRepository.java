@@ -1,4 +1,4 @@
-package com.playdata.petCommunity.comment.service;
+package com.playdata.petCommunity.repository;
 
 import java.util.List;
 

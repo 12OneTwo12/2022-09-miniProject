@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.playdata.petCommunity.command.DoctorVO;
 import com.playdata.petCommunity.entity.Doctor;
 import com.playdata.petCommunity.entity.QDoctor;
+import com.playdata.petCommunity.repository.DoctorRepository;
 import com.querydsl.core.BooleanBuilder;
 
 @Service("doctorService")

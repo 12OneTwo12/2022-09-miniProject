@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.playdata.petCommunity.entity.Comment;
 import com.playdata.petCommunity.entity.Notice;
 import com.playdata.petCommunity.entity.QNotice;
+import com.playdata.petCommunity.repository.NoticeRepository;
 import com.playdata.petCommunity.util.page.Criteria;
 import com.playdata.petCommunity.util.page.PageDTO;
 import com.querydsl.core.BooleanBuilder;
@@ -67,6 +68,11 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public Notice getDetailById(Long nno) {
 		return noticeRepository.findById(nno).get();
+	}
+
+	@Override
+	public Notice registNotice(Notice notice) {
+		return noticeRepository.save(notice);
 	}
 
 }

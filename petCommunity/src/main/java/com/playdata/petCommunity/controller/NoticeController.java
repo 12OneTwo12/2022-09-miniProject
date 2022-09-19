@@ -17,6 +17,7 @@ import com.playdata.petCommunity.comment.service.CommentService;
 import com.playdata.petCommunity.entity.Comment;
 import com.playdata.petCommunity.entity.Notice;
 import com.playdata.petCommunity.notice.service.NoticeService;
+import com.playdata.petCommunity.repository.NoticeRepository;
 import com.playdata.petCommunity.util.page.Criteria;
 import com.playdata.petCommunity.util.page.PageDTO;
 
@@ -110,6 +111,21 @@ public class NoticeController {
 		} else {
 			RA.addFlashAttribute("msg", "정상 등록 됐습니다");
 			return "noticeDetail?nno="+notice.getNno(); // 게시글로 리다이렉트
+		}
+		
+	}
+	
+	@PostMapping("/registNotice")
+	public String registNotice(Notice notice, RedirectAttributes RA) {
+		
+		Notice newNotice = noticeService.registNotice(notice);
+		
+		if(newNotice == null) {
+			RA.addFlashAttribute("msg", "등록 중 문제가 발생했습니다");
+			return "";
+		} else {
+			RA.addFlashAttribute("msg", "정상 등록 됐습니다");
+			return "";
 		}
 		
 	}

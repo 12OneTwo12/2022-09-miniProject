@@ -9,13 +9,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-import com.playdata.petCommunity.comment.service.CommentRepository;
-import com.playdata.petCommunity.doctor.service.DoctorRepository;
 import com.playdata.petCommunity.entity.Doctor;
 import com.playdata.petCommunity.entity.Notice;
 import com.playdata.petCommunity.entity.QDoctor;
 import com.playdata.petCommunity.entity.QNotice;
-import com.playdata.petCommunity.notice.service.NoticeRepository;
+import com.playdata.petCommunity.repository.CommentRepository;
+import com.playdata.petCommunity.repository.DoctorRepository;
+import com.playdata.petCommunity.repository.NoticeRepository;
 import com.playdata.petCommunity.user.service.UserRepository;
 import com.playdata.petCommunity.util.page.Criteria;
 import com.playdata.petCommunity.util.page.PageDTO;

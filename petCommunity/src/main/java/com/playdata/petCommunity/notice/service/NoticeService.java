@@ -16,4 +16,6 @@ public interface NoticeService {
 
 	Notice getDetailById(Long nno);
 
+	Notice registNotice(Notice notice);
+
 }

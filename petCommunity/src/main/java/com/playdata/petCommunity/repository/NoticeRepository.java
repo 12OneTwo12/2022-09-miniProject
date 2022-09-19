@@ -1,4 +1,4 @@
-package com.playdata.petCommunity.notice.service;
+package com.playdata.petCommunity.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

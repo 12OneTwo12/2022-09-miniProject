@@ -8,9 +8,14 @@ import com.playdata.petCommunity.entity.User;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
+
+	@Autowired
+	UserRepository userRepository;
 	
-//	@Autowired
-//	UserRepository userRepository;
+	@Override
+	public User getUser(String userId) {
+		return userRepository.findByUserId(userId);
+	}
 //
 //	@Override
 //	public User userIdCheck(UserVO vo) {
