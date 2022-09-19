@@ -35,7 +35,7 @@ public class Notice extends BaseNoticeEntity {
 	@Column(length = 2000)
 	private String content;
 	
-	@Column(columnDefinition = "varchar(30) default 'Á¤»ó µî·Ï'")
+	@Column(columnDefinition = "varchar(30) default 'ì •ìƒ ë“±ë¡'")
 	private String noticeState;
 	
 }

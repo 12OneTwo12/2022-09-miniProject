@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DotorVO {
+public class DoctorVO {
 
 	private Long dno;
 	
