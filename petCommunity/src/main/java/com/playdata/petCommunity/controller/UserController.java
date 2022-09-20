@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.playdata.petCommunity.command.UserLoginVO;
 import com.playdata.petCommunity.command.UserVO;
 import com.playdata.petCommunity.entity.Doctor;
 import com.playdata.petCommunity.entity.User;
@@ -27,26 +29,26 @@ public class UserController {
 	//유저 로그인화면
 	@GetMapping("/userLogin")
 	public String userLogin() {
-		return "user/userLogin";
+		return "user/user_login";
 	}
 	
 	// 유저 회원가입화면
 	@GetMapping("/userJoin")
 	public String userJoin() {
-		return "user/userJoin";
+		return "user/user_signin";
 	}
 	
-	@GetMapping({"/user_login","user_signin","main"})
-	public void view() {
-		
-	}
+//	@GetMapping({"/user_login","user_signin","main"})
+//	public void view() {
+//		
+//	} 이거 내일 가서 말해야함 return 하는곳에 _ 말고 -이걸로 바꿔야함 convention
 	
 	// 유저회원가입
 	//회원가입 성공하면 바로 반려동물 정보입력페이지로
 	@PostMapping("/userJoinForm")
-	public String userJoinForm(User en, RedirectAttributes RA) {
+	public String userJoinForm(@RequestBody UserVO vo, RedirectAttributes RA) {
 		
-		User result = userService.userJoin(en);
+		User result = userService.userJoin(vo);
 		
 		if(result != null) { // 유저회원가입성공
 			RA.addFlashAttribute("msg", "가입을 축하드립니다");
@@ -61,7 +63,7 @@ public class UserController {
 	
 	// 유저로그인
 	@PostMapping("/userLogin")
-	public String userLogin(UserVO vo, RedirectAttributes RA, HttpSession session) {
+	public String userLogin(@RequestBody UserLoginVO vo, RedirectAttributes RA, HttpSession session) {
 		
 		// 유저로그인처리
 		 User user = userService.userLogin(vo);
@@ -80,16 +82,16 @@ public class UserController {
 	
 	// 유저 회원정보 수정
 	@PostMapping("/userUpdateForm")
-	public String doctorUpdateForm(User user, RedirectAttributes RA) {
+	public String userUpdateForm(@RequestBody UserVO vo, RedirectAttributes RA) {
 			
-			User check = userService.userUpdate(user);
+		 User check = userService.userUpdate(vo);
 			
 		if(check == null) {
 			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
 			return "redirect:/user/userUpdate";
 		} else {
 			RA.addFlashAttribute("msg", "정상적으로 변경 됐습니다");
-			return "redirect:/user/userUpdate";
+			return "redirect:/user/userJoin";
 		}
 			
 	}

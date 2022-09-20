@@ -3,9 +3,12 @@ package com.playdata.petCommunity.doctor.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.playdata.petCommunity.command.DoctorLoginVO;
 import com.playdata.petCommunity.command.DoctorVO;
+import com.playdata.petCommunity.command.UserVO;
 import com.playdata.petCommunity.entity.Doctor;
 import com.playdata.petCommunity.entity.QDoctor;
+import com.playdata.petCommunity.entity.User;
 import com.playdata.petCommunity.repository.DoctorRepository;
 import com.querydsl.core.BooleanBuilder;
 
@@ -21,18 +24,18 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 
 	@Override // 의사 회원가입
-	public Doctor doctorJoin(Doctor en) {
+	public Doctor doctorJoin(DoctorVO vo) {
 		
-		if(doctorRepository.findByDoctorId(en.getDoctorId()) != null ) {
+		if(doctorRepository.findByDoctorId(vo.getDoctorId()) != null ) {
 			return null; // 회원가입시 아이디 중복체크해서 null값이 아니라면 null을 반환해서 controller에서 회원가입실패 메시지가 뜨게
 		} else {
-			return doctorRepository.save(en);
+			return doctorRepository.save(convertDoctorVOtoDoctor(vo));
 		}
 		
 	}
 
 	@Override
-	public Doctor doctorLogin(DoctorVO vo) {
+	public Doctor doctorLogin(DoctorLoginVO vo) {
 		
 		QDoctor qDoctor = QDoctor.doctor;
 		
@@ -47,8 +50,10 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 	
 	@Override
-	public Doctor doctorUpdate(Doctor doctor) {
-		return doctorRepository.save(doctor);
+	public Doctor doctorUpdate(DoctorVO vo) {
+		Doctor doctor = doctorRepository.findByDoctorId(vo.getDoctorId());
+		
+		return doctor.updateDoctorByVO(vo);
 	}
 
 	@Override
@@ -58,7 +63,18 @@ public class DoctorServiceImpl implements DoctorService{
 		
 		doctor.setDoctorState("탈퇴");
 		
-		return doctorRepository.save(doctor);
+		return doctor;
 	}
 	
+	private Doctor convertDoctorVOtoDoctor(DoctorVO vo) {
+		return new Doctor(null, 
+				vo.getDoctorName(),
+				vo.getDoctorLicenseNumber(),
+				vo.getDoctorPhoneNumber(), 
+				vo.getDoctorId(), 
+				vo.getDoctorPw(),
+				vo.getDoctorLocation(),
+				null,
+				null);
+	}
 }
