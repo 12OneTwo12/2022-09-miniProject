@@ -11,6 +11,7 @@ import com.playdata.petCommunity.entity.QUser;
 import com.playdata.petCommunity.entity.User;
 import com.playdata.petCommunity.repository.UserRepository;
 import com.playdata.petCommunity.response.UserResponse;
+import com.playdata.petCommunity.util.page.Encrypt;
 import com.querydsl.core.BooleanBuilder;
 
 @Transactional
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService{
 			return null;
 		} else {
 
+			String pwHash = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
+			
+			vo.setUserPw(pwHash);
 			vo.setUserState("정상 등록"); // 일단 이렇게
 			return new UserResponse().updateUserVOByEntity(userRepository.save(convertUserVOtoUser(vo)));
 		}
@@ -46,13 +50,14 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserVO userLogin(UserLoginVO vo) {
 
+		String pwHash = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
+		
 		QUser qUser = QUser.user;
 		BooleanBuilder builder = new BooleanBuilder();
 		builder.and(qUser.userState.contains("정상 등록"));
 		
 		builder.and(qUser.userId.contains(vo.getUserId()));
-		
-		builder.and(qUser.userPw.contains(vo.getUserPw()));
+		builder.and(qUser.userPw.contains(pwHash));
 		
 		return new UserResponse().updateUserVOByEntity(userRepository.findAll(builder).iterator().next());
 	}
@@ -61,9 +66,16 @@ public class UserServiceImpl implements UserService{
 	public UserVO userUpdate(UserVO vo) {
 		User user = userRepository.findByUserId(vo.getUserId());
 		
-		User result = user.updateUserByVO(vo);
+		String hashPw = Encrypt.getEncrypt(vo.getUserPw(), user.getUserId());
 		
-		return new UserResponse().updateUserVOByEntity(userRepository.save(result));
+		if(hashPw.equals(user.getUserPw())) {
+			vo.setUserNewPw(Encrypt.getEncrypt(vo.getUserNewPw, user.getUserId()));
+			User result = user.updateUserByVO(vo);
+			return new UserResponse().updateUserVOByEntity(userRepository.save(result));
+		} else {
+			return null;
+		}
+		
 	}
 	
 	@Override
@@ -86,7 +98,6 @@ public class UserServiceImpl implements UserService{
 				vo.getUserPw(),
 				vo.getUserLocation(),
 				vo.getUserLocationDetail(),
-
 				vo.getUserState()
 				);
 

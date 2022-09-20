@@ -3,11 +3,13 @@ package com.playdata.petCommunity.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,38 +90,49 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/registNotice")
-	public String registNotice(NoticeVO noticeVO, RedirectAttributes RA, Model model, HttpSession session) {
+	public String registNotice(@Valid NoticeVO noticeVO, Errors errors, RedirectAttributes RA, Model model, HttpSession session) {
 		
-		String userId = (String) session.getAttribute("userId");
-		
-		noticeVO.setWriter(userId);
-		
-		NoticeVO newNoticeVO = noticeService.registNotice(noticeVO);
-		
-		if(newNoticeVO == null) {
-			RA.addFlashAttribute("msg", "등록 중 문제가 발생했습니다");
-			return "";
+		if(errors.hasErrors()) {
+			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
+			return ""; // 유효성 검사 실패로 등록 페이지로 리다이렉트
 		} else {
-			model.addAttribute("NoticeVO", newNoticeVO);
-			model.addAttribute("msg", "정상적으로 등록 됐습니다");
-			return ""; // 작성된 글 페이지
+			String userId = (String) session.getAttribute("userId");
+			
+			noticeVO.setWriter(userId);
+			
+			NoticeVO newNoticeVO = noticeService.registNotice(noticeVO);
+			
+			if(newNoticeVO == null) {
+				RA.addFlashAttribute("msg", "등록 중 문제가 발생했습니다");
+				return "";
+			} else {
+				model.addAttribute("NoticeVO", newNoticeVO);
+				model.addAttribute("msg", "정상적으로 등록 됐습니다");
+				return ""; // 작성된 글 페이지
+			}
 		}
+		
 		
 	}
 	
 	@PostMapping("/noticeUpdate")
-	public String noticeUpdate(NoticeVO noticeVO, RedirectAttributes RA, Model model, HttpSession session) {
+	public String noticeUpdate(@Valid NoticeVO noticeVO, Errors errors, RedirectAttributes RA, Model model, HttpSession session) {
 		
-		String userId = (String) session.getAttribute("userId");
-		
-		NoticeVO newNoticeVO = noticeService.updateNotice(noticeVO,userId);
-		if(newNoticeVO == null) {
-			RA.addFlashAttribute("msg", "수정 중 문제가 발생했습니다");
-			return "";
+		if(errors.hasErrors()) {
+			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
+			return "noticeDetail?nno="+noticeVO.getNno(); // 유효성 검사 실패로 리다이렉트
 		} else {
-			model.addAttribute("NoticeVO", newNoticeVO);
-			model.addAttribute("msg", "정상적으로 수정 됐습니다");
-			return ""; // 수정된 글 페이지
+			String userId = (String) session.getAttribute("userId");
+			
+			NoticeVO newNoticeVO = noticeService.updateNotice(noticeVO,userId);
+			if(newNoticeVO == null) {
+				RA.addFlashAttribute("msg", "수정 중 문제가 발생했습니다");
+				return "noticeDetail?nno="+noticeVO.getNno();
+			} else {
+				model.addAttribute("NoticeVO", newNoticeVO);
+				model.addAttribute("msg", "정상적으로 수정 됐습니다");
+				return "noticeDetail?nno="+noticeVO.getNno(); // 수정된 글 페이지
+			}
 		}
 		
 	}

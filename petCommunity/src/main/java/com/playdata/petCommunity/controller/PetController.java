@@ -4,10 +4,12 @@ package com.playdata.petCommunity.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,36 +45,48 @@ public class PetController {
 	
 	// 반려동물정보 입력화면
 	@PostMapping("/petJoinForm")
-	public String petJoinForm(@RequestBody PetVO petVO, HttpSession session , RedirectAttributes RA) {
+	public String petJoinForm(@RequestBody @Valid PetVO petVO, Errors errors, HttpSession session , RedirectAttributes RA) {
 		
-		String userId = (String) session.getAttribute("userId");
-		
-		PetVO result = petService.petJoin(petVO, userId);
-		
-		if(result != null) { //반려동물 정보입력성공
-			RA.addFlashAttribute("msg", "반려동물의 정보가 입력되었습니다");
+		if(errors.hasErrors()) {
+			RA.addAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/"; // 마이 페이지
 		} else {
-			RA.addFlashAttribute("msg", "등록 과정에 문제가 생겼습니다 관리자에게 문의해주세요");
-			return "redirect:/"; // 펫 등록 페이지 
+			String userId = (String) session.getAttribute("userId");
+			
+			PetVO result = petService.petJoin(petVO, userId);
+			
+			if(result != null) { //반려동물 정보입력성공
+				RA.addFlashAttribute("msg", "반려동물의 정보가 입력되었습니다");
+				return "redirect:/"; // 마이 페이지
+			} else {
+				RA.addFlashAttribute("msg", "등록 과정에 문제가 생겼습니다 관리자에게 문의해주세요");
+				return "redirect:/"; // 펫 등록 페이지 
+			}
 		}
+		
 		
 	}
 	
 	@PostMapping("/petUpdateForm")
-	public String petUpdateForm(@RequestBody PetVO petVO, HttpSession session, RedirectAttributes RA) {
+	public String petUpdateForm(@RequestBody @Valid PetVO petVO,Errors errors , HttpSession session, RedirectAttributes RA) {
 		
-		String userId = (String) session.getAttribute("userId");
-		
-		PetVO result = petService.petUpdate(petVO, userId);
-		
-		if(result != null) { //반려동물 정보입력성공
-			RA.addFlashAttribute("msg", "반려동물의 정보가 변경되었습니다");
+		if(errors.hasErrors()) {
+			RA.addAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/"; // 마이 페이지
 		} else {
-			RA.addFlashAttribute("msg", "등록 과정에 문제가 생겼습니다 관리자에게 문의해주세요");
-			return "redirect:/"; // 펫 등록 페이지 
+			String userId = (String) session.getAttribute("userId");
+			
+			PetVO result = petService.petUpdate(petVO, userId);
+			
+			if(result != null) { //반려동물 정보입력성공
+				RA.addFlashAttribute("msg", "반려동물의 정보가 변경되었습니다");
+				return "redirect:/"; // 마이 페이지
+			} else {
+				RA.addFlashAttribute("msg", "등록 과정에 문제가 생겼습니다 관리자에게 문의해주세요");
+				return "redirect:/"; // 펫 등록 페이지 
+			}
 		}
+		
 		
 	}
 	

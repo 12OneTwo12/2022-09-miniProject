@@ -88,11 +88,13 @@ public class UserController {
 	@PostMapping("/userUpdateForm")
 	public String userUpdateForm(@RequestBody UserVO vo, Errors errors, RedirectAttributes RA) {
 			
+
 		 UserVO check = userService.userUpdate(vo);
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/user/userUpdateForm";
 		} else {
+
 		if(check == null) {
 			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
 			return "redirect:/user/userUpdate";
