@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.playdata.petCommunity.command.DoctorLoginVO;
 import com.playdata.petCommunity.command.DoctorVO;
 import com.playdata.petCommunity.doctor.service.DoctorService;
-import com.playdata.petCommunity.entity.Doctor;
 
 @Controller
 @RequestMapping("/doctor")

@@ -4,19 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.playdata.petCommunity.command.PetVO;
 import com.playdata.petCommunity.command.UserVO;
 import com.playdata.petCommunity.entity.Pet;
-import com.playdata.petCommunity.entity.QPet;
 import com.playdata.petCommunity.entity.User;
 import com.playdata.petCommunity.repository.PetRepository;
 import com.playdata.petCommunity.repository.UserRepository;
 import com.playdata.petCommunity.response.PetResponse;
 import com.playdata.petCommunity.response.UserResponse;
-import com.querydsl.core.BooleanBuilder;
 
 @Service("petService")
 public class PetServiceImpl implements PetService{

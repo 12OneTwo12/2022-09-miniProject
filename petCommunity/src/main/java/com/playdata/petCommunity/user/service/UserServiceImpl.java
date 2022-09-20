@@ -1,11 +1,11 @@
 package com.playdata.petCommunity.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.petCommunity.command.UserLoginVO;
+import com.playdata.petCommunity.command.UserUpdateVO;
 import com.playdata.petCommunity.command.UserVO;
 import com.playdata.petCommunity.entity.QUser;
 import com.playdata.petCommunity.entity.User;
@@ -63,14 +63,18 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserVO userUpdate(UserVO vo) {
+	public UserVO userUpdate(UserUpdateVO vo) {
 		User user = userRepository.findByUserId(vo.getUserId());
 		
 		String hashPw = Encrypt.getEncrypt(vo.getUserPw(), user.getUserId());
 		
 		if(hashPw.equals(user.getUserPw())) {
-			vo.setUserNewPw(Encrypt.getEncrypt(vo.getUserNewPw, user.getUserId()));
-			User result = user.updateUserByVO(vo);
+			UserVO userVO = new UserResponse().updateUserVOByEntity(user);
+			
+			userVO.setUserPw(Encrypt.getEncrypt(vo.getNewUserPw(), user.getUserId()));
+			
+			User result = new User().updateUserByVO(userVO);
+			
 			return new UserResponse().updateUserVOByEntity(userRepository.save(result));
 		} else {
 			return null;

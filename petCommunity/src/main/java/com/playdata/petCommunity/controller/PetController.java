@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.playdata.petCommunity.command.PetVO;
-import com.playdata.petCommunity.entity.Pet;
 import com.playdata.petCommunity.pet.service.PetService;
-import com.playdata.petCommunity.user.service.UserService;
+import com.playdata.petCommunity.repository.UserRepository;
+import com.playdata.petCommunity.user.service.UserServiceImpl;
+import com.playdata.petCommunity.util.font.Font;
 
 
 @Controller
@@ -29,9 +30,6 @@ public class PetController {
 	@Autowired
 	private PetService petService;
 	
-	@Autowired
-	private UserService userService;
-  
 	@RequestMapping("pet_signup")
 	public String pet_signup() {
 		return"pet/pet_signup";
@@ -119,5 +117,16 @@ public class PetController {
 		return "";
 	}
 	
+	@GetMapping("/pdfPet")
+	public String pdfPet(Model model, HttpSession session) {
+			
+		String userId = (String) session.getAttribute("userId");
+		
+		model.addAttribute("font", new Font().getFont());
+		model.addAttribute("list", petService.getPetList(userId));
+		model.addAttribute("user", new UserServiceImpl().getUser(userId));
+			
+		return "pdf/pdf";
+	}
 	
 }

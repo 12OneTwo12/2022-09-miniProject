@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.playdata.petCommunity.command.PetVO;
-import com.playdata.petCommunity.command.UserVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

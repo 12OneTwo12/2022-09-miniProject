@@ -2,13 +2,11 @@ package com.playdata.petCommunity.repository;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import com.playdata.petCommunity.entity.Pet;
-import com.playdata.petCommunity.entity.User;
 
 public interface PetRepository extends JpaRepository<Pet, Long>, 
 										QuerydslPredicateExecutor<Pet>{

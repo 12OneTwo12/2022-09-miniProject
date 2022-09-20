@@ -2,7 +2,6 @@ package com.playdata.petCommunity.doctor.service;
 
 import com.playdata.petCommunity.command.DoctorLoginVO;
 import com.playdata.petCommunity.command.DoctorVO;
-import com.playdata.petCommunity.entity.Doctor;
 
 public interface DoctorService {
 	

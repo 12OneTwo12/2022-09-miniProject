@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.playdata.petCommunity.command.CommentVO;
-import com.playdata.petCommunity.command.NoticeVO;
 import com.playdata.petCommunity.entity.Comment;
 import com.playdata.petCommunity.entity.Notice;
 import com.playdata.petCommunity.repository.CommentRepository;

@@ -2,6 +2,7 @@ package com.playdata.petCommunity.controller;
 
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.playdata.petCommunity.command.UserLoginVO;
+import com.playdata.petCommunity.command.UserUpdateVO;
 import com.playdata.petCommunity.command.UserVO;
-import com.playdata.petCommunity.entity.Doctor;
-import com.playdata.petCommunity.entity.User;
 import com.playdata.petCommunity.user.service.UserService;
 
 
@@ -43,20 +43,19 @@ public class UserController {
 	@PostMapping("/userJoin")
 	public String userJoinForm(@RequestBody UserVO vo, Errors errors, RedirectAttributes RA) {
 		
-		UserVO result = userService.userJoin(vo);
-		
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/user/userJoin";
 		} else {
-		if(result != null) { // 유저회원가입성공
-			RA.addFlashAttribute("msg", "가입을 축하드립니다");
-			return "redirect:/user/userJoinForm"; //나중에 수정
-		} else { //회원가입실패
-			RA.addFlashAttribute("msg", "가입에 실패했습니다. 입력 내용을 확인해주세요");
-			return "redirect:/user/userJoinForm";
-			// 실패하면 다시 회원가입페이지로 가는 return
-		}
+			UserVO result = userService.userJoin(vo);
+			if(result != null) { // 유저회원가입성공
+				RA.addFlashAttribute("msg", "가입을 축하드립니다");
+				return "redirect:/user/userJoinForm"; //나중에 수정
+			} else { //회원가입실패
+				RA.addFlashAttribute("msg", "가입에 실패했습니다. 입력 내용을 확인해주세요");
+				return "redirect:/user/userJoinForm";
+				// 실패하면 다시 회원가입페이지로 가는 return
+			}
 		}
 	}
 	
@@ -65,43 +64,47 @@ public class UserController {
 	public String userLogin(@RequestBody UserLoginVO vo, Errors errors, RedirectAttributes RA, HttpSession session) {
 		
 		// 유저로그인처리
-		UserVO userVO = userService.userLogin(vo);
-		
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/user/userLogin";
 		} else {
-		if(userVO !=null ) { //유저 로그인 성공
-			
-			session.setAttribute("userId", userVO.getUserId());
-			session.setAttribute("userName", userVO.getUserName());
-			
-			return "redirect:/main"; //성공 시 메인화면으로 이동
-		} else { // 유저 로그인 실패
-			RA.addFlashAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
-			return "redirect:/user/userLogin";
-		}
+			UserVO userVO = userService.userLogin(vo);
+			if(userVO !=null ) { //유저 로그인 성공
+				
+				session.setAttribute("userId", userVO.getUserId());
+				session.setAttribute("userName", userVO.getUserName());
+				
+				return "redirect:/main"; //성공 시 메인화면으로 이동
+			} else { // 유저 로그인 실패
+				RA.addFlashAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
+				return "redirect:/user/userLogin";
+			}
 		}
 	}
 	
 	// 유저 회원정보 수정
 	@PostMapping("/userUpdateForm")
-	public String userUpdateForm(@RequestBody UserVO vo, Errors errors, RedirectAttributes RA) {
+	public String userUpdateForm(@RequestBody @Valid UserUpdateVO vo , Errors errors, RedirectAttributes RA) {
 			
-
-		 UserVO check = userService.userUpdate(vo);
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/user/userUpdateForm";
 		} else {
-
-		if(check == null) {
-			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
-			return "redirect:/user/userUpdate";
-		} else {
-			RA.addFlashAttribute("msg", "정상적으로 변경 됐습니다");
-			return "redirect:/user/userJoin";
-		}
+			if(!vo.getNewUserPw().equals(vo.getNewUserPwCheck())) {
+				RA.addFlashAttribute("msg", "비밀번호를 확인해주세요");
+				return "redirect:/user/userUpdate";
+			} else {
+				UserVO check = userService.userUpdate(vo);
+				
+				if(check == null) {
+					RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
+					return "redirect:/user/userUpdate";
+				} else {
+					RA.addFlashAttribute("msg", "정상적으로 변경 됐습니다");
+					return "redirect:/user/userJoin";
+				}
+			}
+			
 		}	
 	}
 	
@@ -119,7 +122,6 @@ public class UserController {
 		} else if(userVO.getUserState().equals("탈퇴")) {
 			RA.addFlashAttribute("msg", "탈퇴 완료 됐습니다");
 			session.invalidate();
-			
 			return "reidrect:/main"; // 홈페이지로 리다이렉트
 		} else {
 			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
