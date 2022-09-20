@@ -10,12 +10,12 @@ import com.playdata.petCommunity.util.page.PageDTO;
 
 public interface NoticeService {
 
-	PageDTO<Notice> getList(Criteria cri);
+	List<NoticeVO> getList(Criteria cri);
 
-	List<Notice> getListByWriter(Criteria cri);
+	List<NoticeVO> getListByWriter(Criteria cri);
 
-	Notice getDetailById(Long nno);
+	NoticeVO getDetailById(Long nno);
 
-	Notice registNotice(Notice notice);
+	NoticeVO registNotice(NoticeVO noticeVO);
 
 }

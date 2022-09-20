@@ -43,6 +43,9 @@ public class User {
 	@Column(length = 300)
 	private String userLocation;
 	
+	@Column(length = 300)
+	private String userLocationDetail;
+	
 	@Column(columnDefinition = "varchar(30) default '정상 등록'")
 	private String userState;
 	
@@ -52,6 +55,7 @@ public class User {
 		this.userId = vo.getUserId();
 		this.userPw = vo.getUserPw();
 		this.userLocation = vo.getUserLocation();
+		this.userLocationDetail = vo.getUserLocationDetail();
 		return this;
 	}
 	

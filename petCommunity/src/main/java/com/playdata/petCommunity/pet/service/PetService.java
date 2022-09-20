@@ -1,9 +1,9 @@
 package com.playdata.petCommunity.pet.service;
 
-import com.playdata.petCommunity.entity.Pet;
+import com.playdata.petCommunity.command.PetVO;
 
 public interface PetService {
 	
-	public Pet petJoin(Pet pet); //가입
+	public PetVO petJoin(PetVO petVO, String userId); //가입
 	
 }

@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.playdata.petCommunity.command.NoticeVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,7 @@ import lombok.ToString;
 public class Notice extends BaseNoticeEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long nno;
 	
 	@Column(length = 50, nullable = false)
@@ -37,5 +39,14 @@ public class Notice extends BaseNoticeEntity {
 	
 	@Column(columnDefinition = "varchar(30) default '정상 등록'")
 	private String noticeState;
+	
+	public Notice updateNoticeByVO(NoticeVO noticeVO) {
+		this.nno = noticeVO.getNno();
+		this.writer = noticeVO.getWriter();
+		this.title = noticeVO.getTitle();
+		this.content = noticeVO.getContent();
+		
+		return this;
+	}
 	
 }

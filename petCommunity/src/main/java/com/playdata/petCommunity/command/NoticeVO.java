@@ -1,5 +1,7 @@
 package com.playdata.petCommunity.command;
 
+import com.playdata.petCommunity.entity.Notice;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,5 +26,7 @@ public class NoticeVO {
 	private String content;
 	
 	private String noticedate;
+	
+	private String noticeState;
 	
 }

@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.playdata.petCommunity.command.PetVO;
+import com.playdata.petCommunity.command.UserVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,5 +55,19 @@ public class Pet {
 	@ManyToOne
 	@JoinColumn(name="uno", referencedColumnName = "uno", nullable = false)
 	private User user;
+
+	public Pet updatePetbyVO(PetVO petVO, User user) {
+		this.petName = petVO.getPetName();
+		this.petBirth = petVO.getPetBirth();
+		this.petNumber = petVO.getPetNumber();
+		this.petWeight = petVO.getPetWeight();
+		this.petCategory = petVO.getPetCategory();
+		this.petGender = petVO.getPetGender();
+		this.petCategoryDetail = petVO.getPetCategoryDetail();
+		this.user = user;
+		return this;
+	}
+	
+	
 	
 }

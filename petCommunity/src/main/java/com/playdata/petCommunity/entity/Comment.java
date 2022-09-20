@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.playdata.petCommunity.command.CommentVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,5 +45,15 @@ public class Comment extends BaseNoticeEntity {
 	@ManyToOne
 	@JoinColumn(name="nno", referencedColumnName = "nno",nullable = false)
 	private Notice notice;
+	
+	public Comment updateCommentByVO(CommentVO commentVO, Notice notice) {
+		
+		this.writer = commentVO.getWriter();
+		this.content = commentVO.getContent();
+		this.userOrDoctor = commentVO.getUserOrDoctor();
+		this.notice = notice;
+		
+		return this;
+	}
 	
 }

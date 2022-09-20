@@ -39,13 +39,11 @@ public class PetController {
 	
 	// 반려동물정보 입력화면
 	@PostMapping("/petJoinForm")
-	public String petJoinForm(Pet pet, HttpSession session , RedirectAttributes RA) {
+	public String petJoinForm(PetVO petVO, HttpSession session , RedirectAttributes RA) {
 		
 		String userId = (String) session.getAttribute("userId");
 		
-		pet.setUser(userService.getUser(userId));
-		
-		Pet result = petService.petJoin(pet);
+		PetVO result = petService.petJoin(petVO, userId);
 		
 		if(result != null) { //반려동물 정보입력성공
 			RA.addFlashAttribute("msg", "반려동물의 정보가 입력되었습니다");

@@ -15,13 +15,13 @@ import lombok.ToString;
 @Builder
 public class CommentVO {
 
-	private Long cno;
+	// private Long cno;
 	
 	private String writer;
 	
 	private String content;
 	
-	private String noticedate;
+	private String userOrDoctor;
 	
 	private Long nno;
 	

@@ -14,21 +14,19 @@ public class PetServiceImpl implements PetService{
 	private PetRepository petMapper;
 
 	@Override
-	public Pet petJoin(Pet pet) {
+	public PetVO petJoin(PetVO petVO, String userId) {
 		
-		String petNumber = pet.getPetBirth()+"-";
+		String petNumber = petVO.getPetBirth()+"-";
 		
-		if(pet.getPetGender().equals("수컷")) {
+		if(petVO.getPetGender().equals("수컷")) {
 			petNumber += "7";
-		} else if (pet.getPetGender().equals("암컷")) {
+		} else if (petVO.getPetGender().equals("암컷")) {
 			petNumber += "8";
-		} else if (pet.getPetGender().equals("중성")) {
+		} else if (petVO.getPetGender().equals("중성")) {
 			petNumber += "9";
 		}
 		
-		
-		
-		return petMapper.save(pet);
+		return null;
 	}
 	
 

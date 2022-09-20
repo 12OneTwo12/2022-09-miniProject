@@ -15,7 +15,7 @@ import lombok.ToString;
 @Builder
 public class PetVO {
 
-	private Long pno;
+	// private Long pno;
 	
 	private String petName;
 	
@@ -27,6 +27,10 @@ public class PetVO {
 	
 	private String petCategory;
 	
+	private String petGender;
+	
+	private String petCategoryDetail;
+
 	private Long uno;
 	
 }
