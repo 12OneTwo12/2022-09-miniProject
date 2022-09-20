@@ -94,4 +94,52 @@ public class NoticeServiceImpl implements NoticeService {
 		return realList;
 	}
 
+	@Override
+	public NoticeVO noticeDelete(NoticeVO noticeVO, String userId) {
+		
+		if(checkNotice(noticeVO,userId)) {
+		
+			Notice notice = new Notice().updateNoticeByVO(noticeVO);
+			notice.setNoticeState("삭제");
+	
+			Notice result = noticeRepository.save(notice);
+			
+			NoticeVO vo = new NoticeResponse().updateNoticeVOByEntity(result);
+			
+			if(vo.getNoticeState().equals("삭제")) {
+				return new NoticeResponse().updateNoticeVOByEntity(result);
+			} else {
+				return null;
+			}
+			
+		} else {
+			return null;
+		}
+		
+	}
+
+	@Override
+	public boolean checkNotice(NoticeVO vo, String userId) {
+		
+		Notice notice = noticeRepository.findById(vo.getNno()).get();
+		
+		return notice.getWriter() == userId;
+	}
+
+	@Override
+	public NoticeVO updateNotice(NoticeVO noticeVO, String userId) {
+		
+		if(checkNotice(noticeVO,userId)) {
+		
+			Notice notice = new Notice().updateNoticeByVO(noticeVO);
+			
+			Notice result = noticeRepository.save(notice);
+			
+			return new NoticeResponse().updateNoticeVOByEntity(result);
+			
+		} else {
+			return null;
+		}
+	}
+
 }

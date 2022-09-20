@@ -80,6 +80,7 @@ public class UserServiceImpl implements UserService{
 				vo.getUserId(), 
 				vo.getUserPw(),
 				vo.getUserLocation(),
+				vo.getUserLocationDetail(),
 				null);
 	}
 

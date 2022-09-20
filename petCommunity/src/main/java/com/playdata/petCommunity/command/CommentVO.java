@@ -23,6 +23,8 @@ public class CommentVO {
 	
 	private String userOrDoctor;
 	
+	private String commentState;
+	
 	private Long nno;
 	
 }

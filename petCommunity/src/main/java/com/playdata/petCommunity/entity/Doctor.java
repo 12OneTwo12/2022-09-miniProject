@@ -22,7 +22,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Doctor {
+public class Doctor extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
@@ -31,7 +31,7 @@ public class Doctor {
 	@Column(length = 30, nullable = false)
 	private String doctorName;
 	
-	@Column(length = 30, nullable = false)
+	@Column(length = 30, nullable = false, unique = true)
 	private String doctorLicenseNumber;
 	
 	@Column(length = 30, nullable = false)
