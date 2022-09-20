@@ -15,7 +15,7 @@ import lombok.ToString;
 @Builder
 public class CommentVO {
 
-	// private Long cno;
+	private Long cno;
 	
 	private String writer;
 	

@@ -12,6 +12,8 @@ import org.springframework.data.domain.Sort;
 
 import com.playdata.petCommunity.command.CommentVO;
 import com.playdata.petCommunity.command.PetVO;
+import com.playdata.petCommunity.command.UserVO;
+import com.playdata.petCommunity.entity.Comment;
 import com.playdata.petCommunity.entity.Doctor;
 import com.playdata.petCommunity.entity.Notice;
 import com.playdata.petCommunity.entity.Pet;
@@ -172,5 +174,22 @@ public class NoticeTest {
 //	public void testCode10() {
 //		
 //		System.out.println(noticeRepository.findByIdWithoutDelete(1L));
+//	}
+	
+//	@Test
+//	public void testCode11() {
+//		
+//		Comment commnet = commentRepository.save(new Comment(null,"jji0428","dsada12312312s","정상 등록","user",noticeRepository.findByIdWithoutDelete(1L)));
+//		
+//		System.out.println(commnet);
+//	}
+	
+//	@Test
+//	public void testCode12() {
+//		
+//		UserVO vo = new UserVO("정정일", "01098006069", "jjjjjj", "123123", null, null);
+//		
+//		userRepository.save(new User().updateUserByVO(vo));
+//		
 //	}
 }

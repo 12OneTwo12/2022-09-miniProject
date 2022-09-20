@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService{
 		if(userRepository.findByUserId(vo.getUserId()) != null) {
 			return null;
 		} else {
-			return userRepository.save(convertUserVOtoUser(vo));
+			return userRepository.save(new User().updateUserByVO(vo));
 		}
 	}
 	

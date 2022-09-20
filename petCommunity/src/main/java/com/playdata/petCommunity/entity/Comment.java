@@ -48,6 +48,7 @@ public class Comment extends BaseEntity {
 	
 	public Comment updateCommentByVO(CommentVO commentVO, Notice notice) {
 		
+		this.cno = commentVO.getCno();
 		this.writer = commentVO.getWriter();
 		this.content = commentVO.getContent();
 		this.userOrDoctor = commentVO.getUserOrDoctor();

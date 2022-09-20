@@ -12,4 +12,8 @@ public interface CommentService {
 
 	CommentVO registComment(HttpSession session, CommentVO commentVO);
 
+	CommentVO updateComment(HttpSession session, CommentVO commentVO);
+
+	CommentVO deleteComment(HttpSession session, CommentVO commentVO);
+
 }

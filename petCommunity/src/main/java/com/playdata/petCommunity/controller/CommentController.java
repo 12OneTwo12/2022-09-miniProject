@@ -35,11 +35,33 @@ public class CommentController {
 	}
 	
 	@PostMapping("/updateComment")
-	public String updateComment(@RequestBody CommentVO commentVO) {
+	public String updateComment(@RequestBody CommentVO commentVO, HttpSession session, RedirectAttributes RA) {
 		
+		CommentVO updateComment = commentService.updateComment(session, commentVO);
 		
+		if(updateComment == null) {
+			RA.addFlashAttribute("msg", "댓글 수정 중 문제가 발생했습니다");
+			return "noticeDetail?nno="+commentVO.getNno(); // 에러 발생 게시글로 리다이렉트
+		} else {
+			RA.addFlashAttribute("msg", "정상적으로 수정 됐습니다");
+			return "noticeDetail?nno="+commentVO.getNno(); // 게시글로 리다이렉트
+		}
 		
-		return "";
+	}
+	
+	@PostMapping("/deleteComment")
+	public String deleteComment(@RequestBody CommentVO commentVO, HttpSession session, RedirectAttributes RA) {
+		
+		CommentVO deleteComment = commentService.deleteComment(session, commentVO);
+		
+		if(deleteComment == null) {
+			RA.addFlashAttribute("msg", "댓글 삭제 중 문제가 발생했습니다");
+			return "noticeDetail?nno="+commentVO.getNno(); // 에러 발생 게시글로 리다이렉트
+		} else {
+			RA.addFlashAttribute("msg", "정상적으로 삭제 됐습니다");
+			return "noticeDetail?nno="+commentVO.getNno(); // 게시글로 리다이렉트
+		}
+		
 	}
 	
 }
