@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.playdata.petCommunity.command.DoctorLoginVO;
 import com.playdata.petCommunity.command.DoctorVO;
 import com.playdata.petCommunity.doctor.service.DoctorService;
 import com.playdata.petCommunity.entity.Doctor;
@@ -34,9 +36,9 @@ public class DoctorController {
 	
 	// 의사회원가입
 	@PostMapping("/doctorJoinForm")
-	public String doctorJoinForm(Doctor en, RedirectAttributes RA) {
+	public String doctorJoinForm(@RequestBody DoctorVO vo, RedirectAttributes RA) {
 		
-		Doctor result = doctorService.doctorJoin(en);
+		Doctor result = doctorService.doctorJoin(vo);
 		
 		if(result != null) { //의사 회원가입성공
 			RA.addFlashAttribute("msg", "가입을 축하드립니다");
@@ -51,7 +53,7 @@ public class DoctorController {
 	
 	// 의사로그인
 	@PostMapping("/doctorLogin")
-	public String doctorLogin(DoctorVO vo, RedirectAttributes RA, HttpSession session) {
+	public String doctorLogin(@RequestBody DoctorLoginVO vo, RedirectAttributes RA, HttpSession session) {
 		
 		// 의사로그인처리
 		Doctor doctor = doctorService.doctorLogin(vo);
@@ -70,9 +72,9 @@ public class DoctorController {
 	
 	// 의사 회원정보 수정
 	@PostMapping("/doctorUpdateForm")
-	public String doctorUpdateForm(Doctor doctor, RedirectAttributes RA) {
+	public String doctorUpdateForm(@RequestBody DoctorVO vo, RedirectAttributes RA) {
 		
-		Doctor check = doctorService.doctorUpdate(doctor);
+		Doctor check = doctorService.doctorUpdate(vo);
 		
 		if(check == null) {
 			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");

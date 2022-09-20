@@ -1,14 +1,18 @@
 package com.playdata.petCommunity.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.playdata.petCommunity.command.UserLoginVO;
 import com.playdata.petCommunity.command.UserVO;
 import com.playdata.petCommunity.entity.QUser;
 import com.playdata.petCommunity.entity.User;
 import com.playdata.petCommunity.repository.UserRepository;
 import com.querydsl.core.BooleanBuilder;
 
+@Transactional
 @Service("userService")
 public class UserServiceImpl implements UserService{
 
@@ -20,23 +24,24 @@ public class UserServiceImpl implements UserService{
 		return userRepository.findByUserId(userId);
 	}
 
+	
 	@Override
 	public User userIdCheck(UserVO vo) {
 		return userRepository.findByUserId(vo.getUserId());
 	}
 
 	@Override
-	public User userJoin(User en) {
+	public User userJoin(UserVO vo) {
 	
-		if(userRepository.findByUserId(en.getUserId()) != null) {
+		if(userRepository.findByUserId(vo.getUserId()) != null) {
 			return null;
 		} else {
-			return userRepository.save(en);
+			return userRepository.save(convertUserVOtoUser(vo));
 		}
 	}
-
+	
 	@Override
-	public User userLogin(UserVO vo) {
+	public User userLogin(UserLoginVO vo) {
 
 		QUser qUser = QUser.user;
 		BooleanBuilder builder = new BooleanBuilder();
@@ -50,10 +55,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User userUpdate(User user) {
-		return userRepository.save(user);
+	public User userUpdate(UserVO vo) {
+		User user = userRepository.findByUserId(vo.getUserId());
+		
+		return user.updateUserByVO(vo);
 	}
-
+	
 	@Override
 	public User userDelete(String userId) {
 		
@@ -61,9 +68,19 @@ public class UserServiceImpl implements UserService{
 		
 		user.setUserState("탈퇴");
 		
-		return userRepository.save(user);
+		return user;
 	}
 
-
+	// save는 entity만 매개변수로 받을 수 있기 때문에
+	// vo를 entity로 바꿔주는 역할
+	private User convertUserVOtoUser(UserVO vo) {
+		return new User(null, 
+				vo.getUserName(), 
+				vo.getUserPhoneNumber(), 
+				vo.getUserId(), 
+				vo.getUserPw(),
+				vo.getUserLocation(),
+				null);
+	}
 
 }

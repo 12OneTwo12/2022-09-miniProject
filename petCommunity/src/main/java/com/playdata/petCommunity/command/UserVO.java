@@ -15,7 +15,7 @@ import lombok.ToString;
 @Builder
 public class UserVO {
 
-	private Long uno;
+//	private Long uno;
 	
 	private String userName;
 	

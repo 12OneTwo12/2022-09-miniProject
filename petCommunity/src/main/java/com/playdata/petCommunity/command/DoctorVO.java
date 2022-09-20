@@ -15,11 +15,13 @@ import lombok.ToString;
 @Builder
 public class DoctorVO {
 
-	private Long dno;
+//	private Long dno;
 	
 	private String doctorName;
 	
-	private String doctorNumber;
+	private String doctorLicenseNumber;
+	
+	private String doctorPhoneNumber;
 	
 	private String doctorId;
 	

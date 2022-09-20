@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.playdata.petCommunity.command.UserVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,5 +45,14 @@ public class User {
 	
 	@Column(columnDefinition = "varchar(30) default '정상 등록'")
 	private String userState;
+	
+	public User updateUserByVO(UserVO vo) {
+		this.userName = vo.getUserName();
+		this.userPhoneNumber = vo.getUserPhoneNumber();
+		this.userId = vo.getUserId();
+		this.userPw = vo.getUserPw();
+		this.userLocation = vo.getUserLocation();
+		return this;
+	}
 	
 }
