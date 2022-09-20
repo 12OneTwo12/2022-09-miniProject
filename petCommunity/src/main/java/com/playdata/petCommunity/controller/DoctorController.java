@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,13 +37,17 @@ public class DoctorController {
 	
 	// 의사회원가입
 	@PostMapping("/doctorJoinForm")
-	public String doctorJoinForm(@RequestBody DoctorVO vo, RedirectAttributes RA) {
+	public String doctorJoinForm(@RequestBody DoctorVO vo, Errors errors, RedirectAttributes RA) {
 		
 		DoctorVO result = doctorService.doctorJoin(vo);
 		
+		if(errors.hasErrors()) {
+			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
+			return "redirect:/doctor/doctorJoinForm";
+		}
 		if(result != null) { //의사 회원가입성공
 			RA.addFlashAttribute("msg", "가입을 축하드립니다");
-			 return "redirect:/doctor/doctocJoin";
+			 return "redirect:/doctor/doctocJoinForm";
 		} else { //회원가입실패
 			RA.addFlashAttribute("msg", "가입을 실패했습니다. 입력 내용을 확인해주세요");
 			return "redirect:/doctor/doctorJoinForm";
@@ -53,11 +58,14 @@ public class DoctorController {
 	
 	// 의사로그인
 	@PostMapping("/doctorLogin")
-	public String doctorLogin(@RequestBody DoctorLoginVO vo, RedirectAttributes RA, HttpSession session) {
+	public String doctorLogin(@RequestBody DoctorLoginVO vo, Errors errors, RedirectAttributes RA, HttpSession session) {
 		
 		// 의사로그인처리
 		DoctorVO doctorVO = doctorService.doctorLogin(vo);
-		
+		if(errors.hasErrors()) {
+			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
+			return "redirect:/doctor/doctorLogin";
+		}
 		if(doctorVO != null) { //의사 로그인 성공
 			
 			session.setAttribute("doctorId", doctorVO.getDoctorId());
@@ -72,10 +80,13 @@ public class DoctorController {
 	
 	// 의사 회원정보 수정
 	@PostMapping("/doctorUpdateForm")
-	public String doctorUpdateForm(@RequestBody DoctorVO vo, RedirectAttributes RA) {
+	public String doctorUpdateForm(@RequestBody DoctorVO vo, Errors errors, RedirectAttributes RA) {
 		
 		DoctorVO check = doctorService.doctorUpdate(vo);
-		
+		if(errors.hasErrors()) {
+			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
+			return "redirect:/doctor/doctorUpdate";
+		}
 		if(check == null) {
 			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
 			return "redirect:/doctor/doctorUpdate";
