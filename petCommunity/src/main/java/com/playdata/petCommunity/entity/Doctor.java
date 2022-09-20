@@ -60,6 +60,7 @@ public class Doctor {
 		this.doctorPw = vo.getDoctorPw();
 		this.doctorLocation = vo.getDoctorLocation();
 		this.doctorRecommend = vo.getDoctorRecommend();
+		this.doctorState = vo.getDoctorState();
 		return this;
 	}
 	

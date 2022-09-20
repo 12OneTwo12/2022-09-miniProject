@@ -7,16 +7,16 @@ import com.playdata.petCommunity.entity.User;
 
 public interface UserService {
 	
-	public User getUser(String userId);
+	public UserVO getUser(String userId);
 	
-	User userIdCheck(UserVO vo); // 유저 아이디 중복체크
+	UserVO userIdCheck(UserVO vo); // 유저 아이디 중복체크
 	
-	User userJoin(UserVO vo); //유저 회원가입
+	UserVO userJoin(UserVO vo); //유저 회원가입
 	
-	User userLogin(UserLoginVO vo); //유저 로그인
+	UserVO userLogin(UserLoginVO vo); //유저 로그인
 	
-	User userUpdate(UserVO vo); // 유저 정보 수정
+	UserVO userUpdate(UserVO vo); // 유저 정보 수정
 	
-	User userDelete(String doctorId); // 유저 탈퇴
+	UserVO userDelete(String doctorId); // 유저 탈퇴
 
 }

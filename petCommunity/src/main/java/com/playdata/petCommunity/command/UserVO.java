@@ -29,4 +29,6 @@ public class UserVO {
 	
 	private String userLocationDetail;
 	
+	private String userState;
+	
 }

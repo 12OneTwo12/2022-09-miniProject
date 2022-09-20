@@ -38,7 +38,7 @@ public class DoctorController {
 	@PostMapping("/doctorJoinForm")
 	public String doctorJoinForm(@RequestBody DoctorVO vo, RedirectAttributes RA) {
 		
-		Doctor result = doctorService.doctorJoin(vo);
+		DoctorVO result = doctorService.doctorJoin(vo);
 		
 		if(result != null) { //의사 회원가입성공
 			RA.addFlashAttribute("msg", "가입을 축하드립니다");
@@ -56,12 +56,12 @@ public class DoctorController {
 	public String doctorLogin(@RequestBody DoctorLoginVO vo, RedirectAttributes RA, HttpSession session) {
 		
 		// 의사로그인처리
-		Doctor doctor = doctorService.doctorLogin(vo);
+		DoctorVO doctorVO = doctorService.doctorLogin(vo);
 		
-		if(doctor != null) { //의사 로그인 성공
+		if(doctorVO != null) { //의사 로그인 성공
 			
-			session.setAttribute("doctorId", doctor.getDoctorId());
-			session.setAttribute("doctorName", doctor.getDoctorName());
+			session.setAttribute("doctorId", doctorVO.getDoctorId());
+			session.setAttribute("doctorName", doctorVO.getDoctorName());
 			
 			return "redirect:/main"; // 성공 시 메인하면으로 이동
 		} else { // 의사 로그인 실패
@@ -74,7 +74,7 @@ public class DoctorController {
 	@PostMapping("/doctorUpdateForm")
 	public String doctorUpdateForm(@RequestBody DoctorVO vo, RedirectAttributes RA) {
 		
-		Doctor check = doctorService.doctorUpdate(vo);
+		DoctorVO check = doctorService.doctorUpdate(vo);
 		
 		if(check == null) {
 			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
@@ -92,12 +92,12 @@ public class DoctorController {
 		
 		String doctorId = (String) session.getAttribute("doctorId");
 		
-		Doctor doctor = doctorService.doctorDelete(doctorId);
+		DoctorVO doctorVO = doctorService.doctorDelete(doctorId);
 		
-		if(doctor == null) {
+		if(doctorVO == null) {
 			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
 			return "redirect:/doctor/doctorUpdate";
-		} else if(doctor.getDoctorState().equals("탈퇴")) {
+		} else if(doctorVO.getDoctorState().equals("탈퇴")) {
 			RA.addFlashAttribute("msg", "탈퇴 완료 됐습니다");
 			session.invalidate();
 			

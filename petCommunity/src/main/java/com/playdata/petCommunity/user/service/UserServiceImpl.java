@@ -10,6 +10,7 @@ import com.playdata.petCommunity.command.UserVO;
 import com.playdata.petCommunity.entity.QUser;
 import com.playdata.petCommunity.entity.User;
 import com.playdata.petCommunity.repository.UserRepository;
+import com.playdata.petCommunity.response.UserResponse;
 import com.querydsl.core.BooleanBuilder;
 
 @Transactional
@@ -20,28 +21,29 @@ public class UserServiceImpl implements UserService{
 	UserRepository userRepository;
 	
 	@Override
-	public User getUser(String userId) {
-		return userRepository.findByUserId(userId);
+	public UserVO getUser(String userId) {
+		return new UserResponse().updateUserVOByEntity(userRepository.findByUserId(userId));
 	}
 
 	
 	@Override
-	public User userIdCheck(UserVO vo) {
-		return userRepository.findByUserId(vo.getUserId());
+	public UserVO userIdCheck(UserVO vo) {
+		return new UserResponse().updateUserVOByEntity(userRepository.findByUserId(vo.getUserId()));
 	}
 
 	@Override
-	public User userJoin(UserVO vo) {
+	public UserVO userJoin(UserVO vo) {
 	
 		if(userRepository.findByUserId(vo.getUserId()) != null) {
 			return null;
 		} else {
-			return userRepository.save(convertUserVOtoUser(vo));
+			vo.setUserState("정상 등록"); // 일단 이렇게
+			return new UserResponse().updateUserVOByEntity(userRepository.save(convertUserVOtoUser(vo)));
 		}
 	}
 	
 	@Override
-	public User userLogin(UserLoginVO vo) {
+	public UserVO userLogin(UserLoginVO vo) {
 
 		QUser qUser = QUser.user;
 		BooleanBuilder builder = new BooleanBuilder();
@@ -51,24 +53,26 @@ public class UserServiceImpl implements UserService{
 		
 		builder.and(qUser.userPw.contains(vo.getUserPw()));
 		
-		return userRepository.findAll(builder).iterator().next();
+		return new UserResponse().updateUserVOByEntity(userRepository.findAll(builder).iterator().next());
 	}
 
 	@Override
-	public User userUpdate(UserVO vo) {
+	public UserVO userUpdate(UserVO vo) {
 		User user = userRepository.findByUserId(vo.getUserId());
 		
-		return user.updateUserByVO(vo);
+		User result = user.updateUserByVO(vo);
+		
+		return new UserResponse().updateUserVOByEntity(userRepository.save(result));
 	}
 	
 	@Override
-	public User userDelete(String userId) {
+	public UserVO userDelete(String userId) {
 		
-		User user = userRepository.findByUserId(userId);
+		User user = userRepository.findByUserIdWithoutDelete(userId);
 		
 		user.setUserState("탈퇴");
 		
-		return user;
+		return new UserResponse().updateUserVOByEntity(userRepository.save(user));
 	}
 
 	// save는 entity만 매개변수로 받을 수 있기 때문에
@@ -80,7 +84,10 @@ public class UserServiceImpl implements UserService{
 				vo.getUserId(), 
 				vo.getUserPw(),
 				vo.getUserLocation(),
-				null);
+				vo.getUserLocationDetail(),
+				vo.getUserState()
+				);
 	}
+	
 
 }

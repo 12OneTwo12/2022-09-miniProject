@@ -13,7 +13,12 @@ import lombok.Setter;
 public class NoticeResponse {
 
 	public NoticeVO updateNoticeVOByEntity(Notice notice) {
-		return new NoticeVO(notice.getNno(), notice.getWriter(), notice.getTitle(), notice.getContent(), notice.getRegdate().toString(),notice.getNoticeState());
+		return new NoticeVO(notice.getNno(), 
+				notice.getWriter(), 
+				notice.getTitle(), 
+				notice.getContent(), 
+				notice.getRegdate().toString(),
+				notice.getNoticeState());
 	}
 	
 }
