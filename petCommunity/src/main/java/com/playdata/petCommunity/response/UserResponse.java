@@ -11,9 +11,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserResponse {
-
-	public UserVO updateUserVOByEntity(User user) {
-		return new UserVO(user.getUserName(),user.getUserPhoneNumber(),user.getUserId(),user.getUserPw(),user.getUserLocation(),user.getUserLocationDetail());
-	}
 	
+	public UserVO updateUserVOByEntity(User user) {
+		return new UserVO(
+						  user.getUserName(),
+						  user.getUserPhoneNumber(),
+						  user.getUserId(),
+						  user.getUserPw(),
+						  user.getUserLocation(),
+						  user.getUserLocationDetail(),
+						  user.getUserState()
+						  );
+	}
+
 }

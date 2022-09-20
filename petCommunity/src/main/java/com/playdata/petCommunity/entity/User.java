@@ -56,6 +56,7 @@ public class User extends BaseEntity {
 		this.userPw = vo.getUserPw();
 		this.userLocation = vo.getUserLocation();
 		this.userLocationDetail = vo.getUserLocationDetail();
+		this.userState = vo.getUserState();
 		return this;
 	}
 	

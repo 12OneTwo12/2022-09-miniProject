@@ -8,6 +8,7 @@ import com.playdata.petCommunity.command.DoctorVO;
 import com.playdata.petCommunity.entity.Doctor;
 import com.playdata.petCommunity.entity.QDoctor;
 import com.playdata.petCommunity.repository.DoctorRepository;
+import com.playdata.petCommunity.response.DoctorResponse;
 import com.querydsl.core.BooleanBuilder;
 
 @Service("doctorService")
@@ -15,25 +16,30 @@ public class DoctorServiceImpl implements DoctorService{
 
 	@Autowired
 	DoctorRepository doctorRepository;
+	
+	@Override
+	public DoctorVO getDoctor(String doctorId) {
+		return new DoctorResponse().updateDoctorVOByEntity(doctorRepository.findByDoctorId(doctorId));
+	}
 
 	@Override
-	public Doctor doctorIdCheck(DoctorVO vo) {
-		return doctorRepository.findByDoctorId(vo.getDoctorId());
+	public DoctorVO doctorIdCheck(DoctorVO vo) {
+		return new DoctorResponse().updateDoctorVOByEntity(doctorRepository.findByDoctorId(vo.getDoctorId()));
 	}
 
 	@Override // 의사 회원가입
-	public Doctor doctorJoin(DoctorVO vo) {
+	public DoctorVO doctorJoin(DoctorVO vo) {
 		
 		if(doctorRepository.findByDoctorId(vo.getDoctorId()) != null ) {
 			return null; // 회원가입시 아이디 중복체크해서 null값이 아니라면 null을 반환해서 controller에서 회원가입실패 메시지가 뜨게
 		} else {
-			return doctorRepository.save(convertDoctorVOtoDoctor(vo));
+			return new DoctorResponse().updateDoctorVOByEntity(doctorRepository.save(convertDoctorVOtoDoctor(vo)));
 		}
 		
 	}
 
 	@Override
-	public Doctor doctorLogin(DoctorLoginVO vo) {
+	public DoctorVO doctorLogin(DoctorLoginVO vo) {
 		
 		QDoctor qDoctor = QDoctor.doctor;
 		
@@ -44,24 +50,26 @@ public class DoctorServiceImpl implements DoctorService{
 		
 		builder.and(qDoctor.doctorPw.contains(vo.getDoctorPw()));
 		
-		return doctorRepository.findAll(builder).iterator().next();
+		return new  DoctorResponse().updateDoctorVOByEntity(doctorRepository.findAll(builder).iterator().next());
 	}
 	
 	@Override
-	public Doctor doctorUpdate(DoctorVO vo) {
+	public DoctorVO doctorUpdate(DoctorVO vo) {
 		Doctor doctor = doctorRepository.findByDoctorId(vo.getDoctorId());
 		
-		return doctor.updateDoctorByVO(vo);
+		Doctor result = doctor.updateDoctorByVO(vo);
+		
+		return new DoctorResponse().updateDoctorVOByEntity(doctorRepository.save(result));
 	}
 
 	@Override
-	public Doctor doctorDelete(String doctorId) {
+	public DoctorVO doctorDelete(String doctorId) {
 
 		Doctor doctor = doctorRepository.findByDoctorId(doctorId);
 		
 		doctor.setDoctorState("탈퇴");
 		
-		return doctor;
+		return new DoctorResponse().updateDoctorVOByEntity(doctorRepository.save(doctor));
 	}
 	
 	private Doctor convertDoctorVOtoDoctor(DoctorVO vo) {

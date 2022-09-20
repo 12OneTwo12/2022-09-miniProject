@@ -31,4 +31,6 @@ public class DoctorVO {
 	
 	private Long doctorRecommend;
 	
+	private String doctorState;
+	
 }

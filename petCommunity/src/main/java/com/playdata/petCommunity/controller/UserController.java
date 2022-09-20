@@ -37,22 +37,16 @@ public class UserController {
 	public String userJoin() {
 		return "user/user_signin";
 	}
-	
-//	@GetMapping({"/user_login","user_signin","main"})
-//	public void view() {
-//		
-//	} 이거 내일 가서 말해야함 return 하는곳에 _ 말고 -이걸로 바꿔야함 convention
-	
 	// 유저회원가입
 	//회원가입 성공하면 바로 반려동물 정보입력페이지로
-	@PostMapping("/userJoinForm")
+	@PostMapping("/userJoin")
 	public String userJoinForm(@RequestBody UserVO vo, RedirectAttributes RA) {
 		
-		User result = userService.userJoin(vo);
+		UserVO result = userService.userJoin(vo);
 		
 		if(result != null) { // 유저회원가입성공
 			RA.addFlashAttribute("msg", "가입을 축하드립니다");
-			return "redirect:/pet/petJoin"; //나중에 수정
+			return "redirect:/user/userJoinForm"; //나중에 수정
 		} else { //회원가입실패
 			RA.addFlashAttribute("msg", "가입에 실패했습니다. 입력 내용을 확인해주세요");
 			return "redirect:/user/userJoinForm";
@@ -69,8 +63,8 @@ public class UserController {
 		User user = userService.userLogin(vo);
 		if(user !=null ) { //유저 로그인 성공
 			
-			session.setAttribute("userId", user.getUserId());
-			session.setAttribute("userName", user.getUserName());
+			session.setAttribute("userId", userVO.getUserId());
+			session.setAttribute("userName", userVO.getUserName());
 			
 			return "redirect:/main"; //성공 시 메인화면으로 이동
 		} else { // 유저 로그인 실패
@@ -84,7 +78,7 @@ public class UserController {
 	@PostMapping("/userUpdateForm")
 	public String userUpdateForm(@RequestBody UserVO vo, RedirectAttributes RA) {
 			
-		 User check = userService.userUpdate(vo);
+		 UserVO check = userService.userUpdate(vo);
 			
 		if(check == null) {
 			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
@@ -102,12 +96,12 @@ public class UserController {
 		
 		String userId = (String) session.getAttribute("userId");
 		
-		User user = userService.userDelete(userId);
+		UserVO userVO = userService.userDelete(userId);
 		
-		if(user == null) {
+		if(userVO == null) {
 			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
 			return "redirect:/user/userUpdate";
-		} else if(user.getUserState().equals("탈퇴")) {
+		} else if(userVO.getUserState().equals("탈퇴")) {
 			RA.addFlashAttribute("msg", "탈퇴 완료 됐습니다");
 			session.invalidate();
 			
