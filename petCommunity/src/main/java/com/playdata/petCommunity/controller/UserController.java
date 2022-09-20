@@ -60,8 +60,8 @@ public class UserController {
 	public String userLogin(@RequestBody UserLoginVO vo, RedirectAttributes RA, HttpSession session) {
 		
 		// 유저로그인처리
-		 UserVO userVO = userService.userLogin(vo);
-		if(userVO !=null ) { //유저 로그인 성공
+		User user = userService.userLogin(vo);
+		if(user !=null ) { //유저 로그인 성공
 			
 			session.setAttribute("userId", userVO.getUserId());
 			session.setAttribute("userName", userVO.getUserName());

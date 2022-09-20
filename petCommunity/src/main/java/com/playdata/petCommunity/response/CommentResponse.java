@@ -13,7 +13,7 @@ import lombok.Setter;
 public class CommentResponse {
 
 	public CommentVO updateCommentVOByEntity(Comment comment) {
-		return new CommentVO(comment.getWriter(), comment.getContent(), comment.getUserOrDoctor(), comment.getNotice().getNno());
+		return new CommentVO(comment.getCno(),comment.getWriter(), comment.getContent(), comment.getUserOrDoctor(),comment.getCommentState(), comment.getNotice().getNno());
 	}
 	
 }

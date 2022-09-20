@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService{
 		if(userRepository.findByUserId(vo.getUserId()) != null) {
 			return null;
 		} else {
+
 			vo.setUserState("정상 등록"); // 일단 이렇게
 			return new UserResponse().updateUserVOByEntity(userRepository.save(convertUserVOtoUser(vo)));
 		}
@@ -85,8 +86,10 @@ public class UserServiceImpl implements UserService{
 				vo.getUserPw(),
 				vo.getUserLocation(),
 				vo.getUserLocationDetail(),
+
 				vo.getUserState()
 				);
+
 	}
 	
 

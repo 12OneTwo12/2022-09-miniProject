@@ -24,7 +24,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends BaseNoticeEntity {
+public class Comment extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //
@@ -48,10 +48,12 @@ public class Comment extends BaseNoticeEntity {
 	
 	public Comment updateCommentByVO(CommentVO commentVO, Notice notice) {
 		
+		this.cno = commentVO.getCno();
 		this.writer = commentVO.getWriter();
 		this.content = commentVO.getContent();
 		this.userOrDoctor = commentVO.getUserOrDoctor();
 		this.notice = notice;
+		this.commentState = commentVO.getCommentState();
 		
 		return this;
 	}

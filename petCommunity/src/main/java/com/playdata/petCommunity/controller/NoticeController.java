@@ -87,33 +87,12 @@ public class NoticeController {
 		
 	}
 	
-	@PostMapping("/addComment")
-	public String addComment(@RequestBody CommentVO commentVO, HttpSession session, RedirectAttributes RA) {
+	@PostMapping("/registNotice")
+	public String registNotice(NoticeVO noticeVO, RedirectAttributes RA, Model model, HttpSession session) {
 		
 		String userId = (String) session.getAttribute("userId");
 		
-		if(userId == null) {
-			String doctorId = (String) session.getAttribute("doctorId");
-			commentVO.setWriter(doctorId);
-			commentVO.setUserOrDoctor("doctor");
-		} else {
-			commentVO.setWriter(userId);
-		}
-		
-		CommentVO newComment = commentService.registComment(commentVO);
-		
-		if(newComment == null) {
-			RA.addFlashAttribute("msg", "댓글 등록 중 문제가 발생했습니다");
-			return "noticeDetail?nno="+commentVO.getNno(); // 에러 발생 게시글로 리다이렉트
-		} else {
-			RA.addFlashAttribute("msg", "정상 등록 됐습니다");
-			return "noticeDetail?nno="+commentVO.getNno(); // 게시글로 리다이렉트
-		}
-		
-	}
-	
-	@PostMapping("/registNotice")
-	public String registNotice(NoticeVO noticeVO, RedirectAttributes RA) {
+		noticeVO.setWriter(userId);
 		
 		NoticeVO newNoticeVO = noticeService.registNotice(noticeVO);
 		
@@ -121,8 +100,46 @@ public class NoticeController {
 			RA.addFlashAttribute("msg", "등록 중 문제가 발생했습니다");
 			return "";
 		} else {
-			RA.addFlashAttribute("msg", "정상 등록 됐습니다");
+			model.addAttribute("NoticeVO", newNoticeVO);
+			model.addAttribute("msg", "정상적으로 등록 됐습니다");
+			return ""; // 작성된 글 페이지
+		}
+		
+	}
+	
+	@PostMapping("/noticeUpdate")
+	public String noticeUpdate(NoticeVO noticeVO, RedirectAttributes RA, Model model, HttpSession session) {
+		
+		String userId = (String) session.getAttribute("userId");
+		
+		NoticeVO newNoticeVO = noticeService.updateNotice(noticeVO,userId);
+		if(newNoticeVO == null) {
+			RA.addFlashAttribute("msg", "수정 중 문제가 발생했습니다");
 			return "";
+		} else {
+			model.addAttribute("NoticeVO", newNoticeVO);
+			model.addAttribute("msg", "정상적으로 수정 됐습니다");
+			return ""; // 수정된 글 페이지
+		}
+		
+	}
+	
+	@PostMapping("/noticeDelete")
+	public String noticeDelete(NoticeVO noticeVO, RedirectAttributes RA,HttpSession session) {
+		
+		String userId = (String) session.getAttribute("userId");
+		
+		if(noticeService.checkNotice(noticeVO,userId)) {
+			NoticeVO newNoticeVO = noticeService.noticeDelete(noticeVO, userId);
+			if(newNoticeVO == null) {
+				RA.addFlashAttribute("msg", "삭제 중 문제가 발생했습니다");
+				return "";
+			} else {
+				RA.addFlashAttribute("msg", "정상적으로 삭제 됐습니다");
+				return "";
+			}
+		} else {
+			return ""; // 로그인한 사람과 작성자가 다름으로 삭제 불가
 		}
 		
 	}

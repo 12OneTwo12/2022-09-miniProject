@@ -17,5 +17,11 @@ public interface NoticeService {
 	NoticeVO getDetailById(Long nno);
 
 	NoticeVO registNotice(NoticeVO noticeVO);
+	
+	NoticeVO updateNotice(NoticeVO noticeVO,String userId);
+
+	NoticeVO noticeDelete(NoticeVO noticeVO,String userId);
+
+	boolean checkNotice(NoticeVO noticeVO, String userId);
 
 }

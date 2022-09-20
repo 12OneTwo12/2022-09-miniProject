@@ -1,5 +1,6 @@
 package com.playdata.petCommunity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -9,13 +10,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import com.playdata.petCommunity.command.CommentVO;
+import com.playdata.petCommunity.command.PetVO;
+import com.playdata.petCommunity.command.UserVO;
+import com.playdata.petCommunity.entity.Comment;
 import com.playdata.petCommunity.entity.Doctor;
 import com.playdata.petCommunity.entity.Notice;
+import com.playdata.petCommunity.entity.Pet;
 import com.playdata.petCommunity.entity.QDoctor;
 import com.playdata.petCommunity.entity.QNotice;
+import com.playdata.petCommunity.entity.QPet;
+import com.playdata.petCommunity.entity.User;
 import com.playdata.petCommunity.repository.CommentRepository;
 import com.playdata.petCommunity.repository.DoctorRepository;
 import com.playdata.petCommunity.repository.NoticeRepository;
+import com.playdata.petCommunity.repository.PetRepository;
 import com.playdata.petCommunity.repository.UserRepository;
 import com.playdata.petCommunity.util.page.Criteria;
 import com.playdata.petCommunity.util.page.PageDTO;
@@ -35,6 +44,9 @@ public class NoticeTest {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	PetRepository petRepository;
 
 //	@Test
 //	public void testCode01() {
@@ -131,4 +143,53 @@ public class NoticeTest {
 //		
 //	}
 	
+//	@Test
+//	public void testCode08() {
+//		
+//		PetVO petvo = new PetVO(null,"강아지","980428","980428-1777777","58","강아지","수컷","포ds121241241asa안",null,null);
+//		
+//		User userEntity = userRepository.findByUserId("jji0428");
+//
+//		Pet findResult = petRepository.selectByPetNumber(petvo.getPetNumber());
+//		
+//		petvo.setPno(findResult.getPno());
+//		
+//		Pet update = findResult.updatePetbyVO(petvo, userEntity);
+//		
+//		Pet result = petRepository.save(update);
+//	}
+	
+//	@Test
+//	public void testCode09() {
+//		User userEntity = userRepository.findByUserId("jji0428");
+//
+//		List<PetVO> list = new ArrayList<>();
+//		
+//		List<Pet> result = petRepository.selectByUno(userEntity.getUno());
+//	
+//		System.out.println(result);
+//	}
+	
+//	@Test
+//	public void testCode10() {
+//		
+//		System.out.println(noticeRepository.findByIdWithoutDelete(1L));
+//	}
+	
+//	@Test
+//	public void testCode11() {
+//		
+//		Comment commnet = commentRepository.save(new Comment(null,"jji0428","dsada12312312s","정상 등록","user",noticeRepository.findByIdWithoutDelete(1L)));
+//		
+//		System.out.println(commnet);
+//	}
+	
+//	@Test
+//	public void testCode12() {
+//		
+//		UserVO vo = new UserVO("정정일", "01098006069", "jjjjjj", "123123", null, null);
+//		
+//		userRepository.save(new User().updateUserByVO(vo));
+//		
+//	}
 }
