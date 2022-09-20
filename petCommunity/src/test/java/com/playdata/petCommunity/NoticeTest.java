@@ -27,6 +27,7 @@ import com.playdata.petCommunity.repository.NoticeRepository;
 import com.playdata.petCommunity.repository.PetRepository;
 import com.playdata.petCommunity.repository.UserRepository;
 import com.playdata.petCommunity.util.page.Criteria;
+import com.playdata.petCommunity.util.page.Encrypt;
 import com.playdata.petCommunity.util.page.PageDTO;
 import com.querydsl.core.BooleanBuilder;
 
@@ -192,4 +193,14 @@ public class NoticeTest {
 //		userRepository.save(new User().updateUserByVO(vo));
 //		
 //	}
+	
+//	@Test
+//	public void testCode12() {
+//		
+//		String hash = Encrypt.getEncrypt("1234", "jji0428");
+//		
+//		System.out.println(hash);
+//		
+//	}
+	
 }

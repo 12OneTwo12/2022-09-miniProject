@@ -60,8 +60,8 @@ public class UserController {
 	public String userLogin(@RequestBody UserLoginVO vo, RedirectAttributes RA, HttpSession session) {
 		
 		// 유저로그인처리
-		User user = userService.userLogin(vo);
-		if(user !=null ) { //유저 로그인 성공
+		UserVO userVO = userService.userLogin(vo);
+		if(userVO !=null) { //유저 로그인 성공
 			
 			session.setAttribute("userId", userVO.getUserId());
 			session.setAttribute("userName", userVO.getUserName());
@@ -78,7 +78,7 @@ public class UserController {
 	@PostMapping("/userUpdateForm")
 	public String userUpdateForm(@RequestBody UserVO vo, RedirectAttributes RA) {
 			
-		 UserVO check = userService.userUpdate(vo);
+		UserVO check = userService.userUpdate(vo);
 			
 		if(check == null) {
 			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
