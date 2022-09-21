@@ -148,7 +148,7 @@ public class UserController {
 		} else if(userVO.getUserState().equals("탈퇴")) {
 			RA.addFlashAttribute("msg", "탈퇴 완료 됐습니다");
 			session.invalidate();
-			return "reidrect:/main"; // 홈페이지로 리다이렉트
+			return "reidrect:/notice/main"; // 홈페이지로 리다이렉트
 		} else {
 			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
 			return "redirect:/user/userUpdate";
