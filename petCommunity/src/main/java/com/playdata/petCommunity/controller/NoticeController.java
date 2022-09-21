@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mysql.cj.Session;
 import com.playdata.petCommunity.command.CommentVO;
 import com.playdata.petCommunity.command.NoticeVO;
 import com.playdata.petCommunity.comment.service.CommentService;
 import com.playdata.petCommunity.notice.service.NoticeService;
 import com.playdata.petCommunity.util.page.Criteria;
+
 
 @Controller
 @RequestMapping("/notice")
@@ -37,15 +39,15 @@ public class NoticeController {
 	public String main() {
 		return "notice/main";
 	}
-	@RequestMapping("/noticeListAll")
-	public String noticeListAll(Criteria cri, Model model) {
-		
-		List<NoticeVO> list = noticeService.getList(cri);
-		
-		model.addAttribute("list", list);
-		
-		return ""; // 전체 목록 조회 페이지
-	}
+//	@RequestMapping("/noticeListAll")
+//	public String noticeListAll(Criteria cri, Model model) {
+//		
+//		List<NoticeVO> list = noticeService.getList(cri);
+//		
+//		model.addAttribute("list", list);
+//		
+//		return ""; // 전체 목록 조회 페이지
+//	}
 	
 	@RequestMapping("/noticeMyList")
 	public String noticeMyList(Criteria cri, Model model, HttpSession session) {
@@ -156,5 +158,20 @@ public class NoticeController {
 			return ""; // 로그인한 사람과 작성자가 다름으로 삭제 불가
 		}
 		
+	}
+	
+	@RequestMapping("/noticeModify")
+	public String noticeModify(HttpSession session) {
+		
+		return "/notice/noticeModify";
+	}
+	@RequestMapping("/noticeListAll")
+	public String noticeListAll() {
+		return "/notice/noticeListAll";
+	}
+	@RequestMapping("/noticeReg")
+	public String noticeReg(HttpSession session) {
+		
+		return "/notice/noticeReg";
 	}
 }

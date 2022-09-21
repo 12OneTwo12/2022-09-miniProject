@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService{
 
 			String hashPw = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
 			
-			vo.setUserPw(pwHash);
+			vo.setUserPw(hashPw);
 			vo.setUserState("정상 등록"); // 일단 이렇게
 			return UserResponse.createUserVOByEntity(userRepository.save(convertUserVOtoUser(vo)));
 		}

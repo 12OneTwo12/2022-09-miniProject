@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"> 
 
 <!-- ~{경로 :: 전달할 선택자} -->
-<body>
+<body style=background-image:url("/img/modback.jpg");>
 <header  class="wrap">
 <th:block th:replace="~{./include/basicLayout :: setContent(~{ :: .wrap  } ) }"> 
 </header>
@@ -11,16 +11,8 @@
             <!-- left_menu end -->
             <div class="right_content">
                 <div class="midiaq">
-                    <div class="mainWrapper"> 
-						<div class="ipssGiudeBlock" style="color:red; font-size: large;">
-							-요구사항<br>
-							-판매자는 등록한 본인에 글에 대해 수정, 삭제할 수 있다.<br>
-							-해당 글에 해당하는 정보를 미리보여주도록 처리한다. <br>
-                            <br>
-                            
-						</div>
+                    <div class="mainWrapper">
 					</div>
-                    <div class="page_title">게시글 연습 > <span class="page_subtitle">글수정/삭제</span></div>
                     <form name="#####" action="#####" method="post">
                         <div class="full_collum collum">
                             <ul>
@@ -70,9 +62,9 @@
                                                  -->
 
                                                 <!-- 수정, 삭제는 JS를통해 제어합니다 -->
-                                                <a href="#" class="save">수정</a>
-                                                <a href="#" class="delete">목록</a>
-                                                <a href="#" class="revise mglr13">삭제</a> 
+                                                <a href="#" class="revise mglr13-1" >수정</a>
+                                                <a href="#" class="revise mglr13-2" >목록</a>
+                                                <a href="#" class="revise mglr13-3">삭제</a> 
                                                 
                                             </div>
                                         </li>

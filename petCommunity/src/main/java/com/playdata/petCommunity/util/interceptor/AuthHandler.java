@@ -14,8 +14,13 @@ public class AuthHandler implements HandlerInterceptor{
 			throws Exception{
 		
 		HttpSession session = request.getSession();
+		
+		session.setAttribute("userId", "abc123");
+		
 		String userId = (String)session.getAttribute("userId");
 		String doctorId = (String)session.getAttribute("doctorId");
+		
+		
 		
 		if(userId != null || doctorId != null) {
 			return true; // 컨트롤러를 실행함
