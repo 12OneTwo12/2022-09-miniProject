@@ -11,8 +11,12 @@
             <!-- left_menu end -->
             <div class="right_content">
                 <div class="midiaq">
-                    <div class="mainWrapper">
+
+                    <div class="mainWrapper"> 
+                            
+						</div>
 					</div>
+                    <div class="page_title"> > <span class="page_subtitle">글수정/삭제</span></div>
                     <form name="#####" action="#####" method="post">
                         <div class="full_collum collum">
                             <ul>
@@ -27,17 +31,17 @@
                                                 <tr>
                                                     <th>등록일</th>
                                                     <td>
-                                                        <span>2016-01-01</span>
+                                                        <span>[[${vo.noticeDate}]]</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>아이디</th>
-                                                    <td><input type="text" class="inputw150" name="####" readonly></td>
+                                                    <td><input type="text" th:value="${vo.writer}" class="inputw150" name="writer" readonly="readonly" style="color: black;"></td>
                                                 </tr>
 
                                                 <tr>
                                                     <th>제목</th>
-                                                    <td colspan="5"><input type="text" class="inputw99p" name="####"></td>
+                                                    <td colspan="5"><input type="text" class="inputw99p" name="title" th:value="${vo.title}" style="color: black;"></td>
                                                 </tr>
 
 
@@ -45,7 +49,7 @@
                                                 <tr>
                                                     <th>내용</th>
                                                     <td colspan="5">
-                                                        <div><textarea  class="inputw99p" name="####" style="height: 200px;"></textarea>
+                                                        <div><textarea  class="inputw99p" name="content" style="color: block; height: 200px; ">[[${vo.content}]]</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>

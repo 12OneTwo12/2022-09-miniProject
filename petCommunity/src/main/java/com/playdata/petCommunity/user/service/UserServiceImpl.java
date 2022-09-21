@@ -1,5 +1,6 @@
 package com.playdata.petCommunity.user.service;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,9 @@ public class UserServiceImpl implements UserService{
 		} else {
 
 			String hashPw = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
+			System.out.println(vo.getUserPw());
+			System.out.println(vo.getUserId());
+			System.out.println(hashPw);
 			
 			vo.setUserPw(hashPw);
 			vo.setUserState("정상 등록"); // 일단 이렇게
@@ -69,11 +73,10 @@ public class UserServiceImpl implements UserService{
 		String hashPw = Encrypt.getEncrypt(vo.getUserPw(), user.getUserId());
 		
 		if(hashPw.equals(user.getUserPw())) {
-			UserVO userVO = UserResponse.createUserVOByEntity(user);
 			
-			userVO.setUserPw(Encrypt.getEncrypt(vo.getNewUserPw(), user.getUserId()));
+			vo.setUserPw(Encrypt.getEncrypt(vo.getUserNewPw(), user.getUserId()));
 			
-			User result = new User().updateUserByVO(userVO);
+			User result = user.updateUserByVO(vo);
 			
 			return UserResponse.createUserVOByEntity(userRepository.save(result));
 		} else {

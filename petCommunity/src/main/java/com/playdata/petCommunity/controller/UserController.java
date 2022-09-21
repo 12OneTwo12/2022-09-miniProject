@@ -40,17 +40,20 @@ public class UserController {
 	}
 	// 유저회원가입
 	//회원가입 성공하면 바로 반려동물 정보입력페이지로
-	@PostMapping("/userJoin")
-	public String userJoinForm(@RequestBody UserVO vo, Errors errors, RedirectAttributes RA) {
+	@PostMapping("/userJoinForm")
+	public String userJoinForm(@RequestBody @Valid UserVO vo, Errors errors, RedirectAttributes RA) {
 		
 		if(errors.hasErrors()) {
+			
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
-			return "redirect:/user/userJoin";
+			return "redirect:/user/userJoinForm";
 		} else {
+			
 			UserVO result = userService.userJoin(vo);
 			if(result != null) { // 유저회원가입성공
+				System.out.println(vo);
 				RA.addFlashAttribute("msg", "가입을 축하드립니다");
-				return "redirect:/user/userJoinForm"; //나중에 수정
+				return "redirect:/user/userLogin"; //나중에 수정
 			} else { //회원가입실패
 				RA.addFlashAttribute("msg", "가입에 실패했습니다. 입력 내용을 확인해주세요");
 				return "redirect:/user/userJoinForm";
@@ -61,7 +64,7 @@ public class UserController {
 	
 	// 유저로그인
 	@PostMapping("/userLogin")
-	public String userLogin(@RequestBody UserLoginVO vo, Errors errors, RedirectAttributes RA, HttpSession session) {
+	public String userLogin(@RequestBody @Valid UserLoginVO vo, Errors errors, RedirectAttributes RA, HttpSession session) {
 		
 		// 유저로그인처리
 		if(errors.hasErrors()) {
@@ -85,12 +88,12 @@ public class UserController {
 	// 유저 회원정보 수정
 	@PostMapping("/userUpdateForm")
 	public String userUpdateForm(@RequestBody @Valid UserUpdateVO vo , Errors errors, RedirectAttributes RA) {
-			
+		System.out.println(vo);
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/user/userUpdateForm";
 		} else {
-			if(!vo.getNewUserPw().equals(vo.getNewUserPwCheck())) {
+			if(!vo.getUserNewPw().equals(vo.getUserNewPwCheck())) {
 				RA.addFlashAttribute("msg", "비밀번호를 확인해주세요");
 				return "redirect:/user/userUpdate";
 			} else {
@@ -101,7 +104,7 @@ public class UserController {
 					return "redirect:/user/userUpdate";
 				} else {
 					RA.addFlashAttribute("msg", "정상적으로 변경 됐습니다");
-					return "redirect:/user/userJoin";
+					return "redirect:/user/userUpdate";
 				}
 			}
 			

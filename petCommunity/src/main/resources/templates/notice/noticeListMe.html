@@ -18,12 +18,12 @@
 							<li class="collum_tit">
 								<h2>My Notice List</h2>
 
-								<select class="">
-									<option value="10">10개 보기</option>
-									<option value="20">20개 보기</option>
-									<option value="40">40개 보기</option>
-									<option value="80">80개 보기</option>
-								</select>
+<!-- 								<select class="" id="handleAmount">
+									<option value="10" th:selected="${pageDTO.amount == 10}">10개 보기</option>
+									<option value="20" th:selected="${pageDTO.amount == 20}">20개 보기</option>
+									<option value="40" th:selected="${pageDTO.amount == 40}">40개 보기</option>
+									<option value="80" th:selected="${pageDTO.amount == 80}">80개 보기</option>
+								</select> -->
 								<span class="showtoggle minus"></span>
 								<hr>
 								<ul>
@@ -38,17 +38,16 @@
 												<th>수정/삭제</th>
 											</tr>
 												
-											<tr>
-												<td>1</td>
-												<td>admin</td>
-												<td><a href="#">오늘은 해가뜨려나?</a></td>
+											<tr th:each="vo, status : ${list}">
+												<td>[[${status.count}]]</td>
+												<td>[[${vo.writer}]]</td>
+												<td><a th:href="@{noticeDetail(nno=${vo.nno})}">[[${vo.title}]]</a></td>
 												<td>
-													오늘은 비가오려나?
+													[[${vo.content}]]
 												</td>
-												<td>2016-01-01</td>
+												<td></td>
 												<td>
-                                                    <a href="#">수정 / 삭제</a>
-
+                                                    <a th:href="@{noticeModify(nno=${vo.nno},writer=${vo.writer})}">수정 / 삭제</a>
                                                 </td>
 											</tr>
 
@@ -96,3 +95,19 @@
 
 </th:block>
 	</body>
+	
+<script type="text/javascript">
+$("#handleAmount").change(function(){
+	var amount = $(this).val();
+	
+	// input태그의 name속성이 amount인 태그
+	$("input[name='amount']").val(amount);
+});
+</script>
+
+<script th:inline="javascript">
+	var msg = JSON.parse('[[${msg}]]');
+	if(msg != null){
+		alert(msg);
+	}
+</script>

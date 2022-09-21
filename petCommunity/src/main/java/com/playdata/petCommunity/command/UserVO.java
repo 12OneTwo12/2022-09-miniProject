@@ -1,10 +1,8 @@
 package com.playdata.petCommunity.command;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +20,7 @@ import lombok.ToString;
 public class UserVO {
 
 //	private Long uno;
+	
 	@NotEmpty
 	private String userName;
 	
@@ -38,7 +37,7 @@ public class UserVO {
 	@NotNull(message ="지역은 필수 입력값 입니다")
 	private String userLocation;
 	
-	@NotBlank
+	@NotNull(message="자세한 주소를 입력해 주세요")
 	private String userLocationDetail;
 	
 	private String userState;

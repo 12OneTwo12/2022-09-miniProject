@@ -7,9 +7,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,8 +21,10 @@ import com.mysql.cj.Session;
 import com.playdata.petCommunity.command.CommentVO;
 import com.playdata.petCommunity.command.NoticeVO;
 import com.playdata.petCommunity.comment.service.CommentService;
+import com.playdata.petCommunity.entity.Notice;
 import com.playdata.petCommunity.notice.service.NoticeService;
 import com.playdata.petCommunity.util.page.Criteria;
+import com.playdata.petCommunity.util.page.PageDTO;
 
 
 @Controller
@@ -39,21 +43,25 @@ public class NoticeController {
 	public String main() {
 		return "notice/main";
 	}
-//	@RequestMapping("/noticeListAll")
-//	public String noticeListAll(Criteria cri, Model model) {
-//		
-//		List<NoticeVO> list = noticeService.getList(cri);
-//		
-//		model.addAttribute("list", list);
-//		
-//		return ""; // 전체 목록 조회 페이지
-//	}
+
+	@RequestMapping("/noticeListAll")
+	public String noticeListAll(Criteria cri, Model model, HttpSession session) {
+		
+		session.setAttribute("userId", "jji0428");
+		
+		PageDTO<Notice> pageDTO = noticeService.getList(cri);
+		
+		model.addAttribute("pageDTO", pageDTO);
+		
+		return "notice/noticeListAll"; // 전체 목록 조회 페이지
+	}
 	
 	@RequestMapping("/noticeMyList")
 	public String noticeMyList(Criteria cri, Model model, HttpSession session) {
 		
+		
 		if(session.getAttribute("userId") == null) {
-			return ""; // 작성자 id 값 없음으로 홈페이지로 리다이렉트
+			return "redirect:/"; // 작성자 id 값 없음으로 홈페이지로 리다이렉트
 		} else {
 			String userId = (String) session.getAttribute("userId");
 			cri.setWriter(userId);
@@ -61,33 +69,29 @@ public class NoticeController {
 			
 			model.addAttribute("list", list);
 			
-			return ""; // user 자기 글 조회 목록 페이지
+			return "notice/noticeListMe"; // user 자기 글 조회 목록 페이지
 		}
 		
 	}
+	
 	@RequestMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam("nno") Long nno, Model model, RedirectAttributes RA) {
 		
 		NoticeVO noticeVO = noticeService.getDetailById(nno);
 		
 		if(noticeVO == null) {
-			
 			RA.addFlashAttribute("msg", "잘못된 조회 방법입니다");
-			
-			return ""; // nno 값으로 조회했을 때 없는 글, 홈페이지로 리다이렉트
+			return "redirect:/notice/noticeListAll"; // nno 값으로 조회했을 때 없는 글, 홈페이지로 리다이렉트
 		} else if(noticeVO.getNoticeState().equals("삭제")){
-			
 			RA.addFlashAttribute("msg", "삭제된 게시글 입니다");
-			
-			return ""; // 삭제된 글이라고 메세지 뛰운 후 홈페이지로 리다이렉트
+			return "redirect:/notice/noticeListAll"; // 삭제된 글이라고 메세지 뛰운 후 홈페이지로 리다이렉트
 		} else {
-			
 			List<CommentVO> comments = commentService.getCommentList(nno);
 			
 			model.addAttribute("noticeVO", noticeVO);
 			model.addAttribute("comments", comments); // 댓글들
 			
-			return ""; // notice 디테일 페이지
+			return "notice/noticeDetail"; // notice 디테일 페이지
 		}
 		
 	}
@@ -160,18 +164,31 @@ public class NoticeController {
 		
 	}
 	
-	@RequestMapping("/noticeModify")
-	public String noticeModify(HttpSession session) {
+	@GetMapping("/noticeModify")
+	public String noticeModify(NoticeVO noticeVO, HttpSession session, Model model, RedirectAttributes RA) {
 		
-		return "/notice/noticeModify";
-	}
-	@RequestMapping("/noticeListAll")
-	public String noticeListAll() {
-		return "/notice/noticeListAll";
-	}
-	@RequestMapping("/noticeReg")
-	public String noticeReg(HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
 		
-		return "/notice/noticeReg";
+		if(session.getAttribute("userId")!=null) {
+			
+			if(userId.equals(noticeVO.getWriter())) {
+				
+				NoticeVO vo = noticeService.getDetailById(noticeVO.getNno());
+				
+				model.addAttribute("vo", vo);
+				
+				System.out.println(vo);
+				
+				return "notice/noticeModify";
+			} else {
+				RA.addFlashAttribute("msg", "자신의 글만 수정 혹은 삭제가 가능합니다");
+				return "redirect:/notice/noticeListAll";
+			}
+		} else {
+			RA.addFlashAttribute("msg", "로그인이 필요합니다");
+			return "redirect:/notice/noticeListAll";
+		}
+		
 	}
+	
 }
