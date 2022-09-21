@@ -33,6 +33,10 @@ public class DoctorUpdateVO {
 	@Pattern(regexp ="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"
 			, message = "비밀번호 영문자,숫자,특수문자 조합 8글자 이상입니다")
 	private String doctorNewPw;
+
+	@Pattern(regexp ="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"
+			, message = "비밀번호 영문자,숫자,특수문자 조합 8글자 이상입니다")
+	private String doctorNewPwCheck;
 	
 	@NotNull(message ="지역은 필수 입력값 입니다")
 	private String doctorLocation;

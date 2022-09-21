@@ -71,7 +71,9 @@ public class DoctorServiceImpl implements DoctorService {
 		String hashPw = Encrypt.getEncrypt(vo.getDoctorPw(), vo.getDoctorId());
 
 		if (hashPw.equals(doctor.getDoctorPw())) {
+			
 			vo.setDoctorPw(Encrypt.getEncrypt(vo.getDoctorNewPw(), doctor.getDoctorId()));
+			
 			Doctor result = doctor.updateDoctorByVO(vo);
 
 			return DoctorResponse.createDoctorVOByEntity(doctorRepository.save(result));
