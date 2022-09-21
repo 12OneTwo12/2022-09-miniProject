@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@500&family=IBM+Plex+Sans:ital,wght@1,300&display=swap" rel="stylesheet">
+</head>
+<!-- ~{경로 :: 전달할 선택자} -->
+<body  class="wrap" style=background-color:#e4ac01;>
+<img class="D-back-img"
+     src="/img/detailimg.jpg"
+     alt="background">
+					
+<header>
+<th:block th:replace="~{./include/basicLayout :: setContent(~{ :: .wrap  } ) }">
+</header>
+    <div>
+        <div class="warp_inner">
+            <!-- left_menu end -->
+            <div class="right_content">
+                        <ul>
+                            <li class="collum_tit" style="font-family: 'Edu VIC WA NT Beginner', cursive;
+font-family: 'IBM Plex Sans', sans-serif;">
+                                <h2>게시글</h2>
+                                
+                                <span class="showtoggle minus"></span>
+                                <ul>
+                                    <li>
+                                        <table cellpadding="0" cellspacing="0" class="board_basic_view" width="100%;">
+                                            <tr>
+                                                <th>등록일</th>
+                                                <td>
+                                                    <span>2016-01-01</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>아이디</th>
+                                                <td>admin</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <th>제목</th>
+                                                <td colspan="5">오늘은 해가뜨려나?</td>
+                                            </tr>
+                                            <tr>
+                                                <th>내용</th>
+                                                <td colspan="5">
+                                                    <div style="min-height: 300px;">오늘은 비가오려나?
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2">여러분의 의견을 남겨주세요</th>
+                                            </tr>
+                                            <tr>
+                                                <th>댓글등록</th>
+                                                <td>
+                                                    <form name="#####" action="#####" method="post">
+                                                        <input type="hidden" class="inputw290" name="####"><!-- 여기엔무엇이 들어가야할까요 -->
+                                                        <input type="text" class="inputw290" name="####" required placeholder="작성자(나중에 세션값으로 치환)" style="margin-top:10px;">
+                                                        <textarea class="inputw99p" name="####" required style="height: 150px; margin-top:10px;"></textarea>
+                                                        <div class="btn_area">
+                                                            <input type="submit" class="save" value="댓글등록">
+                                                            <input type="button" class="delete" value="전체목록으로">
+                                                        </div>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <!-- 댓글영역 -->
+
+                                            <tbody class="reply_area">
+                                                <tr>
+                                                    <th>홍길동 수의사<br>
+                                                        <p class="hos-nm">병원이름</p></th>
+                                                    <td class="reply_content">
+                                                        <div class="left">
+                                                            <p class="D-comment">admin님 가격을 후려치시면 우째요?</p>
+                                                             <span class="D-time">2021-03-04</span>
+                                                        </div>
+                                                        <input type="button" class="right" value="삭제">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>이순신</th>
+                                                    <td class="reply_content">
+                                                        <div class="left">
+                                                            <p class="D-comment">물건좀 내려주세요</p>
+                                                            <span class="D-time">2021-03-03</span>
+                                                        </div>
+                                                        <input type="button" class="right" value="삭제">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>이순신</th>
+                                                    <td class="reply_content">
+                                                        <div class="left">
+                                                            <p class="D-comment">물건좀 내려주세요</p>
+                                                            <span class="D-time">2021-03-03</span>
+                                                        </div>
+                                                        <input type="button" class="right" value="삭제">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>이순신</th>
+                                                    <td class="reply_content">
+                                                        <div class="left">
+                                                            <p class="D-comment">물건좀 내려주세요</p>
+                                                            <span class="D-time">2021-03-03</span>
+                                                        </div>
+                                                        <input type="button" class="right" value="삭제">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>이순신</th>
+                                                    <td class="reply_content">
+                                                        <div class="left">
+                                                            <p class="D-comment">물건좀 내려주세요</p>
+                                                            <span class="D-time">2021-03-03</span>
+                                                        </div>
+                                                        <input type="button" class="right" value="삭제">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>이순신</th>
+                                                    <td class="reply_content">
+                                                        <div class="left">
+                                                            <p class="D-comment">물건좀 내려주세요</p>
+                                                            <span class="D-time">2021-03-03</span>
+                                                        </div>
+                                                        <input type="button" class="right" value="삭제">
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <th>홍길자</th>
+                                                    <td class="reply_content">
+                                                        <div class="left">
+                                                            <p class="D-comment">우리강아지가 아파용</p>
+                                                            <span class="D-time">2021-03-02</span>
+                                                        </div>
+                                                        <input type="button" class="right" value="삭제">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <!-- end댓글영역 -->
+                                        </table>
+                                        <form name="#####" action="#####" method="post" style="display: none;">
+                                            ....................
+                                        </form>
+
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- right_content end -->
+        </div>
+        <div class="dim_layer">
+        </div>
+    </div>
+    <!-- wrap end -->
+<img class="D-back-under-img"
+     src="/img/under-detail-back.jpg"
+     alt="background">
+</th:block>
+</body>

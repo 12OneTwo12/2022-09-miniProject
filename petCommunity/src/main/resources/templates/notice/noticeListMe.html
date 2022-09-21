@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"> 
+
+<!-- ~{경로 :: 전달할 선택자} -->
+<body style=background-image:url("/img/listme.jpg");>
+<header class="wrap">
+<th:block th:replace="~{./include/basicLayout :: setContent(~{ :: .wrap  } ) }"> 
+</header>
+	
+		<div class="warp_inner">
+	
+			<!-- left_menu end -->
+			<div class="right_content">
+					<form name="###########" action="############" method="get" >
+
+					<div class="full_collum collum">
+						<ul>
+							<li class="collum_tit">
+								<h2>My Notice List</h2>
+
+								<select class="">
+									<option value="10">10개 보기</option>
+									<option value="20">20개 보기</option>
+									<option value="40">40개 보기</option>
+									<option value="80">80개 보기</option>
+								</select>
+								<span class="showtoggle minus"></span>
+								<hr>
+								<ul>
+									<li>
+										<table cellpadding="0" cellspacing="0" class="row_tb_7" width="100%;">
+											<tr>
+												<th>순서</th>
+												<th>아이디</th>
+												<th>제목</th>
+												<th>내용</th>
+												<th>등록일</th>
+												<th>수정/삭제</th>
+											</tr>
+												
+											<tr>
+												<td>1</td>
+												<td>admin</td>
+												<td><a href="#">오늘은 해가뜨려나?</a></td>
+												<td>
+													오늘은 비가오려나?
+												</td>
+												<td>2016-01-01</td>
+												<td>
+                                                    <a href="#">수정 / 삭제</a>
+
+                                                </td>
+											</tr>
+
+
+										</table>
+
+
+										<div class="page">
+											<ul>
+												<li>
+													<a href="#"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+												</li>
+												<li>
+													<a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+												</li>
+												<li class="on"><a href="#">1</a></li>
+												<li><a href="#">2</a></li>
+												<li><a href="#">3</a></li>
+												<li><a href="#">4</a></li>
+												<li><a href="#">5</a></li>
+
+												<li>
+													<a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+												</li>
+												<li>
+													<a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+												</li>
+				
+											</ul>
+										</div>
+									</li>
+
+								</ul>
+							</li>
+						</ul>
+					</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+
+
+
+	
+	</div><!-- end wrap -->
+
+</th:block>
+	</body>

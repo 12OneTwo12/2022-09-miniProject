@@ -33,6 +33,10 @@ public class NoticeController {
 	@Qualifier("commentService")
 	CommentService commentService;
 	
+	@RequestMapping("/main")
+	public String main() {
+		return "notice/main";
+	}
 	@RequestMapping("/noticeListAll")
 	public String noticeListAll(Criteria cri, Model model) {
 		
@@ -59,7 +63,6 @@ public class NoticeController {
 		}
 		
 	}
-	
 	@RequestMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam("nno") Long nno, Model model, RedirectAttributes RA) {
 		
@@ -154,5 +157,4 @@ public class NoticeController {
 		}
 		
 	}
-	
 }
