@@ -21,11 +21,9 @@ public class AuthHandler implements HandlerInterceptor{
 		
 		
 		if(userId != null || doctorId != null) {
-			
 			return true; // 컨트롤러를 실행함
 		} else {
-			
-			response.sendRedirect("/hahimdleda"); //로그인화면으로 
+			response.sendRedirect("/user/userLogin"); //로그인화면으로 
 			return false; // 컨트롤러를 실행하지 않음
 		}
 	}

@@ -47,8 +47,6 @@ public class NoticeController {
 	@RequestMapping("/noticeListAll")
 	public String noticeListAll(Criteria cri, Model model, HttpSession session) {
 		
-		session.setAttribute("userId", "jji0428");
-		
 		PageDTO<Notice> pageDTO = noticeService.getList(cri);
 		
 		model.addAttribute("pageDTO", pageDTO);
