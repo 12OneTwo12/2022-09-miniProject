@@ -88,7 +88,7 @@ public class UserController {
 	// 유저 회원정보 수정
 	@PostMapping("/userUpdateForm")
 	public String userUpdateForm(@RequestBody @Valid UserUpdateVO vo , Errors errors, RedirectAttributes RA) {
-		System.out.println(vo);
+		
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/user/userUpdateForm";

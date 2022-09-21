@@ -16,8 +16,7 @@
                             
 						</div>
 					</div>
-                    <div class="page_title"> > <span class="page_subtitle">글수정/삭제</span></div>
-                    <form name="#####" action="#####" method="post">
+                    <form name="#####" action="noticeUpdate" method="post">
                         <div class="full_collum collum">
                             <ul>
                                 <li class="collum_tit">
@@ -41,7 +40,7 @@
 
                                                 <tr>
                                                     <th>제목</th>
-                                                    <td colspan="5"><input type="text" class="inputw99p" name="title" th:value="${vo.title}" style="color: black;"></td>
+                                                    <td colspan="5"><input type="text" class="inputw99p" name="title" th:value="${vo.title}"></td>
                                                 </tr>
 
 
@@ -54,7 +53,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr style="display:none;">
-													<td><input type="hidden" name="####" value=""></td>
+													<td><input type="hidden" name="nno" th:value="${vo.nno}"></td>
 												</tr>
 												
 
@@ -66,7 +65,7 @@
                                                  -->
 
                                                 <!-- 수정, 삭제는 JS를통해 제어합니다 -->
-                                                <a href="#" class="revise mglr13-1" >수정</a>
+                                                <input type="submit" class="revise mglr13-1" value="수정" >
                                                 <a href="#" class="revise mglr13-2" >목록</a>
                                                 <a href="#" class="revise mglr13-3">삭제</a> 
                                                 
