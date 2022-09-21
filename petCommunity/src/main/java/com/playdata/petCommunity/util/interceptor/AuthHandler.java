@@ -23,10 +23,10 @@ public class AuthHandler implements HandlerInterceptor{
 		
 		
 		if(userId != null || doctorId != null) {
-			System.out.println(session.getAttribute("doctorId"));
+			
 			return true; // 컨트롤러를 실행함
 		} else {
-			System.out.println(session.getAttribute("doctorId"));
+			
 			response.sendRedirect("/hahimdleda"); //로그인화면으로 
 			return false; // 컨트롤러를 실행하지 않음
 		}

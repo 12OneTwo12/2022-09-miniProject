@@ -41,6 +41,7 @@ public class DoctorController {
 	public String doctorJoinForm(@Valid DoctorVO vo, Errors errors, RedirectAttributes RA) {
 
 		if (errors.hasErrors()) {
+			
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/doctor/doctorJoinForm";
 		} else {
@@ -52,7 +53,7 @@ public class DoctorController {
 				return "redirect:/doctor/doctorLogin";
 			} else { // 회원가입실패
 				RA.addFlashAttribute("msg", "가입을 실패했습니다. 입력 내용을 확인해주세요");
-				return "redirect:/doctor/doctorJoinForm";
+				return "redirect:/doctor/doctorJoin";
 				// 실패하면 다시 의사회원가입페이지로
 			}
 		}
@@ -62,12 +63,11 @@ public class DoctorController {
 	@PostMapping("/doctorLoginForm")
 	public String doctorLogin(@Valid DoctorLoginVO vo, Errors errors, RedirectAttributes RA,
 			HttpSession session) {
-		System.out.println("에러에러");
-		System.out.println(vo.getDoctorId().toString());
+	
 		// 의사로그인처리
 		if (errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
-			return "redirect:/doctor/doctorLoginForm";
+			return "redirect:/doctor/doctorLogin";
 		} else {
 			
 			DoctorVO doctorVO = doctorService.doctorLogin(vo);

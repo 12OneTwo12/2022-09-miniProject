@@ -57,10 +57,10 @@ public class UserController {
 		} else {
 			
 			UserVO result = userService.userJoin(vo);
+			
 			if(result != null) { // 유저회원가입성공
-				
 				RA.addFlashAttribute("msg", "가입을 축하드립니다");
-				return "redirect:/notice/main"; //나중에 수정
+				return "redirect:/user/userLogin"; // 가입성공 시 로그인창으로
 			} else { //회원가입실패
 				RA.addFlashAttribute("msg", "가입에 실패했습니다. 입력 내용을 확인해주세요");
 				return "redirect:/user/userJoin";
@@ -78,13 +78,15 @@ public class UserController {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/user/userLogin";
 		} else {
+			
 			UserVO userVO = userService.userLogin(vo);
+			
 			if(userVO !=null ) { //유저 로그인 성공
 				
 				session.setAttribute("userId", userVO.getUserId());
 				session.setAttribute("userName", userVO.getUserName());
 				
-				return "redirect:/main"; //성공 시 메인화면으로 이동
+				return "redirect:/notice/main"; //성공 시 메인화면으로 이동
 			} else { // 유저 로그인 실패
 				RA.addFlashAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
 				return "redirect:/user/userLogin"; // 실패 시 다시 로그인화면으로
