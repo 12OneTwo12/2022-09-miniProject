@@ -12,8 +12,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CommentResponse {
 
-	public CommentVO updateCommentVOByEntity(Comment comment) {
-		return new CommentVO(comment.getCno(),comment.getWriter(), comment.getContent(), comment.getUserOrDoctor(),comment.getCommentState(), comment.getNotice().getNno());
+	public static CommentVO updateCommentVOByEntity(Comment comment) {
+		return new CommentVO(
+				comment.getCno(),
+				comment.getWriter(), 
+				comment.getContent(), 
+				comment.getUserOrDoctor(),
+				comment.getCommentState(), 
+				comment.getNotice().getNno());
 	}
 	
 }

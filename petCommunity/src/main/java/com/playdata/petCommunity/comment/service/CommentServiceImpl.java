@@ -32,7 +32,7 @@ public class CommentServiceImpl implements CommentService {
 		List<CommentVO> result = new ArrayList<>();
 		
 		for(Comment c : list) {
-			result.add(new CommentResponse().updateCommentVOByEntity(c));
+			result.add( CommentResponse.updateCommentVOByEntity(c));
 		}
 		
 		return result;
@@ -64,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
 			
 			Comment saved = commentRepository.save(comment);
 			
-			return new CommentResponse().updateCommentVOByEntity(saved);
+			return CommentResponse.updateCommentVOByEntity(saved);
 		}
 		
 	}
@@ -84,7 +84,7 @@ public class CommentServiceImpl implements CommentService {
 			if(userId.equals(beforeComment.getWriter())) {
 				commentVO.setUserOrDoctor("user");
 				Comment afterComment = new Comment().updateCommentByVO(commentVO, notice);
-				result = new CommentResponse().updateCommentVOByEntity(commentRepository.save(afterComment));
+				result = CommentResponse.updateCommentVOByEntity(commentRepository.save(afterComment));
 			} else {
 				return null;
 			}
@@ -95,7 +95,7 @@ public class CommentServiceImpl implements CommentService {
 			if(doctorId.equals(beforeComment.getWriter())) {
 				commentVO.setUserOrDoctor("doctor");
 				Comment afterComment = new Comment().updateCommentByVO(commentVO, notice);
-				result = new CommentResponse().updateCommentVOByEntity(commentRepository.save(afterComment));
+				result = CommentResponse.updateCommentVOByEntity(commentRepository.save(afterComment));
 			} else {
 				return null;
 			}
@@ -123,7 +123,7 @@ public class CommentServiceImpl implements CommentService {
 				commentVO.setUserOrDoctor("user");
 				commentVO.setCommentState("삭제");
 				Comment afterComment = new Comment().updateCommentByVO(commentVO, notice);
-				result = new CommentResponse().updateCommentVOByEntity(commentRepository.save(afterComment));
+				result = CommentResponse.updateCommentVOByEntity(commentRepository.save(afterComment));
 			} else {
 				return null;
 			}
@@ -135,7 +135,7 @@ public class CommentServiceImpl implements CommentService {
 				commentVO.setUserOrDoctor("doctor");
 				commentVO.setCommentState("삭제");
 				Comment afterComment = new Comment().updateCommentByVO(commentVO, notice);
-				result = new CommentResponse().updateCommentVOByEntity(commentRepository.save(afterComment));
+				result = CommentResponse.updateCommentVOByEntity(commentRepository.save(afterComment));
 			} else {
 				return null;
 			}

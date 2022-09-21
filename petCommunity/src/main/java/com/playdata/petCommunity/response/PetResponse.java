@@ -12,8 +12,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PetResponse {
 
-	public PetVO updatePetVOByEntity(Pet pet) {
-		return new PetVO(pet.getPno(),pet.getPetName(), pet.getPetBirth(), pet.getPetNumber(), pet.getPetWeight(), pet.getPetCategory(), pet.getPetGender(), pet.getPetCategoryDetail(),pet.getPetState() ,pet.getUser().getUno());
+	public static PetVO updatePetVOByEntity(Pet pet) {
+		return new PetVO(pet.getPno(),
+						 pet.getPetName(), 
+						 pet.getPetBirth(), 
+						 pet.getPetNumber(), 
+						 pet.getPetWeight(), 
+						 pet.getPetCategory(), 
+						 pet.getPetGender(), 
+						 pet.getPetCategoryDetail(),
+						 pet.getPetState(),
+						 pet.getUser().getUno());
 	}
 	
 }

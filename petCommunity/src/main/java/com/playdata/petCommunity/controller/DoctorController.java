@@ -1,6 +1,7 @@
 package com.playdata.petCommunity.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.playdata.petCommunity.command.DoctorLoginVO;
+import com.playdata.petCommunity.command.DoctorUpdateVO;
 import com.playdata.petCommunity.command.DoctorVO;
 import com.playdata.petCommunity.doctor.service.DoctorService;
 
@@ -36,7 +38,7 @@ public class DoctorController {
 	
 	// 의사회원가입
 	@PostMapping("/doctorJoinForm")
-	public String doctorJoinForm(@RequestBody DoctorVO vo, Errors errors, RedirectAttributes RA) {
+	public String doctorJoinForm(@Valid @RequestBody DoctorVO vo, Errors errors, RedirectAttributes RA) {
 		
 		DoctorVO result = doctorService.doctorJoin(vo);
 		
@@ -57,7 +59,7 @@ public class DoctorController {
 	
 	// 의사로그인
 	@PostMapping("/doctorLogin")
-	public String doctorLogin(@RequestBody DoctorLoginVO vo, Errors errors, RedirectAttributes RA, HttpSession session) {
+	public String doctorLogin(@Valid @RequestBody DoctorLoginVO vo, Errors errors, RedirectAttributes RA, HttpSession session) {
 		
 		// 의사로그인처리
 		DoctorVO doctorVO = doctorService.doctorLogin(vo);
@@ -79,7 +81,7 @@ public class DoctorController {
 	
 	// 의사 회원정보 수정
 	@PostMapping("/doctorUpdateForm")
-	public String doctorUpdateForm(@RequestBody DoctorVO vo, Errors errors, RedirectAttributes RA) {
+	public String doctorUpdateForm(@Valid @RequestBody DoctorUpdateVO vo, Errors errors, RedirectAttributes RA) {
 		
 		DoctorVO check = doctorService.doctorUpdate(vo);
 		if(errors.hasErrors()) {
