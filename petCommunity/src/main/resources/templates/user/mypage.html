@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"> 
 <html lang="en">
   <head>
-  	<title>user_login</title>
+  	<title>My page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -43,6 +43,29 @@
 	              	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            
+
+	        	<div class="form-group">
+	              <select class="form-control">
+	              <option>서울</option>
+	           	  <option>경기</option>
+	              <option>경남</option>
+	              <option>경북</option>
+				  <option >전남</option>
+				  <option >전북</option>
+				  <option >충남</option>
+				  <option >대전</option>
+				  <option >광주</option>	     
+				  <option >부산</option>	    
+				  <option >제주</option>	    
+				  <option >대구</option>	    
+				  <option >인천</option>	    
+				  <option >강원</option>	    
+				  <option >울산</option>	              
+				 </select>
+	            </div>
+	             <div class="form-group">
+	              <input type="text" class="form-control" placeholder="Address-Detail" required>
+
 	            <div class="form-group">
 	              <input id="password-field" type="password" name="userNewPw"class="form-control" placeholder="NewPassword" required>
 	              	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -108,6 +131,5 @@
 		}
 	}
   </script>
-
 	</body>
 </html>
