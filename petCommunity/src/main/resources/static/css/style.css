@@ -462,7 +462,7 @@ pre {
       max-width: 960px; } }
   @media (min-width: 1200px) {
     .container {
-      max-width: 1340px; } }
+      max-width: 1140px; } }
 
 .container-fluid {
   width: 100%;
@@ -6709,6 +6709,9 @@ button.bg-dark:focus {
 .py-2 {
   padding-bottom: 0.5rem !important; }
 
+.pl-2,
+.px-2 {
+  padding-left: 0.5rem !important; }
 
 .p-3 {
   padding: 1rem !important; }
@@ -8134,10 +8137,9 @@ body {
   line-height: 1.8;
   font-weight: normal;
   color: gray;
+  position: relative;
   z-index: 0;
-  padding: 0; 
-  }
-  
+  padding: 0; }
   body:after {
     position: absolute;
     top: 0;
@@ -8171,14 +8173,8 @@ h1, h2, h3, h4, h5,
   background: #fbceb5 !important; }
 
 .ftco-section {
-  padding: 6.6em 0; }
-  
-.ftco-join-section {
-}
-  
-.ftco-doc-section{
+  padding: 2em 0; }
 
-}
 .ftco-no-pt {
   padding-top: 0; }
 
@@ -8191,7 +8187,8 @@ h1, h2, h3, h4, h5,
 
 .img {
   background-size: cover;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+  background-position: center center; }
 
 .login-wrap {
   position: relative;
@@ -8330,7 +8327,6 @@ textarea.form-control {
   color: #fbceb5; }
   .checkbox-primary input:checked ~ .checkmark:after {
     color: #fbceb5; }
- 
 
 .btn {
   cursor: pointer;
