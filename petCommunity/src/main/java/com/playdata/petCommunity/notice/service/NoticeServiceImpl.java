@@ -25,7 +25,7 @@ public class NoticeServiceImpl implements NoticeService {
 	NoticeRepository noticeRepository;
 	
 	@Override
-	public List<NoticeVO> getList(Criteria cri) {
+	public PageDTO<Notice> getList(Criteria cri) {
 		
 		// 동적쿼리를 만듬
 		QNotice qNotice = QNotice.notice;
@@ -49,22 +49,35 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		Page<Notice> result = noticeRepository.findAll(builder, PageRequest.of(cri.getPage()-1, cri.getAmount(), Sort.by("nno").descending()));
 		
-		return listNoticeVO(new PageDTO<>(result).getPageData());
+		PageDTO<Notice> pageDTO = new PageDTO<>(result);
+		
+		return pageDTO;
 	}
 
 	@Override
-	public List<NoticeVO> getListByWriter(Criteria cri) {
+	public PageDTO<Notice> getListByWriter(Criteria cri) {
 		
+		// 동적쿼리를 만듬
 		QNotice qNotice = QNotice.notice;
 		
+		// 조건을 조합할 불린빌더
 		BooleanBuilder builder = new BooleanBuilder();
 		builder.and(qNotice.noticeState.contains("정상 등록"));
-		
 		builder.and(qNotice.writer.contains(cri.getWriter()));
 		
-		List<Notice> list = noticeRepository.findAll(builder,PageRequest.of(cri.getPage()-1, cri.getAmount(), Sort.by("nno").descending())).getContent();
+		if (cri.getContent() != null && !cri.getContent().equals("")) {
+			builder.and(qNotice.content.like("%"+cri.getContent()+"%"));
+		}
 		
-		return listNoticeVO(list);
+		if (cri.getTitle() != null && !cri.getTitle().equals("")) {
+			builder.and(qNotice.title.like("%"+cri.getTitle()+"%"));
+		}
+		
+		Page<Notice> result = noticeRepository.findAll(builder, PageRequest.of(cri.getPage()-1, cri.getAmount(), Sort.by("nno").descending()));
+		
+		PageDTO<Notice> pageDTO = new PageDTO<>(result);
+		
+		return pageDTO;
 	}
 
 	@Override
@@ -77,9 +90,11 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		Notice notice = new Notice().updateNoticeByVO(noticeVO);
 		
+		notice.setNoticeState("정상 등록");
+		
 		Notice result = noticeRepository.save(notice);
 		
-		return new NoticeResponse().createNoticeVOByEntity(result);
+		return NoticeResponse.createNoticeVOByEntity(result);
 	}
 	
 	private List<NoticeVO> listNoticeVO(List<Notice> noticeList) {
@@ -122,15 +137,17 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		Notice notice = noticeRepository.findById(vo.getNno()).get();
 		
-		return notice.getWriter() == userId;
+		return notice.getWriter().equals(userId);
 	}
 
 	@Override
 	public NoticeVO updateNotice(NoticeVO noticeVO, String userId) {
 		
+		
 		if(checkNotice(noticeVO,userId)) {
 		
 			Notice notice = new Notice().updateNoticeByVO(noticeVO);
+			notice.setNoticeState("정상 등록");
 			
 			Notice result = noticeRepository.save(notice);
 			

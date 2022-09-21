@@ -1,6 +1,9 @@
 package com.playdata.petCommunity.user.service;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +32,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public UserVO userIdCheck(UserVO vo) {
+		System.out.println(vo.getUserId());
 		return UserResponse.createUserVOByEntity(userRepository.findByUserId(vo.getUserId()));
 	}
 
@@ -59,7 +63,16 @@ public class UserServiceImpl implements UserService{
 		builder.and(qUser.userId.contains(vo.getUserId()));
 		builder.and(qUser.userPw.contains(hashPw));
 		
-		return UserResponse.createUserVOByEntity(userRepository.findAll(builder).iterator().next());
+		Page<User> result = userRepository.findAll(builder, PageRequest.of(0, 1));
+		
+		if(result == null) {
+			return null;
+		} else if(result.getContent().size() == 1) {
+			return UserResponse.createUserVOByEntity(result.getContent().get(0));
+		} else {
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -69,11 +82,10 @@ public class UserServiceImpl implements UserService{
 		String hashPw = Encrypt.getEncrypt(vo.getUserPw(), user.getUserId());
 		
 		if(hashPw.equals(user.getUserPw())) {
-			UserVO userVO = UserResponse.createUserVOByEntity(user);
 			
-			userVO.setUserPw(Encrypt.getEncrypt(vo.getNewUserPw(), user.getUserId()));
+			vo.setUserPw(Encrypt.getEncrypt(vo.getUserNewPw(), user.getUserId()));
 			
-			User result = new User().updateUserByVO(userVO);
+			User result = user.updateUserByVO(vo);
 			
 			return UserResponse.createUserVOByEntity(userRepository.save(result));
 		} else {

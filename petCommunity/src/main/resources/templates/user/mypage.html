@@ -28,17 +28,22 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
 		      	<h3 class="mb-4 text-center">회원정보 수정</h3>
-		      	<form action="#" class="signin-form">
+		      	<form action="userUpdateForm" method="post" class="signin-form">
 		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Username" required>
+		      			<input type="text" name="userName" class="form-control" placeholder="Username" th:value="${vo.userName}" required>
 		      		</div>
-		      		
-		      		
+	               <div class="form-group">
+	             		 <input id="text" name="userPhoneNumber" class="form-control" placeholder="Phonenumber" th:value="${vo.userPhoneNumber}" required>
+	            </div>
+		      		<div class="form-group">
+		      			<input type="text" name="userId" class="form-control" placeholder="ID" th:value="${vo.userId}" readonly>
+		      		</div>
 	            <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Password" required>
+	              <input id="password-field" type="password" name="userPw" class="form-control" placeholder="Password" required>
 	              	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            
+
 	        	<div class="form-group">
 	              <select class="form-control">
 	              <option>서울</option>
@@ -60,31 +65,49 @@
 	            </div>
 	             <div class="form-group">
 	              <input type="text" class="form-control" placeholder="Address-Detail" required>
+
+	            <div class="form-group">
+	              <input id="password-field" type="password" name="userNewPw"class="form-control" placeholder="NewPassword" required>
+	              	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            
-	               <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Phonenumber" required>
+	            <div class="form-group">
+	              <input id="password-field" type="password" name="userNewPwCheck"class="form-control" placeholder="NewPassword Check" required>
+	              	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
+	            <div class="form-group">
+	              <input type="text" name="userLocation" class="form-control" placeholder="Adress" th:value="${vo.userLocation}" required>
+	            </div>
+	            <div class="form-group">
+	              <input type="text" name="userLocationDetail" class="form-control" placeholder="Adress Detail" th:value="${vo.userLocationDetail}" required>
+	            </div>
+	            
 	            
 	            <div class="form-group">
 	            	<button type="submit" class="form-control btn btn-primary submit px-3">Submit</button>
 	            </div>
 	          </form>
-	          <p class="w-100 text-center"\>&mdash; Other Object  &mdash;</p>
+	            <form action="userDeleteForm" method="get" id="deleteSubmit" class="signin-form">
+	             <div class="form-group">
+	            	<button type="button" onclick="deleteBookF()" id="deleteAccount" class="form-control btn btn-primary submit px-3">Delete my Account</button>
+	            </div>
+	             <div class="form-group">
+	            </div>
+	          </form>
+	          <p class="w-100 text-center">&mdash; Other Object  &mdash;</p>
 	          <div class="other_object">
 	          <div class="social d-flex text-center">
-	          	<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>증명서</a>
+	          	<a href="/pet/pdfPet" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>증명서</a>
 	          </div>
 	          <div class="social d-flex text-center">
-	          	<a href="javascript:popup()" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>pet inform</a>
+	          	<a href="/pet/petSignup" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>pet inform</a>
 		      </div>
 		       <div class="social d-flex text-center">
-	          	<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>My List</a>
+	          	<a href="/notice/noticeMyList" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>My List</a>
 		      </div>
 		      </div>
 				</div>
 			</div>
-			
 		</div>
 	</section>
 	
@@ -93,14 +116,20 @@
   <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
-  <script>
-        function popup(){
-            var url = "petlist";
-            var name = "popup test";
-            var option = "width = 500, height = 500, top = 100, left = 200, location = no"
-            window.open(url, name, option);
-        }
-    </script>
+  <script th:inline="javascript">
+	var msg = JSON.parse('[[${msg}]]');
+	if(msg != null){
+		alert(msg);
+	}
+	
+	function deleteBookF(){
+		event.preventDefault(); 
+		
+		if(confirm("정말 삭제 하시겠습니까?")){
+			var link = "userDeleteForm"
+			location.href = link;
+		}
+	}
+  </script>
 	</body>
 </html>
-</div>

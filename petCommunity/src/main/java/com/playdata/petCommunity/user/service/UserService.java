@@ -5,6 +5,7 @@ import com.playdata.petCommunity.command.UserLoginVO;
 import com.playdata.petCommunity.command.UserUpdateVO;
 import com.playdata.petCommunity.command.UserVO;
 
+
 public interface UserService {
 	
 	public UserVO getUser(String userId);
@@ -18,5 +19,7 @@ public interface UserService {
 	UserVO userUpdate(UserUpdateVO vo); // 유저 정보 수정
 	
 	UserVO userDelete(String doctorId); // 유저 탈퇴
+
+	
 
 }

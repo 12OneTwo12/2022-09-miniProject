@@ -18,7 +18,7 @@ public class NoticeResponse {
 				notice.getWriter(), 
 				notice.getTitle(), 
 				notice.getContent(), 
-				notice.getRegdate().toString(),
+				notice.getRegdate(),
 				notice.getNoticeState());
 	}
 	
