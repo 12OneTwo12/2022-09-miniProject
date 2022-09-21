@@ -113,7 +113,7 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		if(checkNotice(noticeVO,userId)) {
 		
-			Notice notice = new Notice().updateNoticeByVO(noticeVO);
+			Notice notice = noticeRepository.findById(noticeVO.getNno()).get();
 			notice.setNoticeState("삭제");
 	
 			Notice result = noticeRepository.save(notice);
