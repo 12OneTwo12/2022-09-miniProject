@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -94,26 +95,39 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping("/mypage")
+	public String mypage(HttpSession session, Model model) {
+		
+		String userId = (String) session.getAttribute("userId");
+		
+		UserVO vo = userService.getUser(userId);
+		
+		model.addAttribute("vo", vo);
+		
+		return"user/mypage";
+	}
+	
 	// 유저 회원정보 수정
 	@PostMapping("/userUpdateForm")
-	public String userUpdateForm(@Valid UserUpdateVO vo , Errors errors, RedirectAttributes RA) {
-		
+	public String userUpdateForm(@Valid UserUpdateVO vo , Errors errors, RedirectAttributes RA, Model model) {
+		System.out.println(vo.toString());
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
-			return "redirect:/user/userUpdateForm";
+			return "redirect:/user/mypage";
 		} else {
 			if(!vo.getUserNewPw().equals(vo.getUserNewPwCheck())) {
 				RA.addFlashAttribute("msg", "비밀번호를 확인해주세요");
-				return "redirect:/user/userUpdate";
+				return "redirect:/user/mypage";
 			} else {
+				
 				UserVO check = userService.userUpdate(vo);
 				
 				if(check == null) {
 					RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
-					return "redirect:/user/userUpdate";
+					return "redirect:/user/mypage";
 				} else {
 					RA.addFlashAttribute("msg", "정상적으로 변경 됐습니다");
-					return "redirect:/user/userUpdate";
+					return "redirect:/user/mypage";
 				}
 			}
 			
@@ -141,10 +155,7 @@ public class UserController {
 		}
 		
 	}
-	@RequestMapping("/mypage")
-	public String mypage() {
-		return"user/mypage";
-	}
+	
 	
 }
 	

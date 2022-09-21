@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public UserVO userIdCheck(UserVO vo) {
+		System.out.println(vo.getUserId());
 		return UserResponse.createUserVOByEntity(userRepository.findByUserId(vo.getUserId()));
 	}
 
