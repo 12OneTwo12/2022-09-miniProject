@@ -12,8 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class NoticeResponse {
 
-	public NoticeVO updateNoticeVOByEntity(Notice notice) {
-		return new NoticeVO(notice.getNno(), 
+	public static NoticeVO createNoticeVOByEntity(Notice notice) {
+		return new NoticeVO(
+				notice.getNno(), 
 				notice.getWriter(), 
 				notice.getTitle(), 
 				notice.getContent(), 

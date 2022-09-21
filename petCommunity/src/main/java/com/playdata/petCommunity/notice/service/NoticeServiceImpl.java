@@ -70,7 +70,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public NoticeVO getDetailById(Long nno) {
-		return new NoticeResponse().updateNoticeVOByEntity(noticeRepository.findById(nno).get());
+		return NoticeResponse.createNoticeVOByEntity(noticeRepository.findById(nno).get());
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		Notice result = noticeRepository.save(notice);
 		
-		return new NoticeResponse().updateNoticeVOByEntity(result);
+		return new NoticeResponse().createNoticeVOByEntity(result);
 	}
 	
 	private List<NoticeVO> listNoticeVO(List<Notice> noticeList) {
@@ -88,7 +88,7 @@ public class NoticeServiceImpl implements NoticeService {
 		List<NoticeVO> realList = new ArrayList<>();
 		
 		for(Notice n : noticeList) {
-			realList.add(new NoticeResponse().updateNoticeVOByEntity(n));
+			realList.add( NoticeResponse.createNoticeVOByEntity(n));
 		}
 		
 		return realList;
@@ -104,10 +104,10 @@ public class NoticeServiceImpl implements NoticeService {
 	
 			Notice result = noticeRepository.save(notice);
 			
-			NoticeVO vo = new NoticeResponse().updateNoticeVOByEntity(result);
+			NoticeVO vo = NoticeResponse.createNoticeVOByEntity(result);
 			
 			if(vo.getNoticeState().equals("삭제")) {
-				return new NoticeResponse().updateNoticeVOByEntity(result);
+				return NoticeResponse.createNoticeVOByEntity(result);
 			} else {
 				return null;
 			}
@@ -135,7 +135,7 @@ public class NoticeServiceImpl implements NoticeService {
 			
 			Notice result = noticeRepository.save(notice);
 			
-			return new NoticeResponse().updateNoticeVOByEntity(result);
+			return NoticeResponse.createNoticeVOByEntity(result);
 			
 		} else {
 			return null;

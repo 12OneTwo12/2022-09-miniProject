@@ -92,7 +92,7 @@ public class PetServiceImpl implements PetService{
 		
 		Pet result = petRepository.save(pet);
 		
-		return new PetResponse().updatePetVOByEntity(result);
+		return PetResponse.updatePetVOByEntity(result);
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class PetServiceImpl implements PetService{
 		
 		Pet result = petRepository.save(update);
 		
-		return new PetResponse().updatePetVOByEntity(result);
+		return PetResponse.updatePetVOByEntity(result);
 	}
 	
 	@Override
@@ -126,7 +126,7 @@ public class PetServiceImpl implements PetService{
 		
 		Pet result = petRepository.save(update);
 		
-		return new PetResponse().updatePetVOByEntity(result);
+		return PetResponse.updatePetVOByEntity(result);
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class PetServiceImpl implements PetService{
 		List<Pet> result = petRepository.selectByUno(userEntity.getUno());
 		
 		for(Pet p : result) {
-			list.add(new PetResponse().updatePetVOByEntity(p));
+			list.add(PetResponse.updatePetVOByEntity(p));
 		}
 		
 		return list;
