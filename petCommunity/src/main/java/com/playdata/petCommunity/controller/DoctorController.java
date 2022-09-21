@@ -1,17 +1,21 @@
 package com.playdata.petCommunity.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.playdata.petCommunity.command.DoctorLoginVO;
+import com.playdata.petCommunity.command.DoctorUpdateVO;
 import com.playdata.petCommunity.command.DoctorVO;
 import com.playdata.petCommunity.doctor.service.DoctorService;
-import com.playdata.petCommunity.entity.Doctor;
 
 @Controller
 @RequestMapping("/doctor")
@@ -26,8 +30,6 @@ public class DoctorController {
 		return "doctor/doctorLogin";
 	}
 	
-	
-	
 	// 의사 회원가입화면
 	@GetMapping("/doctorJoin")
 	public String doctorJoin()	{
@@ -36,13 +38,17 @@ public class DoctorController {
 	
 	// 의사회원가입
 	@PostMapping("/doctorJoinForm")
-	public String doctorJoinForm(Doctor en, RedirectAttributes RA) {
+	public String doctorJoinForm(@Valid @RequestBody DoctorVO vo, Errors errors, RedirectAttributes RA) {
 		
-		Doctor result = doctorService.doctorJoin(en);
+		DoctorVO result = doctorService.doctorJoin(vo);
 		
+		if(errors.hasErrors()) {
+			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
+			return "redirect:/doctor/doctorJoinForm";
+		}
 		if(result != null) { //의사 회원가입성공
 			RA.addFlashAttribute("msg", "가입을 축하드립니다");
-			 return "redirect:/doctor/doctocJoin";
+			 return "redirect:/doctor/doctocJoinForm";
 		} else { //회원가입실패
 			RA.addFlashAttribute("msg", "가입을 실패했습니다. 입력 내용을 확인해주세요");
 			return "redirect:/doctor/doctorJoinForm";
@@ -53,15 +59,18 @@ public class DoctorController {
 	
 	// 의사로그인
 	@PostMapping("/doctorLogin")
-	public String doctorLogin(DoctorVO vo, RedirectAttributes RA, HttpSession session) {
+	public String doctorLogin(@Valid @RequestBody DoctorLoginVO vo, Errors errors, RedirectAttributes RA, HttpSession session) {
 		
 		// 의사로그인처리
-		Doctor doctor = doctorService.doctorLogin(vo);
-		
-		if(doctor != null) { //의사 로그인 성공
+		DoctorVO doctorVO = doctorService.doctorLogin(vo);
+		if(errors.hasErrors()) {
+			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
+			return "redirect:/doctor/doctorLogin";
+		}
+		if(doctorVO != null) { //의사 로그인 성공
 			
-			session.setAttribute("doctorId", doctor.getDoctorId());
-			session.setAttribute("doctorName", doctor.getDoctorName());
+			session.setAttribute("doctorId", doctorVO.getDoctorId());
+			session.setAttribute("doctorName", doctorVO.getDoctorName());
 			
 			return "redirect:/main"; // 성공 시 메인하면으로 이동
 		} else { // 의사 로그인 실패
@@ -71,18 +80,45 @@ public class DoctorController {
 	}
 	
 	// 의사 회원정보 수정
-	@PostMapping("/doctorUpdate")
-	public String doctorUpdate(DoctorVO vo) {
+	@PostMapping("/doctorUpdateForm")
+	public String doctorUpdateForm(@Valid @RequestBody DoctorUpdateVO vo, Errors errors, RedirectAttributes RA) {
 		
-		doctorService.doctorUpdate(vo);
+		DoctorVO check = doctorService.doctorUpdate(vo);
+		if(errors.hasErrors()) {
+			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
+			return "redirect:/doctor/doctorUpdate";
+		}
+		if(check == null) {
+			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
+			return "redirect:/doctor/doctorUpdate";
+		} else {
+			RA.addFlashAttribute("msg", "정상적으로 변경 됐습니다");
+			return "redirect:/doctor/doctorUpdate";
+		}
 		
-		return "doctor/doctorUpdate";
 	}
 	
 	// 의사 탈퇴
-	@GetMapping("/doctorDelete")
-	public void doctorDelete(Doctor en) {
-		doctorService.doctorDelete(en);
+	@GetMapping("/doctorDeleteForm")
+	public String doctorDeleteForm(HttpSession session, RedirectAttributes RA) {
+		
+		String doctorId = (String) session.getAttribute("doctorId");
+		
+		DoctorVO doctorVO = doctorService.doctorDelete(doctorId);
+		
+		if(doctorVO == null) {
+			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
+			return "redirect:/doctor/doctorUpdate";
+		} else if(doctorVO.getDoctorState().equals("탈퇴")) {
+			RA.addFlashAttribute("msg", "탈퇴 완료 됐습니다");
+			session.invalidate();
+			
+			return "reidrect:/main"; // 홈페이지로 리다이렉트
+		} else {
+			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
+			return "redirect:/doctor/doctorUpdate";
+		}
+		
 	}
 	
 

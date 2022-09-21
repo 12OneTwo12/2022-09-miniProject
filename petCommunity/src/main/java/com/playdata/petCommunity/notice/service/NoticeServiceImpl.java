@@ -1,5 +1,6 @@
 package com.playdata.petCommunity.notice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.playdata.petCommunity.entity.Comment;
+import com.playdata.petCommunity.command.NoticeVO;
 import com.playdata.petCommunity.entity.Notice;
 import com.playdata.petCommunity.entity.QNotice;
+import com.playdata.petCommunity.repository.NoticeRepository;
+import com.playdata.petCommunity.response.NoticeResponse;
 import com.playdata.petCommunity.util.page.Criteria;
 import com.playdata.petCommunity.util.page.PageDTO;
 import com.querydsl.core.BooleanBuilder;
@@ -22,7 +25,7 @@ public class NoticeServiceImpl implements NoticeService {
 	NoticeRepository noticeRepository;
 	
 	@Override
-	public PageDTO<Notice> getList(Criteria cri) {
+	public List<NoticeVO> getList(Criteria cri) {
 		
 		// 동적쿼리를 만듬
 		QNotice qNotice = QNotice.notice;
@@ -46,13 +49,11 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		Page<Notice> result = noticeRepository.findAll(builder, PageRequest.of(cri.getPage()-1, cri.getAmount(), Sort.by("nno").descending()));
 		
-		PageDTO<Notice> pageDTO = new PageDTO<>(result);
-		
-		return pageDTO;
+		return listNoticeVO(new PageDTO<>(result).getPageData());
 	}
 
 	@Override
-	public List<Notice> getListByWriter(Criteria cri) {
+	public List<NoticeVO> getListByWriter(Criteria cri) {
 		
 		QNotice qNotice = QNotice.notice;
 		
@@ -61,12 +62,83 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		builder.and(qNotice.writer.contains(cri.getWriter()));
 		
-		return noticeRepository.findAll(builder,PageRequest.of(cri.getPage()-1, cri.getAmount(), Sort.by("nno").descending())).getContent();
+		List<Notice> list = noticeRepository.findAll(builder,PageRequest.of(cri.getPage()-1, cri.getAmount(), Sort.by("nno").descending())).getContent();
+		
+		return listNoticeVO(list);
 	}
 
 	@Override
-	public Notice getDetailById(Long nno) {
-		return noticeRepository.findById(nno).get();
+	public NoticeVO getDetailById(Long nno) {
+		return NoticeResponse.createNoticeVOByEntity(noticeRepository.findById(nno).get());
+	}
+
+	@Override
+	public NoticeVO registNotice(NoticeVO noticeVO) {
+		
+		Notice notice = new Notice().updateNoticeByVO(noticeVO);
+		
+		Notice result = noticeRepository.save(notice);
+		
+		return new NoticeResponse().createNoticeVOByEntity(result);
+	}
+	
+	private List<NoticeVO> listNoticeVO(List<Notice> noticeList) {
+		
+		List<NoticeVO> realList = new ArrayList<>();
+		
+		for(Notice n : noticeList) {
+			realList.add( NoticeResponse.createNoticeVOByEntity(n));
+		}
+		
+		return realList;
+	}
+
+	@Override
+	public NoticeVO noticeDelete(NoticeVO noticeVO, String userId) {
+		
+		if(checkNotice(noticeVO,userId)) {
+		
+			Notice notice = new Notice().updateNoticeByVO(noticeVO);
+			notice.setNoticeState("삭제");
+	
+			Notice result = noticeRepository.save(notice);
+			
+			NoticeVO vo = NoticeResponse.createNoticeVOByEntity(result);
+			
+			if(vo.getNoticeState().equals("삭제")) {
+				return NoticeResponse.createNoticeVOByEntity(result);
+			} else {
+				return null;
+			}
+			
+		} else {
+			return null;
+		}
+		
+	}
+
+	@Override
+	public boolean checkNotice(NoticeVO vo, String userId) {
+		
+		Notice notice = noticeRepository.findById(vo.getNno()).get();
+		
+		return notice.getWriter() == userId;
+	}
+
+	@Override
+	public NoticeVO updateNotice(NoticeVO noticeVO, String userId) {
+		
+		if(checkNotice(noticeVO,userId)) {
+		
+			Notice notice = new Notice().updateNoticeByVO(noticeVO);
+			
+			Notice result = noticeRepository.save(notice);
+			
+			return NoticeResponse.createNoticeVOByEntity(result);
+			
+		} else {
+			return null;
+		}
 	}
 
 }

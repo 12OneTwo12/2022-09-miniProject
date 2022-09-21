@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.playdata.petCommunity.command.CommentVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +24,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends BaseNoticeEntity {
+public class Comment extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //
@@ -43,5 +45,17 @@ public class Comment extends BaseNoticeEntity {
 	@ManyToOne
 	@JoinColumn(name="nno", referencedColumnName = "nno",nullable = false)
 	private Notice notice;
+	
+	public Comment updateCommentByVO(CommentVO commentVO, Notice notice) {
+		
+		this.cno = commentVO.getCno();
+		this.writer = commentVO.getWriter();
+		this.content = commentVO.getContent();
+		this.userOrDoctor = commentVO.getUserOrDoctor();
+		this.notice = notice;
+		this.commentState = commentVO.getCommentState();
+		
+		return this;
+	}
 	
 }

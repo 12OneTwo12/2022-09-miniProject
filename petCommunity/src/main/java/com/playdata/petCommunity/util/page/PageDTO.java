@@ -25,7 +25,7 @@ public class PageDTO<T> {
 	private int amount; // 데이터 개수
 	private long total; // 전체 게시글 수
 	private int pageTotal; // 실제 끝 페이지 번호
-	private List<T> pageDate; // 데이터 *****
+	private List<T> pageData; // 데이터 *****
 	
 	private List<Integer> pageList = new ArrayList<>(); // start~end값을 저장하는 리스트
 	
@@ -35,7 +35,7 @@ public class PageDTO<T> {
 		this.amount = pageable.getSize();
 		this.total = pageable.getTotalElements();
 		this.pageTotal = pageable.getTotalPages();
-		this.pageDate = pageable.getContent();
+		this.pageData = pageable.getContent();
 		
 		// End페이지 계산
 		// 1~10 조회시 -> 10
