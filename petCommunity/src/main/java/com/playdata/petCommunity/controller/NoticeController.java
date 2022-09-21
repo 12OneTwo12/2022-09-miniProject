@@ -125,20 +125,21 @@ public class NoticeController {
 	@PostMapping("/noticeUpdate")
 	public String noticeUpdate(@Valid NoticeVO noticeVO, Errors errors, RedirectAttributes RA, Model model, HttpSession session) {
 		
+		System.out.println(noticeVO);
+		
 		if(errors.hasErrors()) {
-			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
-			return "noticeDetail?nno="+noticeVO.getNno(); // 유효성 검사 실패로 리다이렉트
+			model.addAttribute("msg", errors.getFieldError().getDefaultMessage());
+			return "notice/noticeDetail?nno="+noticeVO.getNno(); // 유효성 검사 실패로 리다이렉트
 		} else {
 			String userId = (String) session.getAttribute("userId");
 			
 			NoticeVO newNoticeVO = noticeService.updateNotice(noticeVO,userId);
 			if(newNoticeVO == null) {
-				RA.addFlashAttribute("msg", "수정 중 문제가 발생했습니다");
-				return "noticeDetail?nno="+noticeVO.getNno();
+				model.addAttribute("msg", "수정 중 문제가 발생했습니다");
+				return "notice/noticeDetail?nno="+noticeVO.getNno();
 			} else {
-				model.addAttribute("NoticeVO", newNoticeVO);
-				model.addAttribute("msg", "정상적으로 수정 됐습니다");
-				return "noticeDetail?nno="+noticeVO.getNno(); // 수정된 글 페이지
+				RA.addFlashAttribute("msg", "정상적으로 수정 됐습니다");
+				return "redirect:/notice/noticeDetail?nno="+noticeVO.getNno(); // 수정된 글 페이지
 			}
 		}
 		
