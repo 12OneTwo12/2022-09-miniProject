@@ -10,8 +10,6 @@
 </head>
 <body>
 
-hi 
-
 	<input type="hidden" th:value="${list.size}" id="list">
 	<input type="hidden" th:value="${user.userId}" id="userId">
 	<input type="hidden" th:value="${user.userName}" id="userName">
@@ -74,7 +72,16 @@ for(i = 1; i <= limit; i++){
 	
 }
 
+var today = new Date();
+
+var year = today.getFullYear();
+var month = ('0' + (today.getMonth() + 1)).slice(-2);
+var day = ('0' + today.getDate()).slice(-2);
+
+var dateString = year + '-' + month  + '-' + day;
+
 doc.text(83, 250, '항상 행복만 가득하시길 바랍니다');  // 글씨입력(시작x, 시작y, 내용)
+doc.text(115, 260, dateString);  // 글씨입력(시작x, 시작y, 내용)
 doc.line(15, 270, 195, 270); // 선그리기(시작x, 시작y, 종료x, 종료y)
 
 var info = new Image();
@@ -82,7 +89,7 @@ info.src = '/img/9927FF335C184FBD01.png';
 info.onload = function(){
     doc.addImage(info, 'PNG', 165, 238, 20, 20); //이미지 그리기
     doc.save('web.pdf');  //결과 출력
-	location.href = "/"; 
+	location.href = "/user/mypage"; 
 }
 
 

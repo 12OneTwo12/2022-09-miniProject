@@ -9,7 +9,7 @@
     <div class="wrap">
         <div class="warp_inner">
 					</div>
-                    <form name="#####" action="#####" method="post">
+                    <form name="#####" action="registNotice" method="post">
                         <div class="full_collum collum">
                             <ul>
                                 <li class="collum_tit">
@@ -20,28 +20,28 @@
                                         <li>
                                             <table cellpadding="0" cellspacing="0" class="board_basic_view"
                                                 width="100%;">
-                                                <tr>
+<!--                                                 <tr>
                                                     <th>등록일</th>
                                                     <td colspan="5">
                                                         <input type="text" class="datepicker" name="####" readonly placeholder="날짜선택">
                                                     </td>
-                                                </tr>
+                                                </tr> -->
 
 
                                                 <tr>
                                                     <th>아이디</th>
-                                                    <td><input type="text" class="inputw150" name="####" value="admin" readonly></td>
+                                                    <td><input type="text" class="inputw150" name="writer" th:value="${userId}" readonly style="color: black"></td>
                                                 </tr>
 
                                                 <tr>
                                                     <th>제목</th>
-                                                    <td colspan="5"><input type="text" class="inputw99p" name="####"></td>
+                                                    <td colspan="5"><input type="text" class="inputw99p" name="title"></td>
                                                 </tr>
                                                 
                                                 <tr>
                                                     <th>내용</th>
                                                     <td colspan="5">
-                                                        <div><textarea  class="inputw99p" name="####" style="height:200px";></textarea>
+                                                        <div><textarea  class="inputw99p" name="content" style="height:200px";></textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -49,7 +49,7 @@
                                             </table>
                                             <div class="btn_area">
                                                 <input type="submit" class="save" value="등록">
-                                            	<input type="button" class="delete" value="목록">
+                                            	<a href="noticeListAll" class="delete" >목록</a>
                                                 <!-- 
                                                 <a href="#" class="save">등록</a>
                                                 <a href="#" class="delete">목록</a>

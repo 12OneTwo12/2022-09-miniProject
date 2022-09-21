@@ -59,7 +59,6 @@ public class NoticeController {
 	@RequestMapping("/noticeMyList")
 	public String noticeMyList(Criteria cri, Model model, HttpSession session) {
 		
-		
 		if(session.getAttribute("userId") == null) {
 			return "redirect:/"; // 작성자 id 값 없음으로 홈페이지로 리다이렉트
 		} else {
@@ -101,7 +100,7 @@ public class NoticeController {
 		
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
-			return ""; // 유효성 검사 실패로 등록 페이지로 리다이렉트
+			return "redirect:/notice/noticeReg"; // 유효성 검사 실패로 등록 페이지로 리다이렉트
 		} else {
 			String userId = (String) session.getAttribute("userId");
 			
@@ -111,11 +110,10 @@ public class NoticeController {
 			
 			if(newNoticeVO == null) {
 				RA.addFlashAttribute("msg", "등록 중 문제가 발생했습니다");
-				return "";
+				return "redirect:/notice/noticeReg";
 			} else {
-				model.addAttribute("NoticeVO", newNoticeVO);
-				model.addAttribute("msg", "정상적으로 등록 됐습니다");
-				return ""; // 작성된 글 페이지
+				RA.addFlashAttribute("msg", "정상적으로 등록 됐습니다");
+				return "redirect:/notice/noticeListAll"; // 작성된 글 페이지
 			}
 		}
 		
@@ -190,6 +188,16 @@ public class NoticeController {
 			return "redirect:/notice/noticeListAll";
 		}
 		
+	}
+	
+	@RequestMapping("/noticeReg")
+	public String noticeReg(HttpSession session, Model model) {
+		
+		String userId = (String) session.getAttribute("userId");
+		
+		model.addAttribute("userId", userId);
+		
+		return "notice/noticeReg";
 	}
 	
 }

@@ -79,9 +79,11 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		Notice notice = new Notice().updateNoticeByVO(noticeVO);
 		
+		notice.setNoticeState("정상 등록");
+		
 		Notice result = noticeRepository.save(notice);
 		
-		return new NoticeResponse().createNoticeVOByEntity(result);
+		return NoticeResponse.createNoticeVOByEntity(result);
 	}
 	
 	private List<NoticeVO> listNoticeVO(List<Notice> noticeList) {
@@ -124,15 +126,17 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		Notice notice = noticeRepository.findById(vo.getNno()).get();
 		
-		return notice.getWriter() == userId;
+		return notice.getWriter().equals(userId);
 	}
 
 	@Override
 	public NoticeVO updateNotice(NoticeVO noticeVO, String userId) {
 		
+		
 		if(checkNotice(noticeVO,userId)) {
 		
 			Notice notice = new Notice().updateNoticeByVO(noticeVO);
+			notice.setNoticeState("정상 등록");
 			
 			Notice result = noticeRepository.save(notice);
 			

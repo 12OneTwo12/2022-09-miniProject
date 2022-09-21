@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.playdata.petCommunity.command.PetVO;
 import com.playdata.petCommunity.pet.service.PetService;
 import com.playdata.petCommunity.repository.UserRepository;
+import com.playdata.petCommunity.user.service.UserService;
 import com.playdata.petCommunity.user.service.UserServiceImpl;
 import com.playdata.petCommunity.util.font.Font;
 
@@ -30,7 +31,10 @@ public class PetController {
 	@Autowired
 	private PetService petService;
 	
-	@RequestMapping("pet_signup")
+	@Autowired
+	private UserService userService;
+	
+	@RequestMapping("petSignup")
 	public String pet_signup() {
 		return"pet/pet_signup";
 	}
@@ -124,7 +128,7 @@ public class PetController {
 		
 		model.addAttribute("font", new Font().getFont());
 		model.addAttribute("list", petService.getPetList(userId));
-		model.addAttribute("user", new UserServiceImpl().getUser(userId));
+		model.addAttribute("user", userService.getUser(userId));
 			
 		return "pdf/pdf";
 	}

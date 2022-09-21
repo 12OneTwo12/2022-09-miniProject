@@ -122,6 +122,7 @@ public class CommentServiceImpl implements CommentService {
 			if(userId.equals(beforeComment.getWriter())) {
 				commentVO.setUserOrDoctor("user");
 				commentVO.setCommentState("삭제");
+				commentVO.setContent(beforeComment.getContent());
 				Comment afterComment = new Comment().updateCommentByVO(commentVO, notice);
 				result = CommentResponse.updateCommentVOByEntity(commentRepository.save(afterComment));
 			} else {

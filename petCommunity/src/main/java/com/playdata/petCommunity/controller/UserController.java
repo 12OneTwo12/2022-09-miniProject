@@ -96,7 +96,6 @@ public class UserController {
 	
 	// 유저 회원정보 수정
 	@PostMapping("/userUpdateForm")
-
 	public String userUpdateForm(@Valid UserUpdateVO vo , Errors errors, RedirectAttributes RA) {
 		
 		if(errors.hasErrors()) {
