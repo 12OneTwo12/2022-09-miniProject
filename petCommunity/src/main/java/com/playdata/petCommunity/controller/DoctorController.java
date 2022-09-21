@@ -83,17 +83,26 @@ public class DoctorController {
 	@PostMapping("/doctorUpdateForm")
 	public String doctorUpdateForm(@Valid @RequestBody DoctorUpdateVO vo, Errors errors, RedirectAttributes RA) {
 		
-		DoctorVO check = doctorService.doctorUpdate(vo);
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/doctor/doctorUpdate";
-		}
-		if(check == null) {
-			RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
-			return "redirect:/doctor/doctorUpdate";
 		} else {
-			RA.addFlashAttribute("msg", "정상적으로 변경 됐습니다");
-			return "redirect:/doctor/doctorUpdate";
+			if(!vo.getDoctorNewPw().equals(vo.getDoctorNewPwCheck())) {
+				RA.addFlashAttribute("msg", "비밀번호를 확인해주세요");
+				return "redirect:/doctor/doctorUpdate";
+			} else {
+				DoctorVO check = doctorService.doctorUpdate(vo);
+				
+				if(check == null) {
+					RA.addFlashAttribute("msg", "정보 변경도중 문제가 발생했습니다 관리자에게 문의해주세요");
+					return "redirect:/doctor/doctorUpdate";
+				} else {
+					RA.addFlashAttribute("msg", "정상적으로 변경 됐습니다");
+					return "redirect:/doctor/doctorUpdate";
+				}
+		
+			}
+			
 		}
 		
 	}
