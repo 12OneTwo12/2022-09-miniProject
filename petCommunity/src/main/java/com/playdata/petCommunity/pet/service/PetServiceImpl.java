@@ -31,7 +31,7 @@ public class PetServiceImpl implements PetService{
 		
 		User userEntity = userRepository.findByUserId(userId);
 		
-		UserVO userVO = new UserResponse().updateUserVOByEntity(userEntity);
+		UserVO userVO = new UserResponse().createUserVOByEntity(userEntity);
 		
 		if(petVO.getPetGender().equals("수컷")) {
 			petNumber += "7";

@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserResponse {
 	
-	public UserVO updateUserVOByEntity(User user) {
+	public static UserVO createUserVOByEntity(User user) {
 		return new UserVO(
 						  user.getUserName(),
 						  user.getUserPhoneNumber(),

@@ -23,13 +23,13 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public UserVO getUser(String userId) {
-		return new UserResponse().updateUserVOByEntity(userRepository.findByUserId(userId));
+		return UserResponse.createUserVOByEntity(userRepository.findByUserId(userId));
 	}
 
 	
 	@Override
 	public UserVO userIdCheck(UserVO vo) {
-		return new UserResponse().updateUserVOByEntity(userRepository.findByUserId(vo.getUserId()));
+		return UserResponse.createUserVOByEntity(userRepository.findByUserId(vo.getUserId()));
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService{
 			
 			vo.setUserPw(pwHash);
 			vo.setUserState("정상 등록"); // 일단 이렇게
-			return new UserResponse().updateUserVOByEntity(userRepository.save(convertUserVOtoUser(vo)));
+			return UserResponse.createUserVOByEntity(userRepository.save(convertUserVOtoUser(vo)));
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService{
 		builder.and(qUser.userId.contains(vo.getUserId()));
 		builder.and(qUser.userPw.contains(pwHash));
 		
-		return new UserResponse().updateUserVOByEntity(userRepository.findAll(builder).iterator().next());
+		return UserResponse.createUserVOByEntity(userRepository.findAll(builder).iterator().next());
 	}
 
 	@Override
@@ -69,13 +69,13 @@ public class UserServiceImpl implements UserService{
 		String hashPw = Encrypt.getEncrypt(vo.getUserPw(), user.getUserId());
 		
 		if(hashPw.equals(user.getUserPw())) {
-			UserVO userVO = new UserResponse().updateUserVOByEntity(user);
+			UserVO userVO = UserResponse.createUserVOByEntity(user);
 			
 			userVO.setUserPw(Encrypt.getEncrypt(vo.getNewUserPw(), user.getUserId()));
 			
 			User result = new User().updateUserByVO(userVO);
 			
-			return new UserResponse().updateUserVOByEntity(userRepository.save(result));
+			return UserResponse.createUserVOByEntity(userRepository.save(result));
 		} else {
 			return null;
 		}
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService{
 		
 		user.setUserState("탈퇴");
 		
-		return new UserResponse().updateUserVOByEntity(userRepository.save(user));
+		return UserResponse.createUserVOByEntity(userRepository.save(user));
 	}
 
 	// save는 entity만 매개변수로 받을 수 있기 때문에
