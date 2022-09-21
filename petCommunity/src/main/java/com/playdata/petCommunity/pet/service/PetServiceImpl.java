@@ -87,6 +87,8 @@ public class PetServiceImpl implements PetService{
 		
 		Pet pet = new Pet().updatePetbyVO(petVO, userEntity);
 		
+		pet.setPetState("정상 등록");
+		
 		Pet result = petRepository.save(pet);
 		
 		return PetResponse.updatePetVOByEntity(result);
@@ -114,14 +116,11 @@ public class PetServiceImpl implements PetService{
 		
 		User userEntity = userRepository.findByUserId(userId);
 		
-		Pet findResult = petRepository.selectByPetNumber(petVO.getPetNumber());
+		Pet findResult = petRepository.findById(petVO.getPno()).get();
 		
-		petVO.setPno(findResult.getPno());
-		petVO.setPetState("삭제");
+		findResult.setPetState("삭제");
 		
-		Pet update = findResult.updatePetbyVO(petVO, userEntity);
-		
-		Pet result = petRepository.save(update);
+		Pet result = petRepository.save(findResult);
 		
 		return PetResponse.updatePetVOByEntity(result);
 	}
@@ -140,6 +139,14 @@ public class PetServiceImpl implements PetService{
 		}
 		
 		return list;
+	}
+
+	@Override
+	public PetVO getPetDetail(Long pno) {
+		
+		Pet findResult = petRepository.findById(pno).get();
+		
+		return PetResponse.updatePetVOByEntity(findResult);
 	}
 	
 

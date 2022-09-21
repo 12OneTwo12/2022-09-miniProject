@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.playdata.petCommunity.command.PetVO;
@@ -47,11 +48,11 @@ public class PetController {
 	
 	// 반려동물정보 입력화면
 	@PostMapping("/petJoinForm")
-	public String petJoinForm(@RequestBody @Valid PetVO petVO, Errors errors, HttpSession session , RedirectAttributes RA) {
+	public String petJoinForm(@Valid PetVO petVO, Errors errors, HttpSession session , RedirectAttributes RA) {
 		
 		if(errors.hasErrors()) {
 			RA.addAttribute("msg", errors.getFieldError().getDefaultMessage());
-			return "redirect:/"; // 마이 페이지
+			return "redirect:/pet/viewPetList"; // 마이 페이지
 		} else {
 			String userId = (String) session.getAttribute("userId");
 			
@@ -59,10 +60,10 @@ public class PetController {
 			
 			if(result != null) { //반려동물 정보입력성공
 				RA.addFlashAttribute("msg", "반려동물의 정보가 입력되었습니다");
-				return "redirect:/"; // 마이 페이지
+				return "redirect:/pet/viewPetList"; // 마이 페이지
 			} else {
 				RA.addFlashAttribute("msg", "등록 과정에 문제가 생겼습니다 관리자에게 문의해주세요");
-				return "redirect:/"; // 펫 등록 페이지 
+				return "redirect:/pet/viewPetList"; // 펫 등록 페이지 
 			}
 		}
 		
@@ -70,11 +71,11 @@ public class PetController {
 	}
 	
 	@PostMapping("/petUpdateForm")
-	public String petUpdateForm(@RequestBody @Valid PetVO petVO,Errors errors , HttpSession session, RedirectAttributes RA) {
+	public String petUpdateForm(@Valid PetVO petVO,Errors errors , HttpSession session, RedirectAttributes RA) {
 		
 		if(errors.hasErrors()) {
 			RA.addAttribute("msg", errors.getFieldError().getDefaultMessage());
-			return "redirect:/"; // 마이 페이지
+			return "redirect:/pet/viewPetList"; // 마이 페이지
 		} else {
 			String userId = (String) session.getAttribute("userId");
 			
@@ -82,10 +83,10 @@ public class PetController {
 			
 			if(result != null) { //반려동물 정보입력성공
 				RA.addFlashAttribute("msg", "반려동물의 정보가 변경되었습니다");
-				return "redirect:/"; // 마이 페이지
+				return "redirect:/pet/viewPetList"; // 마이 페이지
 			} else {
 				RA.addFlashAttribute("msg", "등록 과정에 문제가 생겼습니다 관리자에게 문의해주세요");
-				return "redirect:/"; // 펫 등록 페이지 
+				return "redirect:/pet/viewPetList"; // 펫 등록 페이지 
 			}
 		}
 		
@@ -93,7 +94,7 @@ public class PetController {
 	}
 	
 	@PostMapping("/petDelete")
-	public String petDelete(@RequestBody PetVO petVO, HttpSession session, RedirectAttributes RA) {
+	public String petDelete(PetVO petVO, HttpSession session, RedirectAttributes RA) {
 		
 		String userId = (String) session.getAttribute("userId");
 		
@@ -101,10 +102,10 @@ public class PetController {
 		
 		if(result != null) { //반려동물 정보입력성공
 			RA.addFlashAttribute("msg", "반려동물의 정보가 삭제되었습니다");
-			return "redirect:/"; // 마이 페이지
+			return "redirect:/pet/viewPetList"; // 마이 페이지
 		} else {
 			RA.addFlashAttribute("msg", "삭제 과정에 문제가 생겼습니다 관리자에게 문의해주세요");
-			return "redirect:/"; // 펫 등록 페이지 
+			return "redirect:/pet/viewPetList"; // 펫 등록 페이지 
 		}
 		
 	}
@@ -118,7 +119,7 @@ public class PetController {
 		
 		model.addAttribute("list", list);
 		
-		return "";
+		return "pet/petlist";
 	}
 	
 	@GetMapping("/pdfPet")
@@ -132,13 +133,14 @@ public class PetController {
 			
 		return "pdf/pdf";
 	}
-	@RequestMapping("/petlist")
-	public String petlist() {
-		return"/pet/petlist";
-	}
 	@RequestMapping("/petmodify")
-	public String petmodify() {
-		return"/pet/petmodify";
+	public String petmodify(@RequestParam("pno") Long pno, Model model) {
+		
+		PetVO vo = petService.getPetDetail(pno);
+		
+		model.addAttribute("vo", vo);
+		
+		return"pet/petmodify";
 	}
 	@RequestMapping("/petreg")
 	public String petreg() {

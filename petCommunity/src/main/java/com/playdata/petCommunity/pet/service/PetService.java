@@ -13,5 +13,7 @@ public interface PetService {
 	public PetVO petDelete(PetVO petVO, String userId);
 
 	public List<PetVO> getPetList(String userId);
+
+	public PetVO getPetDetail(Long pno);
 	
 }
