@@ -38,11 +38,18 @@ public class UserController {
 	public String userJoin() {
 		return "user/userJoin";
 	}
+	
+	// 유저 수정화면
+	@GetMapping("/userUpdate")
+	public String userUpdate() {
+		return "user/userUpdateForm";
+	}
+	
 	// 유저회원가입
 	//회원가입 성공하면 바로 반려동물 정보입력페이지로
 	@PostMapping("/userJoinForm")
-	public String userJoinForm(@RequestBody @Valid UserVO vo, Errors errors, RedirectAttributes RA) {
-		
+	public String userJoinForm(@Valid UserVO vo, Errors errors, RedirectAttributes RA) {
+	
 		if(errors.hasErrors()) {
 			
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
@@ -50,44 +57,47 @@ public class UserController {
 		} else {
 			
 			UserVO result = userService.userJoin(vo);
+			
 			if(result != null) { // 유저회원가입성공
-				System.out.println(vo);
 				RA.addFlashAttribute("msg", "가입을 축하드립니다");
-				return "redirect:/user/userLogin"; //나중에 수정
+				return "redirect:/user/userLogin"; // 가입성공 시 로그인창으로
 			} else { //회원가입실패
 				RA.addFlashAttribute("msg", "가입에 실패했습니다. 입력 내용을 확인해주세요");
-				return "redirect:/user/userJoinForm";
+				return "redirect:/user/userJoin";
 				// 실패하면 다시 회원가입페이지로 가는 return
 			}
 		}
 	}
 	
 	// 유저로그인
-	@PostMapping("/userLogin")
-	public String userLogin(@RequestBody @Valid UserLoginVO vo, Errors errors, RedirectAttributes RA, HttpSession session) {
-		
+	@PostMapping("/userLoginForm")
+	public String userLogin(@Valid UserLoginVO vo, Errors errors, RedirectAttributes RA, HttpSession session) {
+	
 		// 유저로그인처리
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "redirect:/user/userLogin";
 		} else {
+			
 			UserVO userVO = userService.userLogin(vo);
+			
 			if(userVO !=null ) { //유저 로그인 성공
 				
 				session.setAttribute("userId", userVO.getUserId());
 				session.setAttribute("userName", userVO.getUserName());
 				
-				return "redirect:/main"; //성공 시 메인화면으로 이동
+				return "redirect:/notice/main"; //성공 시 메인화면으로 이동
 			} else { // 유저 로그인 실패
 				RA.addFlashAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
-				return "redirect:/user/userLogin";
+				return "redirect:/user/userLogin"; // 실패 시 다시 로그인화면으로
 			}
 		}
 	}
 	
 	// 유저 회원정보 수정
 	@PostMapping("/userUpdateForm")
-	public String userUpdateForm(@RequestBody @Valid UserUpdateVO vo , Errors errors, RedirectAttributes RA) {
+
+	public String userUpdateForm(@Valid UserUpdateVO vo , Errors errors, RedirectAttributes RA) {
 		
 		if(errors.hasErrors()) {
 			RA.addFlashAttribute("msg", errors.getFieldError().getDefaultMessage());

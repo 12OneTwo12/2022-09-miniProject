@@ -24,12 +24,12 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
 		      	<h3 class="mb-4 text-center">계정이 있으신가요?</h3>
-		      	<form action="#" class="signin-form">
+		      	<form action="userLoginForm" method="post" class="signin-form">
 		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Username" required>
+		      			<input type="text" name="userId" class="form-control" placeholder="UserID" required>
 		      		</div>
 	            <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Password" required>
+	              <input id="password-field" name="userPw" type="password" class="form-control" placeholder="Password" required>
 	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            <div class="form-group">
@@ -61,6 +61,12 @@
   <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
+  <script th:inline="javascript">
+	var msg = JSON.parse('[[${msg}]]');
+	if(msg != null){
+		alert(msg);
+	}
+	</script>
 
 	</body>
 </html>

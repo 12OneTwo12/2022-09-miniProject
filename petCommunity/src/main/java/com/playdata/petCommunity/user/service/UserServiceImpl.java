@@ -41,9 +41,6 @@ public class UserServiceImpl implements UserService{
 		} else {
 
 			String hashPw = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
-			System.out.println(vo.getUserPw());
-			System.out.println(vo.getUserId());
-			System.out.println(hashPw);
 			
 			vo.setUserPw(hashPw);
 			vo.setUserState("정상 등록"); // 일단 이렇게

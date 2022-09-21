@@ -24,28 +24,36 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
 		      	<h3 class="mb-4 text-center">회원가입</h3>
-		      	<form action="#" class="signup-form">
-		      	<!-- id  -->
+		      	<form action="userJoinForm" method="post" class="signup-form">
+		      	<!-- userName  -->
 		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Username" required>
+		      			<input type="text" class="form-control" name="userName" placeholder="Name" required>
 		      		</div>
-		      	<!--id check  -->
+		      	<!-- userPhoneNumber  -->
 		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Username_check" required>
+		      			<input type="text" class="form-control" name="userPhoneNumber" placeholder="PhoneNumber" required>
 		      		</div>	
-		      	<!-- passwrod  -->
+		      	<!-- userId -->
+		      		<div class="form-group">
+		      			<input type="text" class="form-control" name="userId" placeholder="UserID" required>
+		      		</div>	
+		      	<!-- userPw  -->
 	            <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Password" required>
+	              <input id="password-field" type="password" name="userPw"class="form-control" placeholder="Password" required>
 	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            <!--password_check  -->
 	                <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Password_check" required>
+	              <input id="password-field" type="password" name="userPwCheck" class="form-control" placeholder="Password_check" required>
 	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
-	            <!-- address  -->
+	            <!-- userLocation  -->
 	             <div class="form-group">
-	              <input type="text" class="form-control" placeholder="Address" required>
+	              <input type="text" name="userLocation" class="form-control" placeholder="Address" required>
+	            </div>
+	            <!-- userLocationDetail  -->
+	             <div class="form-group">
+	              <input type="text" name="userLocationDetail" class="form-control" placeholder="AddressDetail" required>
 	            </div>
 	            
 	            
@@ -55,7 +63,7 @@
 	        
 	 		 <p class="w-100 text-center">&mdash; Cancel  &mdash;</p>
 	          <div class="social d-flex text-center">
-	          	<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>Cancle</a>
+	          	<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>Cancel</a>
 	            	
 	          </form>
 	          </div>
@@ -69,6 +77,12 @@
   <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
+  <script th:inline="javascript">
+	var msg = JSON.parse('[[${msg}]]');
+	if(msg != null){
+		alert(msg);
+	}
+  </script>
 
 	</body>
 </html>
