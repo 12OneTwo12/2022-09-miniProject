@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mysql.cj.Session;
 import com.playdata.petCommunity.command.CommentVO;
 import com.playdata.petCommunity.command.NoticeVO;
 import com.playdata.petCommunity.comment.service.CommentService;
@@ -121,8 +119,6 @@ public class NoticeController {
 	@PostMapping("/noticeUpdate")
 	public String noticeUpdate(@Valid NoticeVO noticeVO, Errors errors, RedirectAttributes RA, Model model, HttpSession session) {
 		
-		System.out.println(noticeVO);
-		
 		if(errors.hasErrors()) {
 			model.addAttribute("msg", errors.getFieldError().getDefaultMessage());
 			return "notice/noticeDetail?nno="+noticeVO.getNno(); // 유효성 검사 실패로 리다이렉트
@@ -148,15 +144,16 @@ public class NoticeController {
 		
 		if(noticeService.checkNotice(noticeVO,userId)) {
 			NoticeVO newNoticeVO = noticeService.noticeDelete(noticeVO, userId);
+		
 			if(newNoticeVO == null) {
 				RA.addFlashAttribute("msg", "삭제 중 문제가 발생했습니다");
-				return "";
+				return "redirect:/notice/noticeMyList";
 			} else {
 				RA.addFlashAttribute("msg", "정상적으로 삭제 됐습니다");
-				return "";
+				return "redirect:/notice/noticeMyList";
 			}
 		} else {
-			return ""; // 로그인한 사람과 작성자가 다름으로 삭제 불가
+			return "redirect:/"; // 로그인한 사람과 작성자가 다름으로 삭제 불가
 		}
 		
 	}

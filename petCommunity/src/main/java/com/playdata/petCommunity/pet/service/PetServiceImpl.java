@@ -77,6 +77,8 @@ public class PetServiceImpl implements PetService{
 		
 		String countNumber = ""+(petRepository.findTodayRegistPet()+1);
 		
+		System.out.println(countNumber);
+		
 		for(int i = 0; i < 4-countNumber.length(); i++) {
 			petNumber += "0";
 		}
