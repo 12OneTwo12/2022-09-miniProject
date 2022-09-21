@@ -16,7 +16,8 @@ legend{ display: none; }
 address{ font-style: normal;}
 pre{ color:#777}
 input[type=button], input[type=submit], input[type=reset], input[type=image], button{ cursor: pointer; }
-input[type=text], select{min-width:60px;}
+input[type=text], select{min-width:60px;
+}
 *{box-sizing:border-box;}
 ::-webkit-input-placeholder { /* 크롬 4–56 */
     color: #ddd;
@@ -111,7 +112,7 @@ padding: 50px;}
 .board_notice_basic tr th{width:110px; background-color:rgb(0, 0, 128)0, 128)0, 128)f5; text-align:center; border-bottom:1px solid #fff; border-right:1px solid #ededed; height:45px; line-height:45px; }
 .board_notice_basic tr td{ border-bottom:1px solid #ededed; padding-left:12px; line-height:30px; height:45px; text-align:center;}
 
-.board_basic_view{border-top:1px solid #ededed; border-right:1px solid #ededed;}
+.board_basic_view{border-top:1px solid #ededed; border-right:1px solid #ededed;border-left:1px solid #ededed;}
 .board_basic_view tr th{width:140px; background-color:#12498d; text-align:center; border-bottom:1px solid #fff; border-right:1px solid #ededed; height:45px; line-height:45px; }
 .board_basic_view tr td{ border-bottom:1px solid #ededed; padding-left:12px; line-height:30px; height:45px; text-align:left;}
 .board_basic_view tr td .write_edit_area{width:100%; margin:10px auto; border:1px solid #ededed; height:600px;}
@@ -125,9 +126,12 @@ select{height:30px; border:1px solid #d5d5d5; margin-right:4px;}
 
 .btn_area {text-align: center; padding-bottom: 20px; padding-top:20px;}
 .btn_area a {text-align: center; text-align: center; padding: 11px 40px; color: #fff; }
-.btn_area .save {background-color: #12498d; text-align: center; padding: 11px 40px; color: #fff; border: none; height: auto; margin: 0;}
-.btn_area .revise {background-color: #525964; text-align: center; padding: 11px 40px; color: #fff; border: none; height: auto; margin: 0;}
-.btn_area .delete {background-color: #999; text-align: center; padding: 11px 40px; color: #fff; border: none; height: auto; margin: 0;}
+.btn_area .save {background-color: #12498d; 
+border-radius:10px;
+font-size:25px;
+text-align: center; padding: 11px 40px; color: #fff; border: none; height: auto;margin-right:3rem;}
+.btn_area .revise { border-radius:15px; text-align: center; padding: 11px 40px; color: #fff; border: none; height: auto; margin: 0;}
+.btn_area .delete {background-color: #999;font-size:25px; border-radius:10px; text-align: center; padding: 11px 40px; color: #fff; border: none; height: auto; margin: 0;}
 
 .btn_area02 {text-align: center; padding-bottom: 20px;}
 .btn_area02 a {text-align: center; text-align: center; padding: 11px 27px; color: #fff; }
@@ -291,7 +295,8 @@ p > .btn-option:last-child{border-radius: 0px 5px 5px 0px;}
 .margin_center{margin:0 auto;}
 
 /*인풋*/
-.inputw99p{width:99.5%; resize: vertical;}
+.inputw99p{width:99.5%; resize: vertical;
+background-color:transparent;}
 .inputw40{width:40px; resize: vertical;}
 .inputw140{width:140px; height:30px; line-height:30px;}
 .inputw217{width:190px; height:30px; line-height:30px; border:1px solid #d5d5d5; background-position-x:190px!important;}
@@ -680,4 +685,13 @@ width:90%;}
 .D-comment{
 	color:white;
 	font-size:20px;
+}
+.mglr13-1{
+	background-color: #12498d;
+}
+.mglr13-2{
+	background-color: #b9c1cc;
+}
+.mglr13-3{
+	background-color: #999;
 }

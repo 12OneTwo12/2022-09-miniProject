@@ -4083,7 +4083,6 @@ optgroup,
 select,
 textarea {
   color: inherit;
-  font: inherit;
   margin: 0;
 }
 optgroup {
@@ -30906,7 +30905,17 @@ a.u-link.u-text-hover-grey-90:hover {
 
 /*begin-variables sitestylecss*/
 
-
+.write{
+	width:100px;
+	height:40px;
+	padding-left:0px;
+	float:right;
+	margin-right:2rem;
+	border-radius:15px;
+    background-color: rgba( 130, 130, 130, 0.5 );
+    color:white;
+    font-size:15px;
+}
 
         
 
@@ -30990,6 +30999,8 @@ a.u-link.u-text-hover-grey-90:hover {
         }
         p:not(.u-text-variant)
         {
+        color:white;
+        font-size:20px;
         margin-top: 20px;
         margin-bottom: 20px;
         }
@@ -31069,7 +31080,9 @@ a.u-link.u-text-hover-grey-90:hover {
         /*end-media rules*/
         /** publish-rules **/
 
-        
+        .other_object{
+        display:flex;
+        }
 
         /** cms-rules **/
         /*begin-responsive rules*/

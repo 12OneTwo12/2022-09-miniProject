@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mysql.cj.Session;
 import com.playdata.petCommunity.command.CommentVO;
 import com.playdata.petCommunity.command.NoticeVO;
 import com.playdata.petCommunity.comment.service.CommentService;
@@ -24,6 +25,7 @@ import com.playdata.petCommunity.entity.Notice;
 import com.playdata.petCommunity.notice.service.NoticeService;
 import com.playdata.petCommunity.util.page.Criteria;
 import com.playdata.petCommunity.util.page.PageDTO;
+
 
 @Controller
 @RequestMapping("/notice")
@@ -41,7 +43,7 @@ public class NoticeController {
 	public String main() {
 		return "notice/main";
 	}
-	
+
 	@RequestMapping("/noticeListAll")
 	public String noticeListAll(Criteria cri, Model model, HttpSession session) {
 		

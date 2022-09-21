@@ -20,6 +20,8 @@ public class AuthHandler implements HandlerInterceptor{
 		String userId = (String)session.getAttribute("userId");
 		String doctorId = (String)session.getAttribute("doctorId");
 		
+		
+		
 		if(userId != null || doctorId != null) {
 			System.out.println(session.getAttribute("doctorId"));
 			return true; // 컨트롤러를 실행함

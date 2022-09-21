@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"> 
 
 <!-- ~{경로 :: 전달할 선택자} -->
-<body>
+<body style=background-image:url("/img/modback.jpg");>
 <header  class="wrap">
 <th:block th:replace="~{./include/basicLayout :: setContent(~{ :: .wrap  } ) }"> 
 </header>
@@ -11,6 +11,7 @@
             <!-- left_menu end -->
             <div class="right_content">
                 <div class="midiaq">
+
                     <div class="mainWrapper"> 
                             
 						</div>
@@ -65,9 +66,9 @@
                                                  -->
 
                                                 <!-- 수정, 삭제는 JS를통해 제어합니다 -->
-                                                <a href="#" class="save">수정</a>
-                                                <a href="#" class="delete">목록</a>
-                                                <a href="#" class="revise mglr13">삭제</a> 
+                                                <a href="#" class="revise mglr13-1" >수정</a>
+                                                <a href="#" class="revise mglr13-2" >목록</a>
+                                                <a href="#" class="revise mglr13-3">삭제</a> 
                                                 
                                             </div>
                                         </li>

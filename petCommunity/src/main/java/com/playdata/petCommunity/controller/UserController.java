@@ -30,13 +30,13 @@ public class UserController {
 	//유저 로그인화면
 	@GetMapping("/userLogin")
 	public String userLogin() {
-		return "user/user_login";
+		return "user/userLogin";
 	}
 	
 	// 유저 회원가입화면
 	@GetMapping("/userJoin")
 	public String userJoin() {
-		return "user/user_signin";
+		return "user/userJoin";
 	}
 	// 유저회원가입
 	//회원가입 성공하면 바로 반려동물 정보입력페이지로
@@ -131,6 +131,10 @@ public class UserController {
 			return "redirect:/user/userUpdate";
 		}
 		
+	}
+	@RequestMapping("/mypage")
+	public String mypage() {
+		return"user/mypage";
 	}
 	
 }
