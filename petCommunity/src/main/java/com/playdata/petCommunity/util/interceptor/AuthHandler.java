@@ -4,9 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-public class UserAuthHandler implements HandlerInterceptor{
+public class AuthHandler implements HandlerInterceptor{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -19,7 +20,8 @@ public class UserAuthHandler implements HandlerInterceptor{
 		if(userId != null || doctorId != null) {
 			return true; // 컨트롤러를 실행함
 		} else {
-			response.sendRedirect("/user/login"); //로그인화면으로 
+			System.out.println(session.getAttribute("doctorId"));
+			response.sendRedirect("/hahimdleda"); //로그인화면으로 
 			return false; // 컨트롤러를 실행하지 않음
 		}
 	}

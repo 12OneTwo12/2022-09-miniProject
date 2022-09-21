@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.playdata.petCommunity.command.DoctorVO;
+import com.playdata.petCommunity.command.DoctorUpdateVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class Doctor extends BaseEntity {
 	@Column(length = 30, nullable = false)
 	private String doctorId;
 	
-	@Column(length = 30, nullable = false)
+	@Column(length = 300, nullable = false)
 	private String doctorPw;
 	
 	@Column(length = 300)
@@ -52,15 +52,12 @@ public class Doctor extends BaseEntity {
 	@Column(columnDefinition = "varchar(30) default '정상 등록'")
 	private String doctorState;
 	
-	public Doctor updateDoctorByVO(DoctorVO vo) {
+	public Doctor updateDoctorByVO(DoctorUpdateVO vo) {
 		this.doctorName = vo.getDoctorName();
-		this.doctorLicenseNumber = vo.getDoctorLicenseNumber();
 		this.doctorPhoneNumber = vo.getDoctorPhoneNumber();
 		this.doctorId = vo.getDoctorId();
 		this.doctorPw = vo.getDoctorPw();
 		this.doctorLocation = vo.getDoctorLocation();
-		this.doctorRecommend = vo.getDoctorRecommend();
-		this.doctorState = vo.getDoctorState();
 		return this;
 	}
 	

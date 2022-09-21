@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService{
 			return null;
 		} else {
 
-			String pwHash = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
+			String hashPw = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
 			
 			vo.setUserPw(pwHash);
 			vo.setUserState("정상 등록"); // 일단 이렇게
@@ -50,14 +50,14 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserVO userLogin(UserLoginVO vo) {
 
-		String pwHash = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
+		String hashPw = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
 		
 		QUser qUser = QUser.user;
 		BooleanBuilder builder = new BooleanBuilder();
 		builder.and(qUser.userState.contains("정상 등록"));
 		
 		builder.and(qUser.userId.contains(vo.getUserId()));
-		builder.and(qUser.userPw.contains(pwHash));
+		builder.and(qUser.userPw.contains(hashPw));
 		
 		return new UserResponse().updateUserVOByEntity(userRepository.findAll(builder).iterator().next());
 	}

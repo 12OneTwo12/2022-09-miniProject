@@ -5,14 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.playdata.petCommunity.util.interceptor.UserAuthHandler;
+import com.playdata.petCommunity.util.interceptor.AuthHandler;
 
 @Configuration 
 public class WebConfig implements WebMvcConfigurer{
 	
 	@Bean
-	public UserAuthHandler userAuthHandler()	{
-		return new UserAuthHandler();
+	public AuthHandler userAuthHandler()	{
+		return new AuthHandler();
 	}
 	
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -25,6 +25,10 @@ public class WebConfig implements WebMvcConfigurer{
 				.addPathPatterns("/comment/**")
 				
 				.excludePathPatterns("/main")
+				.excludePathPatterns("/user/userJoinForm")
+				.excludePathPatterns("/user/userLogin")
+				.excludePathPatterns("/doctor/doctorJoinForm")
+				.excludePathPatterns("/doctor/doctorLogin")
 				.excludePathPatterns("/notice/noticeListAll")
 				.excludePathPatterns("/notice/noticeDetail");
 	}
