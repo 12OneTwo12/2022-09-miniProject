@@ -87,6 +87,7 @@ public class UserController {
 				session.setAttribute("userId", userVO.getUserId());
 				session.setAttribute("userName", userVO.getUserName());
 				
+				RA.addFlashAttribute("msg", "로그인 성공");
 				return "redirect:/notice/main"; //성공 시 메인화면으로 이동
 			} else { // 유저 로그인 실패
 				RA.addFlashAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
@@ -148,7 +149,7 @@ public class UserController {
 		} else if(userVO.getUserState().equals("탈퇴")) {
 			RA.addFlashAttribute("msg", "탈퇴 완료 됐습니다");
 			session.invalidate();
-			return "reidrect:/notice/main"; // 홈페이지로 리다이렉트
+			return "reidrect:/"; // 홈페이지로 리다이렉트
 		} else {
 			RA.addFlashAttribute("msg", "탈퇴 도중 문제가 발생했습니다 관리자에게 문의해주세요");
 			return "redirect:/user/userUpdate";
