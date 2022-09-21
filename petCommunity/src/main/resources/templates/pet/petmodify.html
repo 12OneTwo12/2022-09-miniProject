@@ -13,7 +13,7 @@
                 <div class="midiaq">
                     <div class="mainWrapper">
 					</div>
-                    <form name="#####" action="registNotice" method="post">
+                    <form name="#####" action="petUpdateForm" method="post">
                         <div class="full_collum collum">
                             <ul>
                                 <li class="collum_tit">
@@ -24,40 +24,50 @@
                                         <li>
                                             <table cellpadding="0" cellspacing="0" class="board_basic_view"
                                                 width="100%;">                                                <tr>
-                                                    <th>등록일</th>
-                                                    <td>
-                                                        <span>2016-01-01</span>
-                                                    </td>
-                                                </tr>
+                                                    
                                                 <tr>
                                                     <th>이름</th>
-                                                    <td><input type="text" class="inputw99p" name="####"style="background-color: transparent;"></td>
+                                                    <td><input type="text" class="inputw99p" th:value="${vo.petName}" name="petName"style="background-color: transparent;"></td>
+                                                </tr>
+
+												<tr>
+                                                    <th>생일</th>
+                                                    <td><input type="number" class="inputw99p" name="petBirth" th:value="${vo.petBirth}" placeholder="반려동물의 생년월일 6자리를 입력해주세요" style="background-color: transparent;"></td>
                                                 </tr>
 
                                                 <tr>
                                                     <th>몸무게</th>
-                                                    <td colspan="5"><input type="text" class="inputw99p" name="####"></td>
+                                                    <td colspan="5"><input type="text" class="inputw99p" th:value="${vo.petWeight}" name="petWeight"></td>
 
                                                 </tr>
-
-                                                	<th>종</th>
-                                                	<td><select class="0"style="color:black">
-                                                		<option>강아지</option>
-                                                		<option>고양이</option>
-                                                		<option>파충류</option>
-                                                		<option>대형동물</option>
-                                                		<option>기타</option>
+                                                <tr>
+                                                	<th>성별</th>
+                                                	<td><select name="petGender" style="color:black">
+                                                		<option value="수컷" th:selected="${vo.petGender == '수컷'}">수컷</option>
+                                                		<option value="암컷" th:selected="${vo.petGender == '암컷'}">암컷</option>
+                                                		<option value="중성" th:selected="${vo.petGender == '중성'}">중성</option>
                                                 		</select>
-                                                		</td>
-                							
+                                                	</td>
+												</tr>
+												<tr>
+                                                	<th>종</th>
+                                                	<td><select class="0"style="color:black" name="petCategory">
+                                                		<option value="강아지" th:selected="${vo.petCategory == '강아지'}">강아지</option>
+                                                		<option value="고양이" th:selected="${vo.petCategory == '고양이'}">고양이</option>
+                                                		<option value="파충류" th:selected="${vo.petCategory == '파충류'}">파충류</option>
+                                                		<option value="대형동물" th:selected="${vo.petCategory == '대형동물'}">대형동물</option>
+                                                		<option value="기타" th:selected="${vo.petCategory == '기타'}">기타</option>
+                                                		</select>
+                                                		</td>	
                 									</tr>
-                									<tr>
+                									
                 									<th>종(상세)</th>
-                									<td><input type="text" class="inputw99p" name="####"style="background-color: transparent;"></td>
+                									<td><input type="text" class="inputw99p" th:value="${vo.petCategoryDetail}" name="petCategoryDetail"style="background-color: transparent;"></td>
                 									
                                                 </tr>
                                                 <tr class="none"style="display:none;">
-													<td><input type="hidden" name="####" value=""></td>
+													<td><input type="hidden" name="petNumber" th:value="${vo.petNumber}"></td>
+													<td><input type="hidden" name="pno" th:value="${vo.pno}"></td>
 												</tr>
 												
 
@@ -65,8 +75,8 @@
                                             <div class="btn_area">
 
                                                 <!-- 수정, 삭제는 JS를통해 제어합니다 -->
-                                                <a href="#" class="revise mglr13-1" >등록</a>
-                                                <a href="#" class="revise mglr13-2" >목록</a>
+                                                <input type="submit" href="#" class="revise mglr13-1" value="등록" ></a>
+                                                <a href="viewPetList" class="revise mglr13-2" >목록</a>
                                
 					                      </div>
                                         </li>

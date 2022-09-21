@@ -59,16 +59,15 @@
 
                                             </table>
                                             <div class="btn_area">
-                                                <!-- 
-                                                <input type="submit" class="save" value="등록">
-                                            	<input type="button" class="delete" value="목록">
-                                                 -->
-
-                                                <!-- 수정, 삭제는 JS를통해 제어합니다 -->
                                                 <input type="submit" class="revise mglr13-1" value="수정" >
-                                                <a href="#" class="revise mglr13-2" >목록</a>
-                                                <a href="#" class="revise mglr13-3">삭제</a> 
+                                                <a href="noticeMyList" class="revise mglr13-2" >목록</a>
                                                 
+  							                  </form>
+                                                <form action="noticeDelete" method="post">
+                                                        <input type="hidden" th:value="${vo.writer}" name="writer">
+                                                        <input type="hidden" th:value="${vo.nno}" name="nno">
+                                                        <input type="submit" class="revise mglr13-3" value="삭제">
+                                                </form>
                                             </div>
                                         </li>
 
@@ -76,7 +75,6 @@
                                 </li>
                             </ul>
                         </div>
-                    </form>
                 </div>
             </div>
             <!-- right_content end -->

@@ -23,6 +23,7 @@ public class PetVO {
 	
 	private String petNumber;
 	
+	@NotEmpty(message = "반려동물의 몸무게는 필수 값입니다, Kg 단위를 제외한 숫자만 적어주세요")
 	private String petWeight;
 	
 	private String petCategory;

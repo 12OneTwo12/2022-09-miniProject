@@ -1,72 +1,123 @@
-package com.playdata.petCommunity.notice.service;
+package com.playdata.petCommunity.user.service;
 
-import java.util.List;
-
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.playdata.petCommunity.entity.Comment;
-import com.playdata.petCommunity.entity.Notice;
-import com.playdata.petCommunity.entity.QNotice;
-import com.playdata.petCommunity.util.page.Criteria;
-import com.playdata.petCommunity.util.page.PageDTO;
+import com.playdata.petCommunity.command.UserLoginVO;
+import com.playdata.petCommunity.command.UserUpdateVO;
+import com.playdata.petCommunity.command.UserVO;
+import com.playdata.petCommunity.entity.QUser;
+import com.playdata.petCommunity.entity.User;
+import com.playdata.petCommunity.repository.UserRepository;
+import com.playdata.petCommunity.response.UserResponse;
+import com.playdata.petCommunity.util.page.Encrypt;
 import com.querydsl.core.BooleanBuilder;
 
-@Service("noticeService")
-public class NoticeServiceImpl implements NoticeService {
+@Transactional
+@Service("userService")
+public class UserServiceImpl implements UserService{
 
 	@Autowired
-	NoticeRepository noticeRepository;
+	UserRepository userRepository;
 	
 	@Override
-	public PageDTO<Notice> getList(Criteria cri) {
-		
-		// 동적쿼리를 만듬
-		QNotice qNotice = QNotice.notice;
-		
-		// 조건을 조합할 불린빌더
-		BooleanBuilder builder = new BooleanBuilder();
-		builder.and(qNotice.noticeState.contains("정상 등록"));
-		
-		// ID에 값이 있다면? express로 표현
-		if(cri.getWriter() != null && !cri.getWriter().equals("")) {
-			builder.and(qNotice.writer.like("%"+cri.getWriter()+"%"));
-		} 
-		
-		if (cri.getContent() != null && !cri.getContent().equals("")) {
-			builder.and(qNotice.content.like("%"+cri.getContent()+"%"));
-		}
-		
-		if (cri.getTitle() != null && !cri.getTitle().equals("")) {
-			builder.and(qNotice.title.like("%"+cri.getTitle()+"%"));
-		}
-		
-		Page<Notice> result = noticeRepository.findAll(builder, PageRequest.of(cri.getPage()-1, cri.getAmount(), Sort.by("nno").descending()));
-		
-		PageDTO<Notice> pageDTO = new PageDTO<>(result);
-		
-		return pageDTO;
+	public UserVO getUser(String userId) {
+		return UserResponse.createUserVOByEntity(userRepository.findByUserId(userId));
+	}
+
+	
+	@Override
+	public UserVO userIdCheck(UserVO vo) {
+		System.out.println(vo.getUserId());
+		return UserResponse.createUserVOByEntity(userRepository.findByUserId(vo.getUserId()));
 	}
 
 	@Override
-	public List<Notice> getListByWriter(Criteria cri) {
+	public UserVO userJoin(UserVO vo) {
+	
+		if(userRepository.findByUserId(vo.getUserId()) != null) {
+			return null;
+		} else {
+
+			String hashPw = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
+			
+			vo.setUserPw(hashPw);
+			vo.setUserState("정상 등록"); // 일단 이렇게
+			return UserResponse.createUserVOByEntity(userRepository.save(convertUserVOtoUser(vo)));
+		}
+	}
+	
+	@Override
+	public UserVO userLogin(UserLoginVO vo) {
+
+		String hashPw = Encrypt.getEncrypt(vo.getUserPw(), vo.getUserId());
 		
-		QNotice qNotice = QNotice.notice;
-		
+		QUser qUser = QUser.user;
 		BooleanBuilder builder = new BooleanBuilder();
-		builder.and(qNotice.noticeState.contains("정상 등록"));
+		builder.and(qUser.userState.contains("정상 등록"));
 		
-		builder.and(qNotice.writer.contains(cri.getWriter()));
+		builder.and(qUser.userId.contains(vo.getUserId()));
+		builder.and(qUser.userPw.contains(hashPw));
 		
-		return noticeRepository.findAll(builder,PageRequest.of(cri.getPage()-1, cri.getAmount(), Sort.by("nno").descending())).getContent();
+		Page<User> result = userRepository.findAll(builder, PageRequest.of(0, 1));
+		
+		if(result == null) {
+			return null;
+		} else if(result.getContent().size() == 1) {
+			return UserResponse.createUserVOByEntity(result.getContent().get(0));
+		} else {
+			return null;
+		}
+		
 	}
 
 	@Override
-	public Notice getDetailById(Long nno) {
-		return noticeRepository.findById(nno).get();
+	public UserVO userUpdate(UserUpdateVO vo) {
+		User user = userRepository.findByUserId(vo.getUserId());
+		
+		String hashPw = Encrypt.getEncrypt(vo.getUserPw(), user.getUserId());
+		
+		if(hashPw.equals(user.getUserPw())) {
+			
+			vo.setUserPw(Encrypt.getEncrypt(vo.getUserNewPw(), user.getUserId()));
+			
+			User result = user.updateUserByVO(vo);
+			
+			return UserResponse.createUserVOByEntity(userRepository.save(result));
+		} else {
+			return null;
+		}
+		
 	}
+	
+	@Override
+	public UserVO userDelete(String userId) {
+		
+		User user = userRepository.findByUserIdWithoutDelete(userId);
+		
+		user.setUserState("탈퇴");
+		
+		return UserResponse.createUserVOByEntity(userRepository.save(user));
+	}
+
+	// save는 entity만 매개변수로 받을 수 있기 때문에
+	// vo를 entity로 바꿔주는 역할
+	private User convertUserVOtoUser(UserVO vo) {
+		return new User(null, 
+				vo.getUserName(), 
+				vo.getUserPhoneNumber(), 
+				vo.getUserId(), 
+				vo.getUserPw(),
+				vo.getUserLocation(),
+				vo.getUserLocationDetail(),
+				vo.getUserState()
+				);
+
+	}
+	
 
 }

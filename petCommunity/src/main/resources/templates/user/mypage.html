@@ -43,29 +43,6 @@
 	              	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            
-
-	        	<div class="form-group">
-	              <select class="form-control">
-	              <option>서울</option>
-	           	  <option>경기</option>
-	              <option>경남</option>
-	              <option>경북</option>
-				  <option >전남</option>
-				  <option >전북</option>
-				  <option >충남</option>
-				  <option >대전</option>
-				  <option >광주</option>	     
-				  <option >부산</option>	    
-				  <option >제주</option>	    
-				  <option >대구</option>	    
-				  <option >인천</option>	    
-				  <option >강원</option>	    
-				  <option >울산</option>	              
-				 </select>
-	            </div>
-	             <div class="form-group">
-	              <input type="text" class="form-control" placeholder="Address-Detail" required>
-
 	            <div class="form-group">
 	              <input id="password-field" type="password" name="userNewPw"class="form-control" placeholder="NewPassword" required>
 	              	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -75,8 +52,25 @@
 	              <input id="password-field" type="password" name="userNewPwCheck"class="form-control" placeholder="NewPassword Check" required>
 	              	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
-	            <div class="form-group">
-	              <input type="text" name="userLocation" class="form-control" placeholder="Adress" th:value="${vo.userLocation}" required>
+	        	<div class="form-group">
+	              <select class="form-control" name="userLocation">
+	              <option value="서울" th:selected="${vo.userLocation == '서울'}">서울</option>
+	           	  <option value="경남" th:selected="${vo.userLocation == '경기'}">경기</option>
+	              <option value="경북" th:selected="${vo.userLocation == '경남'}">경남</option>
+	              <option value="경북" th:selected="${vo.userLocation == '경북'}">경북</option>
+				  <option value="전남" th:selected="${vo.userLocation == '전남'}">전남</option>
+				  <option value="전북" th:selected="${vo.userLocation == '전북'}">전북</option>
+				  <option value="충남" th:selected="${vo.userLocation == '충남'}">충남</option>
+				  <option value="대전" th:selected="${vo.userLocation == '대전'}">대전</option>
+				  <option value="광주" th:selected="${vo.userLocation == '광주'}">광주</option>	     
+				  <option value="부산" th:selected="${vo.userLocation == '부산'}">부산</option>	    
+				  <option value="제주" th:selected="${vo.userLocation == '제주'}">제주</option>	    
+				  <option value="대구" th:selected="${vo.userLocation == '대구'}">대구</option>	    
+				  <option value="인천" th:selected="${vo.userLocation == '인천'}">인천</option>	    
+				  <option value="강원" th:selected="${vo.userLocation == '강원'}">강원</option>	    
+				  <option value="울산" th:selected="${vo.userLocation == '울산'}">울산</option>             
+				 </select>
+	            </div>
 	            </div>
 	            <div class="form-group">
 	              <input type="text" name="userLocationDetail" class="form-control" placeholder="Adress Detail" th:value="${vo.userLocationDetail}" required>
@@ -89,7 +83,7 @@
 	          </form>
 	            <form action="userDeleteForm" method="get" id="deleteSubmit" class="signin-form">
 	             <div class="form-group">
-	            	<button type="button" onclick="deleteBookF()" id="deleteAccount" class="form-control btn btn-primary submit px-3">Delete my Account</button>
+	            	<button type="button" onclick="deleteUser()" id="deleteAccount" class="form-control btn btn-primary submit px-3">Delete my Account</button>
 	            </div>
 	             <div class="form-group">
 	            </div>
@@ -100,7 +94,7 @@
 	          	<a href="/pet/pdfPet" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>증명서</a>
 	          </div>
 	          <div class="social d-flex text-center">
-	          	<a href="/pet/petSignup" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>pet inform</a>
+	          	<a href="/pet/viewPetList" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>pet inform</a>
 		      </div>
 		       <div class="social d-flex text-center">
 	          	<a href="/notice/noticeMyList" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>My List</a>
@@ -122,7 +116,7 @@
 		alert(msg);
 	}
 	
-	function deleteBookF(){
+	function deleteUser(){
 		event.preventDefault(); 
 		
 		if(confirm("정말 삭제 하시겠습니까?")){
