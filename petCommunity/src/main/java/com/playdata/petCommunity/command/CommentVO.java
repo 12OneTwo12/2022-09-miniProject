@@ -1,5 +1,7 @@
 package com.playdata.petCommunity.command;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -30,6 +32,8 @@ public class CommentVO {
 	private String userOrDoctor;
 	
 	private String commentState;
+	
+	private LocalDateTime commentDate;
 	
 	@NotNull(message = "게시글 선택은 필수입니다")
 	private Long nno;

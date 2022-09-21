@@ -14,6 +14,9 @@ public class AuthHandler implements HandlerInterceptor{
 			throws Exception{
 		
 		HttpSession session = request.getSession();
+		
+		session.setAttribute("userId", "jji0428");
+		
 		String userId = (String)session.getAttribute("userId");
 		String doctorId = (String)session.getAttribute("doctorId");
 		

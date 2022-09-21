@@ -25,7 +25,7 @@ public class NoticeServiceImpl implements NoticeService {
 	NoticeRepository noticeRepository;
 	
 	@Override
-	public List<NoticeVO> getList(Criteria cri) {
+	public PageDTO<Notice> getList(Criteria cri) {
 		
 		// 동적쿼리를 만듬
 		QNotice qNotice = QNotice.notice;
@@ -49,7 +49,9 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		Page<Notice> result = noticeRepository.findAll(builder, PageRequest.of(cri.getPage()-1, cri.getAmount(), Sort.by("nno").descending()));
 		
-		return listNoticeVO(new PageDTO<>(result).getPageData());
+		PageDTO<Notice> pageDTO = new PageDTO<>(result);
+		
+		return pageDTO;
 	}
 
 	@Override

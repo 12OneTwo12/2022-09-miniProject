@@ -19,6 +19,7 @@ public class CommentResponse {
 				comment.getContent(), 
 				comment.getUserOrDoctor(),
 				comment.getCommentState(), 
+				comment.getRegdate(),
 				comment.getNotice().getNno());
 	}
 	
