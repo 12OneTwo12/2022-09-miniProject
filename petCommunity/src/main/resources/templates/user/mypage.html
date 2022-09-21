@@ -66,7 +66,7 @@
 	          </form>
 	            <form action="userDeleteForm" method="get" id="deleteSubmit" class="signin-form">
 	             <div class="form-group">
-	            	<button type="button" id="deleteAccount" class="form-control btn btn-primary submit px-3">Delete my Account</button>
+	            	<button type="button" onclick="deleteBookF()" id="deleteAccount" class="form-control btn btn-primary submit px-3">Delete my Account</button>
 	            </div>
 	             <div class="form-group">
 	            </div>
@@ -99,16 +99,14 @@
 		alert(msg);
 	}
 	
-	$(document).ready(function(){
-		$('#deleteAccount').click(function(){
-			alert('하이')
-			if(confirm('삭제하시겠습니까?')){
-				$('#deleteSubmit').submit();
-			} else {
-				return false;
-			}
-		})
-	});
+	function deleteBookF(){
+		event.preventDefault(); 
+		
+		if(confirm("정말 삭제 하시겠습니까?")){
+			var link = "userDeleteForm"
+			location.href = link;
+		}
+	}
   </script>
 
 	</body>
