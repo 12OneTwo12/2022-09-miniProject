@@ -47,8 +47,6 @@ public class NoticeController {
 	@RequestMapping("/noticeListAll")
 	public String noticeListAll(Criteria cri, Model model, HttpSession session) {
 		
-		session.setAttribute("userId", "jji0428");
-		
 		PageDTO<Notice> pageDTO = noticeService.getList(cri);
 		
 		model.addAttribute("pageDTO", pageDTO);
@@ -64,9 +62,9 @@ public class NoticeController {
 		} else {
 			String userId = (String) session.getAttribute("userId");
 			cri.setWriter(userId);
-			List<NoticeVO> list = noticeService.getListByWriter(cri);
+			PageDTO<Notice> pageDTO = noticeService.getListByWriter(cri);
 			
-			model.addAttribute("list", list);
+			model.addAttribute("pageDTO", pageDTO);
 			
 			return "notice/noticeListMe"; // user 자기 글 조회 목록 페이지
 		}

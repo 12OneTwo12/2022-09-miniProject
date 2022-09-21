@@ -38,8 +38,8 @@
 												<th>수정/삭제</th>
 											</tr>
 												
-											<tr th:each="vo, status : ${list}">
-												<td>[[${status.count}]]</td>
+											<tr th:each="vo, status : ${pageDTO.pageData}">
+												<td>[[${(pageDTO.page*pageDTO.amount)-pageDTO.amount+status.count}]]</td>
 												<td>[[${vo.writer}]]</td>
 												<td><a th:href="@{noticeDetail(nno=${vo.nno})}">[[${vo.title}]]</a></td>
 												<td>
@@ -56,22 +56,19 @@
 										<div class="page">
 											<ul>
 												<li>
-													<a href="#"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+													<a th:href="@{noticeListAll(page=1, amount=${pageDTO.amount},writer=${criteria.writer},title=${criteria.title},content=${criteria.content})}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+												</li>
+												<li th:if="${pageDTO.prev}">
+													<a th:href="@{noticeListAll(page=${pageDTO.start - 1}, amount=${pageDTO.amount},writer=${criteria.writer},title=${criteria.title},content=${criteria.content})}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+												</li>
+												<th:block th:each="num : ${pageDTO.pageList}">
+													<li th:class="${pageDTO.page == num ? 'on' : ''}"><a th:href="@{noticeListAll(page=${num},amount=${pageDTO.amount},writer=${criteria.writer},title=${criteria.title},content=${criteria.content})}">[[${num}]]</a></li>
+												</th:block>	
+												<li th:if="${pageDTO.next}">
+													<a th:href="@{noticeListAll(page=${pageDTO.end + 1}, amount=${pageDTO.amount},writer=${criteria.writer},title=${criteria.title},content=${criteria.content})}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
 												</li>
 												<li>
-													<a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-												</li>
-												<li class="on"><a href="#">1</a></li>
-												<li><a href="#">2</a></li>
-												<li><a href="#">3</a></li>
-												<li><a href="#">4</a></li>
-												<li><a href="#">5</a></li>
-
-												<li>
-													<a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-												</li>
-												<li>
-													<a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+													<a th:href="@{noticeListAll(page=${pageDTO.pageTotal}, amount=${pageDTO.amount},writer=${criteria.writer},title=${criteria.title},content=${criteria.content})}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 												</li>
 				
 											</ul>

@@ -13,7 +13,7 @@ public interface NoticeService {
 
 	PageDTO<Notice> getList(Criteria cri);
 
-	List<NoticeVO> getListByWriter(Criteria cri);
+	PageDTO<Notice> getListByWriter(Criteria cri);
 
 	NoticeVO getDetailById(Long nno);
 
