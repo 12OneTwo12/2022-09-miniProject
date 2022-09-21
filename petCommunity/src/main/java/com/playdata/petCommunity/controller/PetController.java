@@ -128,5 +128,16 @@ public class PetController {
 			
 		return "pdf/pdf";
 	}
-	
+	@RequestMapping("/petlist")
+	public String petlist() {
+		return"/pet/petlist";
+	}
+	@RequestMapping("/petmodify")
+	public String petmodify() {
+		return"/pet/petmodify";
+	}
+	@RequestMapping("/petreg")
+	public String petreg() {
+		return"/pet/petreg";
+	}
 }

@@ -5768,7 +5768,6 @@ button.bg-dark:focus {
   justify-content: flex-end !important; }
 
 .justify-content-center {
-	height:80px;
   -webkit-box-pack: center !important;
   -ms-flex-pack: center !important;
   justify-content: center !important; }
@@ -8135,10 +8134,8 @@ body {
   line-height: 1.8;
   font-weight: normal;
   color: gray;
-  position: relative;
   z-index: 0;
   padding: 0; 
-  height: 100%;
   }
   
   body:after {
@@ -8194,8 +8191,7 @@ h1, h2, h3, h4, h5,
 
 .img {
   background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center; }
+  background-repeat: no-repeat; }
 
 .login-wrap {
   position: relative;
