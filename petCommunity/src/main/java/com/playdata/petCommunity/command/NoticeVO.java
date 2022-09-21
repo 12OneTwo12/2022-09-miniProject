@@ -30,7 +30,11 @@ public class NoticeVO {
 	@Pattern(regexp = "[.]{2,}", message = "본문은 2글자 이상 입력해주세요")
 	private String content;
 	
+<<<<<<< Updated upstream
 	private LocalDateTime noticeDate;
+=======
+	private String noticeDate;
+>>>>>>> Stashed changes
 	
 	private String noticeState;
 	

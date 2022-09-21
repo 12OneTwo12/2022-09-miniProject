@@ -24,11 +24,17 @@ public class WebConfig implements WebMvcConfigurer{
 				.addPathPatterns("/notice/**")
 				.addPathPatterns("/comment/**")
 				
-				.excludePathPatterns("/main")
+				.excludePathPatterns("/notice/main")
+				.excludePathPatterns("/user/userJoin")
 				.excludePathPatterns("/user/userJoinForm")
 				.excludePathPatterns("/user/userLogin")
+				.excludePathPatterns("/user/userLoginForm")
+				
+				.excludePathPatterns("/doctor/doctorJoin")
 				.excludePathPatterns("/doctor/doctorJoinForm")
 				.excludePathPatterns("/doctor/doctorLogin")
+				.excludePathPatterns("/doctor/doctorLoginForm")
+				
 				.excludePathPatterns("/notice/noticeListAll")
 				.excludePathPatterns("/notice/noticeDetail");
 	}
