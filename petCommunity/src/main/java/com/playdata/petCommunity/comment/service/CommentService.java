@@ -2,12 +2,18 @@ package com.playdata.petCommunity.comment.service;
 
 import java.util.List;
 
-import com.playdata.petCommunity.entity.Comment;
+import javax.servlet.http.HttpSession;
+
+import com.playdata.petCommunity.command.CommentVO;
 
 public interface CommentService {
 
-	List<Comment> getCommentList(Long nno);
+	List<CommentVO> getCommentList(Long nno);
 
-	Comment registComment(Comment comment);
+	CommentVO registComment(HttpSession session, CommentVO commentVO);
+
+	CommentVO updateComment(HttpSession session, CommentVO commentVO);
+
+	CommentVO deleteComment(HttpSession session, CommentVO commentVO);
 
 }
